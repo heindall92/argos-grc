@@ -15,7 +15,7 @@ test('el banco completo pasa la validación sin errores', () => {
 
 test('cifras del banco', () => {
   const st = E.estadisticas(B);
-  assert.deepEqual(st, { rutas: 3, salas: 19, preguntas: 190, maquinas: 15, flags: 75, simulacros: 13, logros: 18 });
+  assert.deepEqual(st, { rutas: 3, salas: 19, preguntas: 190, maquinas: 15, flags: 75, simulacros: 13, logros: 20 });
   for (const r of B.rutas) for (const s of r.salas) assert.equal(s.preguntas.length, 10, `${s.id} tiene 10 preguntas`);
 });
 

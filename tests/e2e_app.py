@@ -220,7 +220,7 @@ def main():
         x0 = J(f"{A}.P.xp")
         page.click(f'[data-act="flag-opt"][data-id="{f0["id"]}"][data-o="{f0["c"]}"]')
         page.click(f'[data-act="flag-enviar"][data-id="{f0["id"]}"]')
-        ok(J(f"{A}.P.xp") - x0 == 20, "Flag de usuario fácil con pista: 40 / 2 = 20 XP")
+        ok(J(f"{A}.P.xp") - x0 == 15, "Flag de usuario fácil con pista: 30 / 2 = 15 XP")
         ok(page.locator(f'#flag-{f0["id"]}.captured').count() == 1 and page.locator(f'#flag-{f0["id"]} .explain').count() == 1, "La flag capturada muestra su explicación")
         for f in flags[1:]:
             for c in (f["c"] if f["t"] == "multiple" else [f["c"]]):

@@ -29,7 +29,7 @@ def progreso():
     dias = {f"2026-10-{d:02d}": {"xp": 120, "preguntas": 18, "repasos": 4} for d in range(1, 5)}
     dias[HOY] = {"xp": 85, "preguntas": 14, "repasos": 2}
     return {
-        "v": 1, "perfil": {"nombre": "Yoandy Ramírez", "color": "teal"}, "ajustes": {"tema": "sistema", "meta": 100}, "xp": 1385,
+        "v": 1, "perfil": {"nombre": "Yoandy Ramírez", "color": "teal"}, "ajustes": {"tema": "sistema", "meta": 100}, "xp": 2650,
         "respuestas": resp,
         "salas": {"ens-1": {"mejor": 1, "intentos": 2, "ultima": "2026-10-02"}, "ens-2": {"mejor": 0.9, "intentos": 1, "ultima": "2026-10-03"}, "ens-3": {"mejor": 0.8, "intentos": 2, "ultima": "2026-10-04"},
                   "ens-4": {"mejor": 0.7, "intentos": 1, "ultima": "2026-10-04"}, "iso-1": {"mejor": 0.9, "intentos": 1, "ultima": "2026-10-04"}, "iso-2": {"mejor": 0.6, "intentos": 1, "ultima": HOY}, "cont-1": {"mejor": 0.8, "intentos": 1, "ultima": HOY}},

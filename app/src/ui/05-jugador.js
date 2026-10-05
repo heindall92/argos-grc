@@ -72,7 +72,7 @@ function finalizar() {
     st.intentos++; st.mejor = Math.max(st.mejor, res.nota); st.aprobado = st.aprobado || res.aprobado;
     st.historial = [...st.historial, { fecha: hoyD, nota: res.nota, ok: res.ok, total: res.total, seg: Math.round((Date.now() - s.inicio) / 1000) }].slice(-20);
     P.simulacros[s.id] = st;
-    if (primeraVez) s.xp += sumarXp(E.XP.simulacro);
+    if (primeraVez) s.xp += sumarXp(E.xpSimulacro(sim));
     s.resultado = { ...res, primeraVez, seg: Math.round((Date.now() - s.inicio) / 1000) };
   } else if (s.modo === 'sala') {
     const nota = s.ids.length ? s.aciertos / s.ids.length : 0;
@@ -167,7 +167,7 @@ function renderPlayer() {
 function resumen(s) {
   const r = s.resultado; const sim = s.modo === 'simulacro'; const okNota = sim ? r.aprobado : s.modo === 'sala' ? r.superada : r.nota >= 0.8;
   const titulo = sim ? (r.aprobado ? 'Simulacro aprobado' : 'Simulacro no superado') : s.modo === 'sala' ? (r.nota >= 1 ? 'Sala perfecta' : r.superada ? 'Sala superada' : 'Casi lo tienes') : 'Repaso completado';
-  const sub = sim ? `Necesitabas un ${pct(SIM[s.id].aprobado)}.${r.primeraVez ? ` Primer aprobado: +${E.XP.simulacro} XP.` : ''}` : s.modo === 'sala' ? (r.superada ? (r.bonus ? `Bonificación: +${r.bonus} XP.` : 'Ya la habías superado antes.') : 'Necesitas un 80 % para superarla. Las que fallaste volverán en el repaso.') : 'Las que fallaste vuelven a la primera caja y siguen en tu repaso.';
+  const sub = sim ? `Necesitabas un ${pct(SIM[s.id].aprobado)}.${r.primeraVez ? ` Primer aprobado: +${E.xpSimulacro(SIM[s.id])} XP.` : ''}` : s.modo === 'sala' ? (r.superada ? (r.bonus ? `Bonificación: +${r.bonus} XP.` : 'Ya la habías superado antes.') : 'Necesitas un 80 % para superarla. Las que fallaste volverán en el repaso.') : 'Las que fallaste vuelven a la primera caja y siguen en tu repaso.';
   const fallos = s.ids.filter((id) => (sim ? !(s.resp[id] !== undefined && E.evaluar(IDX.preguntas.get(id), s.resp[id])) : s.comprobada[id] === false));
   const porSala = sim ? Object.entries(r.porSala).map(([sid, v]) => `<div class="row spread small" style="padding:6px 0"><span>${esc(SALA[sid].nombre)}</span><b>${v.ok} / ${v.total}</b></div>`).join('') : '';
   return `<div class="player" role="dialog" aria-modal="true" aria-label="Resultado"><div class="player-top"><button type="button" class="icon-btn" data-act="p-cerrar" aria-label="Cerrar">${icon('x', 22)}</button><div class="grow"></div></div>

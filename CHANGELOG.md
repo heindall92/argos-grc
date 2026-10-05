@@ -1,5 +1,25 @@
 # Cambios
 
+## 1.3.0 · octubre de 2026
+
+**Progresión sincronizada con el contenido.** Con 15 máquinas y 13 simulacros, los puntos posibles pasaron de unos 5.700 a 12.400. Los rangos se habían quedado cortos (Panoptes se alcanzaba con el 36 % del contenido) y las máquinas pesaban más que todas las preguntas juntas. Este es el reequilibrio:
+- **Flags:** 30 XP la de usuario y 60 la de root (antes 40 y 80), por el multiplicador de dificultad (×1, ×1,5 o ×2). Abrir la pista sigue dejando la flag a la mitad.
+- **Simulacros:** 5 XP por pregunta al aprobar por primera vez, y los retos ×1,5. Un sprint da 50 XP y el maratón 675 (antes, todos daban 150). Cada tarjeta muestra lo que vale.
+- **Rangos reescalados:** 300, 900, 2.000, 3.600, 6.000 y 9.400 XP. Panoptes pide el 85 % de los 11.035 XP posibles.
+- **Reparto:** preguntas y salas, 38 %; máquinas, 43 %; simulacros, 19 %.
+- **Dos logros nuevos** (20 en total):
+  - **Root de lo difícil:** las 5 máquinas difíciles.
+  - **Fondista:** aprobar el Maratón GRC.
+- **Guardas de calibración en las pruebas.**
+  - Panoptes debe pedir entre el 80 % y el 90 % del total.
+  - Las máquinas no pueden superar la mitad, y los simulacros deben pesar entre el 10 % y el 30 %.
+  - Un simulacro más largo nunca vale menos.
+
+  Si se añade contenido sin recalibrar, las pruebas fallan.
+- **Logros → Cómo se ganan los puntos:** muestra el total de XP posibles y lo que pide Panoptes, calculado a partir del banco.
+
+Los puntos que ya tenías se conservan. Como los umbrales son más altos, puede que veas un rango menos que antes.
+
 ## 1.2.0 · octubre de 2026
 
 - **13 simulacros** (antes 3), en cuatro tipos:

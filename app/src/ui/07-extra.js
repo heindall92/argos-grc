@@ -11,7 +11,7 @@ function tarjetaSimulacro(sim) {
     <div class="row">${sim.rutas.map((r) => glyph(r, 18)).join('')}${st && st.aprobado ? '<span class="grow"></span><span class="tag ok">' + icon('check', 13) + 'Aprobado</span>' : ''}</div>
     <h3 id="sim-${sim.id}" style="font:700 1.12rem/1.25 var(--f-d)">${esc(sim.nombre)}</h3>
     <p class="small muted">${esc(sim.descripcion)}</p>
-    <div class="row small"><span class="tag">${icon('listChecks', 13)}${sim.n} preguntas</span><span class="tag">${icon('timer', 13)}${sim.minutos} min</span><span class="tag">${icon('target', 13)}${pct(sim.aprobado)}</span></div>
+    <div class="row small"><span class="tag">${icon('listChecks', 13)}${sim.n} preguntas</span><span class="tag">${icon('timer', 13)}${sim.minutos} min</span><span class="tag">${icon('target', 13)}${pct(sim.aprobado)}</span><span class="tag">${icon('sparkles', 13)}${E.xpSimulacro(sim)} XP</span></div>
     ${st ? `<p class="small">Mejor nota: <b>${pct(st.mejor)}</b><br><span class="muted">${plural(st.intentos, 'intento', 'intentos')}${ult ? ` · último: ${pct(ult.nota)} el ${esc(fmtFecha(ult.fecha))}` : ''}</span></p>` : '<p class="small muted">Sin intentos todavía.</p>'}
     <button type="button" class="btn primary" style="margin-top:auto" data-act="simulacro" data-id="${sim.id}" aria-label="Empezar ${esc(sim.nombre)}">${icon('timer', 17)}<span>Empezar</span></button></article>`;
 }

@@ -9,13 +9,14 @@
 
   /* ---------- Rangos: los cien ojos de Argos ---------- */
   const RANGOS = [
+    // Umbrales calibrados sobre el total de XP del banco: Panoptes exige en torno al 85 % (lo comprueba tests/engine.test.js)
     { ojos: 1, xp: 0, nombre: 'Primer ojo', lema: 'Empiezas a mirar el sistema.' },
-    { ojos: 5, xp: 150, nombre: '5 ojos', lema: 'Reconoces los marcos y su vocabulario.' },
-    { ojos: 10, xp: 450, nombre: '10 ojos', lema: 'Relacionas requisitos con controles.' },
-    { ojos: 25, xp: 1000, nombre: '25 ojos', lema: 'Sabes qué evidencia pedir.' },
-    { ojos: 50, xp: 1800, nombre: '50 ojos', lema: 'Detectas no conformidades a la primera.' },
-    { ojos: 75, xp: 3000, nombre: '75 ojos', lema: 'Auditas con criterio y lo justificas.' },
-    { ojos: 100, xp: 4500, nombre: 'Panoptes', lema: 'Los cien ojos abiertos. Nada se te escapa.' }
+    { ojos: 5, xp: 300, nombre: '5 ojos', lema: 'Reconoces los marcos y su vocabulario.' },
+    { ojos: 10, xp: 900, nombre: '10 ojos', lema: 'Relacionas requisitos con controles.' },
+    { ojos: 25, xp: 2000, nombre: '25 ojos', lema: 'Sabes qué evidencia pedir.' },
+    { ojos: 50, xp: 3600, nombre: '50 ojos', lema: 'Detectas no conformidades a la primera.' },
+    { ojos: 75, xp: 6000, nombre: '75 ojos', lema: 'Auditas con criterio y lo justificas.' },
+    { ojos: 100, xp: 9400, nombre: 'Panoptes', lema: 'Los cien ojos abiertos. Nada se te escapa.' }
   ];
   function rangoDe(xp) {
     const x = Math.max(0, Number(xp) || 0);
@@ -33,10 +34,18 @@
     pregunta: { 1: 10, 2: 15, 3: 20 },
     repaso: 4,
     sala: 50, salaPerfecta: 25,
-    flag: { user: 40, root: 80 },
+    flag: { user: 30, root: 60 },
     dificultad: { 'Fácil': 1, 'Media': 1.5, 'Difícil': 2 },
-    simulacro: 150
+    simulacroPorPregunta: 5, reto: 1.5
   };
+  /* Aprobar un simulacro por primera vez: 5 XP por pregunta; los retos, ×1,5 */
+  const xpSimulacro = (sim) => Math.round(sim.n * XP.simulacroPorPregunta * (sim.tipo === 'reto' ? XP.reto : 1));
+  /* XP máximos que se pueden ganar con el banco (preguntas, salas, flags sin pista y simulacros) */
+  function xpTotal(banco) {
+    const q = banco.rutas.reduce((a, r) => a + r.salas.reduce((b, s) => b + s.preguntas.reduce((c, p) => c + xpPregunta(p), 0) + XP.sala + XP.salaPerfecta, 0), 0);
+    const m = banco.maquinas.reduce((a, x) => a + x.flags.reduce((b, f) => b + xpFlag(f, x.dificultad, false), 0), 0);
+    return q + m + banco.simulacros.reduce((a, s) => a + xpSimulacro(s), 0);
+  }
   const xpPregunta = (q) => XP.pregunta[q.d] || XP.pregunta[1];
   function xpFlag(flag, dificultad, conPista) {
     const base = (XP.flag[flag.tipo] || XP.flag.user) * (XP.dificultad[dificultad] || 1);
@@ -146,9 +155,11 @@
     { id: 'ruta-continuidad', nombre: 'Resiliente', desc: 'Superas todas las salas de la ruta de continuidad.', icono: 'lifebuoy' },
     { id: 'maquina-1', nombre: 'Primera máquina', desc: 'Capturas todas las flags de un caso práctico.', icono: 'flag' },
     { id: 'ojo-halcon', nombre: 'Ojo de halcón', desc: 'Completas un caso práctico sin abrir ninguna pista.', icono: 'scan' },
+    { id: 'maquinas-dificiles', nombre: 'Root de lo difícil', desc: 'Resuelves las cinco máquinas difíciles.', icono: 'zap' },
     { id: 'maquinas-todas', nombre: 'Auditor de campo', desc: 'Completas todos los casos prácticos.', icono: 'briefcase' },
     { id: 'simulacro-ok', nombre: 'Examen superado', desc: 'Apruebas un simulacro.', icono: 'graduation' },
     { id: 'simulacro-90', nombre: 'Matrícula', desc: 'Sacas un 90 % o más en un simulacro.', icono: 'award' },
+    { id: 'maraton', nombre: 'Fondista', desc: 'Apruebas el Maratón GRC: 90 preguntas sin perder el foco.', icono: 'timer' },
     { id: 'simulacros-todos', nombre: 'Examinador', desc: 'Apruebas todos los simulacros, del sprint al maratón.', icono: 'trophy' },
     { id: 'racha-3', nombre: 'Constancia', desc: 'Practicas tres días seguidos.', icono: 'flame' },
     { id: 'racha-7', nombre: 'Semana completa', desc: 'Practicas siete días seguidos.', icono: 'flame' },
@@ -171,9 +182,12 @@
     if (hechas.length) s.add('maquina-1');
     if (hechas.some((m) => !(maq[m.id].pistas || []).length)) s.add('ojo-halcon');
     if (banco.maquinas.length && hechas.length === banco.maquinas.length) s.add('maquinas-todas');
+    const dificiles = banco.maquinas.filter((m) => m.dificultad === 'Difícil');
+    if (dificiles.length && dificiles.every((m) => maq[m.id] && maq[m.id].completada)) s.add('maquinas-dificiles');
     const sims = Object.values(p.simulacros || {});
     if (sims.some((x) => x.aprobado)) s.add('simulacro-ok');
     if (sims.some((x) => x.mejor >= 0.9)) s.add('simulacro-90');
+    if (p.simulacros && p.simulacros['reto-maraton'] && p.simulacros['reto-maraton'].aprobado) s.add('maraton');
     if (banco.simulacros.length && banco.simulacros.every((x) => p.simulacros && p.simulacros[x.id] && p.simulacros[x.id].aprobado)) s.add('simulacros-todos');
     const rmax = Math.max(racha(p.dias, hoy), mejorRacha(p.dias));
     if (rmax >= 3) s.add('racha-3'); if (rmax >= 7) s.add('racha-7'); if (rmax >= 30) s.add('racha-30');
@@ -266,7 +280,7 @@
     return { rutas: banco.rutas.length, salas, preguntas, maquinas: banco.maquinas.length, flags, simulacros: banco.simulacros.length, logros: LOGROS.length };
   }
 
-  const API = { RANGOS, XP, LOGROS, INTERVALOS, rangoDe, xpPregunta, xpFlag, evaluar, correctas, dia, sumarDias, diasEntre, repasar, pendientes, racha, mejorRacha,
+  const API = { RANGOS, XP, LOGROS, INTERVALOS, rangoDe, xpPregunta, xpFlag, xpSimulacro, xpTotal, evaluar, correctas, dia, sumarDias, diasEntre, repasar, pendientes, racha, mejorRacha,
     semillaDe, barajar, ordenOpciones, indexar, preguntasDeSimulacro, generarSimulacro, corregirSimulacro, logrosCumplidos, logrosNuevos, progresoRuta, siguienteSala, validarBanco, estadisticas };
   if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.ArgosEngine = Object.freeze(API);
 })(typeof window !== 'undefined' ? window : this);

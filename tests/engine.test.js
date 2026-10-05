@@ -24,10 +24,10 @@ test('corrección: única, múltiple (sin importar el orden ni repeticiones) y v
 test('rangos: umbrales, ojos interpolados y rango máximo', () => {
   assert.equal(E.rangoDe(0).rango.nombre, 'Primer ojo');
   assert.equal(E.rangoDe(0).ojos, 1);
-  assert.equal(E.rangoDe(149).nivel, 1);
-  assert.equal(E.rangoDe(150).nivel, 2);
-  assert.equal(E.rangoDe(150).ojos, 5);
-  const medio = E.rangoDe(300); // mitad entre 150 (5 ojos) y 450 (10 ojos)
+  assert.equal(E.rangoDe(299).nivel, 1);
+  assert.equal(E.rangoDe(300).nivel, 2);
+  assert.equal(E.rangoDe(300).ojos, 5);
+  const medio = E.rangoDe(600); // mitad entre 300 (5 ojos) y 900 (10 ojos)
   assert.ok(medio.ojos >= 5 && medio.ojos < 10);
   assert.equal(E.rangoDe(1e6).rango.nombre, 'Panoptes');
   assert.equal(E.rangoDe(1e6).ojos, 100);
@@ -40,10 +40,25 @@ test('puntos: dificultad de la pregunta y flags con pista', () => {
   assert.equal(E.xpPregunta(vf), 10);
   assert.equal(E.xpPregunta(unica), 15);
   assert.equal(E.xpPregunta(multi), 20);
-  assert.equal(E.xpFlag({ tipo: 'user' }, 'Fácil', false), 40);
-  assert.equal(E.xpFlag({ tipo: 'root' }, 'Difícil', false), 160);
-  assert.equal(E.xpFlag({ tipo: 'root' }, 'Media', false), 120);
-  assert.equal(E.xpFlag({ tipo: 'root' }, 'Media', true), 60, 'la pista reduce la flag a la mitad');
+  assert.equal(E.xpFlag({ tipo: 'user' }, 'Fácil', false), 30);
+  assert.equal(E.xpFlag({ tipo: 'root' }, 'Difícil', false), 120);
+  assert.equal(E.xpFlag({ tipo: 'root' }, 'Media', false), 90);
+  assert.equal(E.xpFlag({ tipo: 'root' }, 'Media', true), 45, 'la pista reduce la flag a la mitad');
+  assert.equal(E.xpSimulacro({ n: 10, tipo: 'sprint' }), 50);
+  assert.equal(E.xpSimulacro({ n: 90, tipo: 'reto' }), 675, 'los retos valen 1,5 veces más');
+});
+
+test('calibración: los rangos y el reparto de XP siguen al tamaño del banco', () => {
+  const total = E.xpTotal(B); const panoptes = E.RANGOS[E.RANGOS.length - 1].xp;
+  assert.ok(panoptes / total >= 0.8 && panoptes / total <= 0.9, `Panoptes pide entre el 80 % y el 90 % del total (${panoptes} de ${total})`);
+  const maq = B.maquinas.reduce((a, m) => a + m.flags.reduce((b, f) => b + E.xpFlag(f, m.dificultad, false), 0), 0);
+  const sims = B.simulacros.reduce((a, s) => a + E.xpSimulacro(s), 0);
+  assert.ok(maq / total <= 0.5, `las máquinas no superan la mitad del total (${maq} de ${total})`);
+  assert.ok(sims / total >= 0.1 && sims / total <= 0.3, `los simulacros pesan entre el 10 % y el 30 % (${sims})`);
+  const ordenados = [...B.simulacros].filter((s) => s.tipo !== 'reto').sort((a, b) => a.n - b.n);
+  for (let i = 1; i < ordenados.length; i++) assert.ok(E.xpSimulacro(ordenados[i]) >= E.xpSimulacro(ordenados[i - 1]), 'un simulacro más largo nunca vale menos');
+  const primeraSala = B.rutas[0].salas[0]; const xpSala = primeraSala.preguntas.reduce((a, q) => a + E.xpPregunta(q), 0) + E.XP.sala;
+  assert.ok(xpSala >= E.RANGOS[1].xp * 0.5 && xpSala < E.RANGOS[1].xp, 'superar la primera sala acerca al segundo rango, pero no lo regala');
 });
 
 test('fechas: suma de días con cambio de mes y año', () => {
@@ -131,10 +146,13 @@ test('logros: se obtienen con el progreso que les corresponde', () => {
   const ens = B.rutas.find((r) => r.id === 'ens');
   const p = { ...vacio, respuestas: { 'ens-1-01': { aciertos: 1 } }, salas: Object.fromEntries(ens.salas.map((s) => [s.id, { mejor: 1 }])),
     maquinas: { [B.maquinas[0].id]: { completada: true, pistas: [] } }, simulacros: { 'sim-ens': { aprobado: true, mejor: 0.93 } },
-    dias: { '2026-10-03': { preguntas: 1 }, '2026-10-04': { preguntas: 1 }, '2026-10-05': { preguntas: 1 } }, repasosOk: 25, xp: 5000 };
+    dias: { '2026-10-03': { preguntas: 1 }, '2026-10-04': { preguntas: 1 }, '2026-10-05': { preguntas: 1 } }, repasosOk: 25, xp: 10000 };
   const s = E.logrosCumplidos(p, B, '2026-10-05');
   for (const id of ['primer-acierto', 'sala-1', 'sala-perfecta', 'ruta-ens', 'maquina-1', 'ojo-halcon', 'simulacro-ok', 'simulacro-90', 'racha-3', 'repaso-25', 'panoptes']) assert.ok(s.has(id), `logro ${id}`);
-  for (const id of ['ruta-iso27001', 'ruta-continuidad', 'maquinas-todas', 'racha-7', 'cien']) assert.ok(!s.has(id), `sin logro ${id}`);
+  for (const id of ['ruta-iso27001', 'ruta-continuidad', 'maquinas-todas', 'maquinas-dificiles', 'maraton', 'racha-7', 'cien']) assert.ok(!s.has(id), `sin logro ${id}`);
+  const dif = { ...vacio, maquinas: Object.fromEntries(B.maquinas.filter((m) => m.dificultad === 'Difícil').map((m) => [m.id, { completada: true, pistas: [] }])), simulacros: { 'reto-maraton': { aprobado: true, mejor: 0.8 } } };
+  const sd = E.logrosCumplidos(dif, B, '2026-10-05');
+  assert.ok(sd.has('maquinas-dificiles') && sd.has('maraton') && !sd.has('maquinas-todas'), 'Root de lo difícil y Fondista');
   assert.deepEqual(E.logrosNuevos({ ...p, logros: { 'primer-acierto': '2026-10-01' } }, B, '2026-10-05').includes('primer-acierto'), false, 'no repite logros ya obtenidos');
   const conPista = { ...vacio, maquinas: { [B.maquinas[0].id]: { completada: true, pistas: ['x'] } } };
   assert.ok(!E.logrosCumplidos(conPista, B, '2026-10-05').has('ojo-halcon'), 'ojo de halcón exige no abrir pistas');

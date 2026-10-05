@@ -63,7 +63,8 @@ function vLogros() {
       <li>Superar una sala por primera vez (80 % o más): ${E.XP.sala} XP; hacerla perfecta: ${E.XP.salaPerfecta} XP más.</li>
       <li>Acertar en el repaso espaciado: ${E.XP.repaso} XP por pregunta.</li>
       <li>Flags de las máquinas: ${E.XP.flag.user} (usuario) y ${E.XP.flag.root} (root), multiplicados por 1, 1,5 o 2 según la dificultad. Abrir la pista reduce la flag a la mitad.</li>
-      <li>Aprobar un simulacro por primera vez: ${E.XP.simulacro} XP.</li></ul></div></section>`;
+      <li>Aprobar un simulacro por primera vez: ${E.XP.simulacroPorPregunta} XP por pregunta (un sprint, ${E.xpSimulacro({ n: 10 })} XP); los retos valen 1,5 veces más.</li>
+      <li>En total se pueden ganar ${E.xpTotal(D).toLocaleString('es-ES')} XP. Panoptes pide ${E.RANGOS[E.RANGOS.length - 1].xp.toLocaleString('es-ES')}.</li></ul></div></section>`;
 }
 
 /* ---------- Perfil, tarjeta para compartir y datos ---------- */

@@ -44,7 +44,7 @@ Además, desde el 1 de abril de 2025 el CCN solo emite certificados en los curso
 | **Máquinas** | 15 casos prácticos al estilo de un CTF (5 fáciles, 5 medias y 5 difíciles), con 75 flags. Analizas evidencias (documentos, registros, tablas) de empresas ficticias y capturas flags de usuario (identificar el problema) y de root (clasificarlo y decidir). |
 | **Simulacros** | 13 exámenes cronometrados: 3 sprints de 10 preguntas, 4 por bloques, 4 completos y 2 retos (las 18 preguntas más difíciles y un maratón de 90). Se corrigen al entregar, con el desglose por sala y la revisión de cada fallo. |
 | **Repaso espaciado** | Cada pregunta entra en un sistema de cajas de Leitner. Lo que fallas vuelve hoy y lo que aciertas, en 1, 3, 7, 14 y 30 días. |
-| **Puntos, rangos y logros** | 7 rangos, del «Primer ojo» a «Panoptes» (los cien ojos abiertos), 18 logros, racha diaria y anillos de actividad al estilo Apple. |
+| **Puntos, rangos y logros** | 7 rangos, del «Primer ojo» a «Panoptes» (los cien ojos abiertos), 20 logros, racha diaria y anillos de actividad al estilo Apple. |
 | **Tarjeta para LinkedIn** | Genera una imagen con tu rango y tu progreso, más el texto para publicarla. |
 
 ### ¿Por qué Argos?
