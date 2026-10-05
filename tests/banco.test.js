@@ -15,7 +15,7 @@ test('el banco completo pasa la validación sin errores', () => {
 
 test('cifras del banco', () => {
   const st = E.estadisticas(B);
-  assert.deepEqual(st, { rutas: 3, salas: 19, preguntas: 190, maquinas: 15, flags: 75, simulacros: 3, logros: 17 });
+  assert.deepEqual(st, { rutas: 3, salas: 19, preguntas: 190, maquinas: 15, flags: 75, simulacros: 13, logros: 18 });
   for (const r of B.rutas) for (const s of r.salas) assert.equal(s.preguntas.length, 10, `${s.id} tiene 10 preguntas`);
 });
 
@@ -87,7 +87,13 @@ test('máquinas: 5 fáciles, 5 medias y 5 difíciles, ids únicos y organizacion
 test('los simulacros caben en el banco y tienen descripción', () => {
   for (const s of B.simulacros) {
     assert.ok(s.descripcion && s.descripcion.length > 20);
-    assert.ok(s.minutos / s.n >= 1.4, `${s.id}: al menos 1,4 minutos por pregunta`);
+    assert.ok(s.minutos / s.n >= 1, `${s.id}: al menos 1 minuto por pregunta`);
+  }
+  const tipos = {}; for (const s of B.simulacros) tipos[s.tipo] = (tipos[s.tipo] || 0) + 1;
+  assert.ok(B.simulacros.length >= 10, 'al menos 10 simulacros');
+  for (const t of ['sprint', 'bloque', 'completo', 'reto']) assert.ok(tipos[t] >= 2, `al menos 2 simulacros de tipo ${t}`);
+  for (const id of ['sim-ens', 'sim-iso', 'sim-grc']) assert.ok(B.simulacros.some((s) => s.id === id), `se conserva ${id} (progreso guardado)`);
+  {
   }
 });
 

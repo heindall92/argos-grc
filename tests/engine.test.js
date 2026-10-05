@@ -100,15 +100,17 @@ test('simulacros: número de preguntas, sin repetir, repartidas entre salas y de
     assert.equal(new Set(ids).size, ids.length, `${sim.id} no repite preguntas`);
     const idx = E.indexar(B.rutas);
     const salas = new Set(ids.map((id) => idx.salaDe.get(id)));
-    const total = B.rutas.filter((r) => sim.rutas.includes(r.id)).reduce((a, r) => a + r.salas.length, 0);
-    assert.equal(salas.size, total, `${sim.id} incluye todas sus salas`);
+    const elegibles = E.preguntasDeSimulacro(B.rutas, sim);
+    assert.equal(salas.size, Math.min(sim.n, elegibles.length), `${sim.id} reparte sus preguntas entre todas sus salas`);
     assert.ok(ids.every((id) => sim.rutas.includes(idx.rutaDe.get(id))), `${sim.id} solo usa sus rutas`);
+    if (sim.salas) assert.ok(ids.every((id) => sim.salas.includes(idx.salaDe.get(id))), `${sim.id} solo usa sus salas`);
+    if (sim.dificultad) assert.ok(ids.every((id) => sim.dificultad.includes(idx.preguntas.get(id).d)), `${sim.id} solo usa su dificultad`);
     assert.deepEqual(E.generarSimulacro(B.rutas, sim, 'seed-1'), ids);
   }
 });
 
 test('corrección de un simulacro: nota, aprobado y desglose por sala', () => {
-  const idx = E.indexar(B.rutas); const sim = B.simulacros[0];
+  const idx = E.indexar(B.rutas); const sim = B.simulacros.find((x) => x.id === 'sim-ens');
   const ids = E.generarSimulacro(B.rutas, sim, 'seed-2');
   const resp = {};
   ids.forEach((id, i) => { const q = idx.preguntas.get(id); if (i < 21) resp[id] = q.t === 'multiple' ? q.c : q.c; });
@@ -122,6 +124,10 @@ test('corrección de un simulacro: nota, aprobado y desglose por sala', () => {
 test('logros: se obtienen con el progreso que les corresponde', () => {
   const vacio = { xp: 0, respuestas: {}, salas: {}, maquinas: {}, simulacros: {}, dias: {}, logros: {}, repasosOk: 0 };
   assert.equal(E.logrosCumplidos(vacio, B, '2026-10-05').size, 0, 'sin progreso no hay logros');
+  const todos = { ...vacio, simulacros: Object.fromEntries(B.simulacros.map((x) => [x.id, { aprobado: true, mejor: 0.8 }])) };
+  assert.ok(E.logrosCumplidos(todos, B, '2026-10-05').has('simulacros-todos'), 'Examinador: todos los simulacros aprobados');
+  const casi = { ...todos, simulacros: { ...todos.simulacros, 'reto-maraton': { aprobado: false, mejor: 0.7 } } };
+  assert.ok(!E.logrosCumplidos(casi, B, '2026-10-05').has('simulacros-todos'), 'Examinador exige aprobarlos todos');
   const ens = B.rutas.find((r) => r.id === 'ens');
   const p = { ...vacio, respuestas: { 'ens-1-01': { aciertos: 1 } }, salas: Object.fromEntries(ens.salas.map((s) => [s.id, { mejor: 1 }])),
     maquinas: { [B.maquinas[0].id]: { completada: true, pistas: [] } }, simulacros: { 'sim-ens': { aprobado: true, mejor: 0.93 } },

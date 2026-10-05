@@ -1,5 +1,17 @@
 # Cambios
 
+## 1.2.0 · octubre de 2026
+
+- **13 simulacros** (antes 3), en cuatro tipos:
+  - **Sprints:** ENS, ISO/IEC 27001 y continuidad, de 10 preguntas en 10 o 12 minutos.
+  - **Por bloques:** ENS · Fundamentos, roles y auditoría; ENS · Categorización, medidas y riesgos; ISO/IEC 27001 · El SGSI; e ISO/IEC 27001 · Anexo A y certificación.
+  - **Completos:** ENS, ISO/IEC 27001, continuidad y GRC integral. Se conservan los de antes y el progreso guardado.
+  - **Retos:** las 18 preguntas más difíciles (aprobado con un 60 %) y el Maratón GRC, de 90 preguntas en 135 minutos (aprobado con un 75 %).
+- **Filtros por sala y por dificultad** en el motor de simulacros, validados en la construcción.
+- **Nuevo logro, «Examinador»:** aprobar todos los simulacros. Son 18 logros en total.
+- **Vista de simulacros agrupada por tipo**, con el recuento de aprobados.
+- **Pruebas:** filtros de sala y dificultad, reparto entre salas, el logro nuevo y el reto de las más difíciles en el navegador.
+
 ## 1.1.0 · octubre de 2026
 
 - **10 máquinas nuevas: 15 en total, 5 por dificultad, con 75 flags.**

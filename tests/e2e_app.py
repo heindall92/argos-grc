@@ -165,7 +165,7 @@ def main():
 
         print("Simulacro cronometrado")
         page.click('#top [data-view="simulacros"]')
-        ok(page.locator('[data-act="simulacro"]').count() == 3, "Hay 3 simulacros")
+        ok(page.locator('[data-act="simulacro"]').count() == 13 and page.locator('#view section h2').count() >= 4, "Hay 13 simulacros agrupados en sprints, bloques, completos y retos")
         page.click('[data-act="simulacro"][data-id="sim-ens"]')
         ok(J(f"{A}.ui.sesion.ids.length") == 30 and page.locator(".timer").count() == 1, "El simulacro ENS carga 30 preguntas y un cronómetro")
         ok(page.locator(".player-foot.ok, .player-foot.bad").count() == 0, "En el simulacro no se corrige pregunta a pregunta")
@@ -191,6 +191,13 @@ def main():
         J(f"{A}.ui.sesion.fin = Date.now() - 1")
         page.wait_for_timeout(1300)
         ok(page.locator(".result").count() == 1 and J(f"{A}.P.simulacros['sim-iso'].intentos") == 1, "Al agotarse el tiempo el simulacro se corrige solo")
+        page.click('.result [data-act="p-cerrar"]')
+
+        page.click('#top [data-view="simulacros"]')
+        page.click('[data-act="simulacro"][data-id="reto-dificil"]')
+        ds = J(f"{A}.ui.sesion.ids.map(id => {A}.D.rutas.flatMap(r => r.salas.flatMap(s => s.preguntas)).find(q => q.id === id).d)")
+        ok(len(ds) == 18 and set(ds) == {3}, "El reto carga las 18 preguntas de dificultad máxima, sin ninguna fácil")
+        J(f"{A}.ui.sesion.fin = Date.now() - 1"); page.wait_for_timeout(1300)
         page.click('.result [data-act="p-cerrar"]')
 
         print("Máquinas: evidencias, pistas y flags")

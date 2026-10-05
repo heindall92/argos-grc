@@ -1,16 +1,24 @@
 /* ---------- Simulacros ---------- */
+const TIPOS_SIM = [
+  ['sprint', 'Sprints', 'Diez preguntas para un rato libre.'],
+  ['bloque', 'Por bloques', 'Una parte de la ruta, para afianzarla antes del examen completo.'],
+  ['completo', 'Exámenes completos', 'Toda la ruta, con el tiempo justo.'],
+  ['reto', 'Retos', 'Más difíciles o más largos. Para cuando ya lo tengas dominado.']
+];
+function tarjetaSimulacro(sim) {
+  const st = P.simulacros[sim.id]; const ult = st && st.historial.length ? st.historial[st.historial.length - 1] : null;
+  return `<article class="card pad stack" aria-labelledby="sim-${sim.id}">
+    <div class="row">${sim.rutas.map((r) => glyph(r, 18)).join('')}${st && st.aprobado ? '<span class="grow"></span><span class="tag ok">' + icon('check', 13) + 'Aprobado</span>' : ''}</div>
+    <h3 id="sim-${sim.id}" style="font:700 1.12rem/1.25 var(--f-d)">${esc(sim.nombre)}</h3>
+    <p class="small muted">${esc(sim.descripcion)}</p>
+    <div class="row small"><span class="tag">${icon('listChecks', 13)}${sim.n} preguntas</span><span class="tag">${icon('timer', 13)}${sim.minutos} min</span><span class="tag">${icon('target', 13)}${pct(sim.aprobado)}</span></div>
+    ${st ? `<p class="small">Mejor nota: <b>${pct(st.mejor)}</b><br><span class="muted">${plural(st.intentos, 'intento', 'intentos')}${ult ? ` · último: ${pct(ult.nota)} el ${esc(fmtFecha(ult.fecha))}` : ''}</span></p>` : '<p class="small muted">Sin intentos todavía.</p>'}
+    <button type="button" class="btn primary" style="margin-top:auto" data-act="simulacro" data-id="${sim.id}" aria-label="Empezar ${esc(sim.nombre)}">${icon('timer', 17)}<span>Empezar</span></button></article>`;
+}
 function vSimulacros() {
-  return `<div class="hd"><div><h1 class="lt">Simulacros</h1><p class="lt-sub">Exámenes cronometrados con preguntas al azar de todas las salas. Sin corrección hasta que entregas, como en un examen real.</p></div></div>
-    <div class="grid g3">${D.simulacros.map((sim) => {
-      const st = P.simulacros[sim.id]; const ult = st && st.historial.length ? st.historial[st.historial.length - 1] : null;
-      return `<article class="card pad stack" aria-labelledby="sim-${sim.id}">
-        <div class="row">${sim.rutas.map((r) => glyph(r, 18)).join('')}</div>
-        <h2 id="sim-${sim.id}" style="font:700 1.2rem/1.2 var(--f-d)">${esc(sim.nombre)}</h2>
-        <p class="small muted">${esc(sim.descripcion)}</p>
-        <div class="row small"><span class="tag">${icon('listChecks', 13)}${sim.n} preguntas</span><span class="tag">${icon('timer', 13)}${sim.minutos} min</span><span class="tag">${icon('target', 13)}${pct(sim.aprobado)}</span></div>
-        ${st ? `<p class="small">Mejor nota: <b>${pct(st.mejor)}</b>${st.aprobado ? ' · <span class="tag ok">Aprobado</span>' : ''}<br><span class="muted">${plural(st.intentos, 'intento', 'intentos')}${ult ? ` · último: ${pct(ult.nota)} el ${esc(fmtFecha(ult.fecha))}` : ''}</span></p>` : '<p class="small muted">Sin intentos todavía.</p>'}
-        <button type="button" class="btn primary" data-act="simulacro" data-id="${sim.id}">${icon('timer', 17)}<span>Empezar</span></button></article>`;
-    }).join('')}</div>
+  const aprob = D.simulacros.filter((x) => P.simulacros[x.id] && P.simulacros[x.id].aprobado).length;
+  return `<div class="hd"><div><h1 class="lt">Simulacros</h1><p class="lt-sub">Exámenes cronometrados con preguntas al azar del banco. Sin corrección hasta que entregas, como en un examen real. ${aprob} de ${D.simulacros.length} aprobados.</p></div></div>
+    ${TIPOS_SIM.map(([t, n, d]) => { const ls = D.simulacros.filter((x) => x.tipo === t); return ls.length ? `<section class="sec" aria-labelledby="tipo-${t}"><div class="sec-h"><h2 id="tipo-${t}">${esc(n)}</h2><span class="small muted">${esc(d)}</span></div><div class="grid g3">${ls.map(tarjetaSimulacro).join('')}</div></section>` : ''; }).join('')}
     <section class="sec"><div class="legal">${icon('info', 18)}<span>Formato de práctica propio. No reproduce el formato ni las preguntas de ningún examen oficial de certificación. Aprobar un simulacro de ARGOS no acredita ninguna certificación.</span></div></section>`;
 }
 

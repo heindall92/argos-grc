@@ -107,10 +107,17 @@
   }
 
   /* ---------- Simulacros ----------
-   * Toma n preguntas repartidas entre las salas de las rutas indicadas (al menos una por sala si caben) y las baraja. */
+   * Toma n preguntas repartidas entre las salas de las rutas indicadas (al menos una por sala si caben) y las baraja.
+   * Filtros opcionales del simulacro: salas (lista de ids) y dificultad (lista de niveles). */
+  function preguntasDeSimulacro(rutas, sim) {
+    return rutas.filter((r) => sim.rutas.includes(r.id)).flatMap((r) => r.salas)
+      .filter((s) => !sim.salas || sim.salas.includes(s.id))
+      .map((s) => ({ sala: s.id, preguntas: s.preguntas.filter((q) => !sim.dificultad || sim.dificultad.includes(q.d)) }))
+      .filter((x) => x.preguntas.length);
+  }
   function generarSimulacro(rutas, sim, seed) {
-    const salas = rutas.filter((r) => sim.rutas.includes(r.id)).flatMap((r) => r.salas);
-    const porSala = salas.map((s) => barajar(s.preguntas.map((q) => q.id), `${seed}|${s.id}`));
+    const salas = preguntasDeSimulacro(rutas, sim);
+    const porSala = salas.map((s) => barajar(s.preguntas.map((q) => q.id), `${seed}|${s.sala}`));
     const elegidas = []; let ronda = 0;
     while (elegidas.length < sim.n && porSala.some((l) => l.length > ronda)) {
       for (const l of porSala) { if (elegidas.length >= sim.n) break; if (l[ronda]) elegidas.push(l[ronda]); }
@@ -142,6 +149,7 @@
     { id: 'maquinas-todas', nombre: 'Auditor de campo', desc: 'Completas todos los casos prácticos.', icono: 'briefcase' },
     { id: 'simulacro-ok', nombre: 'Examen superado', desc: 'Apruebas un simulacro.', icono: 'graduation' },
     { id: 'simulacro-90', nombre: 'Matrícula', desc: 'Sacas un 90 % o más en un simulacro.', icono: 'award' },
+    { id: 'simulacros-todos', nombre: 'Examinador', desc: 'Apruebas todos los simulacros, del sprint al maratón.', icono: 'trophy' },
     { id: 'racha-3', nombre: 'Constancia', desc: 'Practicas tres días seguidos.', icono: 'flame' },
     { id: 'racha-7', nombre: 'Semana completa', desc: 'Practicas siete días seguidos.', icono: 'flame' },
     { id: 'racha-30', nombre: 'Vigilancia continua', desc: 'Practicas treinta días seguidos (ENS, art. 10).', icono: 'flame' },
@@ -166,6 +174,7 @@
     const sims = Object.values(p.simulacros || {});
     if (sims.some((x) => x.aprobado)) s.add('simulacro-ok');
     if (sims.some((x) => x.mejor >= 0.9)) s.add('simulacro-90');
+    if (banco.simulacros.length && banco.simulacros.every((x) => p.simulacros && p.simulacros[x.id] && p.simulacros[x.id].aprobado)) s.add('simulacros-todos');
     const rmax = Math.max(racha(p.dias, hoy), mejorRacha(p.dias));
     if (rmax >= 3) s.add('racha-3'); if (rmax >= 7) s.add('racha-7'); if (rmax >= 30) s.add('racha-30');
     if ((p.repasosOk || 0) >= 25) s.add('repaso-25');
@@ -237,10 +246,14 @@
       }
     }
     const rutasIds = new Set((banco.rutas || []).map((r) => r.id));
+    const salasIds = new Set((banco.rutas || []).flatMap((r) => r.salas.map((s) => s.id)));
     for (const sim of banco.simulacros || []) {
       nuevoId(sim.id, 'simulacro');
       if (!sim.rutas.every((r) => rutasIds.has(r))) err.push(`simulacro ${sim.id}: ruta desconocida`);
-      const disp = (banco.rutas || []).filter((r) => sim.rutas.includes(r.id)).reduce((a, r) => a + r.salas.reduce((b, s) => b + s.preguntas.length, 0), 0);
+      if (sim.salas && !sim.salas.every((x) => salasIds.has(x))) err.push(`simulacro ${sim.id}: sala desconocida`);
+      if (sim.dificultad && !sim.dificultad.every((d) => [1, 2, 3].includes(d))) err.push(`simulacro ${sim.id}: dificultad no válida`);
+      if (!['sprint', 'bloque', 'completo', 'reto'].includes(sim.tipo)) err.push(`simulacro ${sim.id}: tipo no válido`);
+      const disp = preguntasDeSimulacro(banco.rutas || [], sim).reduce((a, s) => a + s.preguntas.length, 0);
       if (disp < sim.n) err.push(`simulacro ${sim.id}: pide ${sim.n} preguntas y solo hay ${disp}`);
       if (!(sim.minutos > 0 && sim.aprobado > 0 && sim.aprobado <= 1)) err.push(`simulacro ${sim.id}: tiempo o nota de aprobado no válidos`);
     }
@@ -254,6 +267,6 @@
   }
 
   const API = { RANGOS, XP, LOGROS, INTERVALOS, rangoDe, xpPregunta, xpFlag, evaluar, correctas, dia, sumarDias, diasEntre, repasar, pendientes, racha, mejorRacha,
-    semillaDe, barajar, ordenOpciones, indexar, generarSimulacro, corregirSimulacro, logrosCumplidos, logrosNuevos, progresoRuta, siguienteSala, validarBanco, estadisticas };
+    semillaDe, barajar, ordenOpciones, indexar, preguntasDeSimulacro, generarSimulacro, corregirSimulacro, logrosCumplidos, logrosNuevos, progresoRuta, siguienteSala, validarBanco, estadisticas };
   if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.ArgosEngine = Object.freeze(API);
 })(typeof window !== 'undefined' ? window : this);
