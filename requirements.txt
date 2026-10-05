@@ -1,0 +1,5 @@
+# Dependencias de la suite de pruebas en navegador (tests/e2e_app.py y tests/a11y_app.py).
+#   python3 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+#   python -m playwright install chromium
+playwright==1.56.0

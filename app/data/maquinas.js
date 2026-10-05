@@ -1,0 +1,193 @@
+/* Máquinas · Casos prácticos al estilo de un CTF: un briefing, evidencias que analizar y flags que capturar.
+ * Las organizaciones, personas y datos son ficticios y de elaboración propia. Cualquier parecido con entidades reales es casual.
+ * Flags: tipo «user» (identificar el problema) y «root» (clasificarlo, justificarlo o decidir la acción). */
+'use strict';
+module.exports = [
+  {
+    id: 'm-copias', nombre: 'Copias de Hespéride', dificultad: 'Fácil', icono: 'hardDrive', marcos: ['ENS', '27001'],
+    empresa: 'Hespéride Servicios Digitales, S.L. (ficticia)',
+    brief: 'Hespéride presta un servicio de registro electrónico a varias diputaciones y está certificada en el ENS de categoría MEDIA. Su sistema de expedientes tiene disponibilidad de nivel MEDIO. Antes de la auditoría bienal, te piden revisar la gestión de copias de seguridad.',
+    evidencias: [
+      { titulo: 'NOR-COP-01 · Normativa de copias (extracto)', tipo: 'doc', texto: '3. Alcance: servidores de expedientes y base de datos de registro.\n4. Frecuencia: copia completa los domingos e incremental diaria a las 02:00.\n5. Almacenamiento: las copias se guardan en la cabina NAS-02, en el mismo CPD que los servidores.\n6. Retención: «la que permita el espacio disponible».\n7. Acceso: el equipo de sistemas (6 personas) tiene acceso de administración a la NAS-02.\n8. Pruebas de restauración: se realizarán cuando se considere necesario.' },
+      { titulo: 'Registro de restauraciones · últimos 24 meses', tipo: 'tabla', texto: 'Fecha        Sistema        Motivo                          Resultado\n2024-11-03   Expedientes    Borrado accidental de carpeta   Parcial (faltan 2 días)\n(sin más registros)' },
+      { titulo: 'Entrevista al responsable del sistema', tipo: 'nota', texto: '«Las copias funcionan, el software envía un correo cada noche con "OK". Probar restauraciones completas es arriesgado, no queremos tocar producción. La retención la decidimos según el espacio que queda.»' }
+    ],
+    flags: [
+      { id: 'm-copias-f1', tipo: 'user', nombre: 'Flag de usuario · El punto débil', t: 'unica', d: 1,
+        q: 'Con disponibilidad de nivel MEDIO, ¿qué refuerzo de mp.info.6 incumple claramente la normativa NOR-COP-01?',
+        o: ['R1: pruebas regulares de recuperación', 'R2: copia en lugar separado', 'R3: cifrado de las copias', 'Ninguno: cumple el nivel MEDIO'], c: 0,
+        x: 'Nivel MEDIO exige mp.info.6 + R1: los procedimientos de copia y restauración deben probarse regularmente. «Cuando se considere necesario» y una sola restauración parcial en dos años no lo cumplen. R2 (copia separada) solo es obligatorio en nivel ALTO, aunque aquí sería muy recomendable.',
+        ref: 'RD 311/2022, anexo II, mp.info.6 r1', pista: 'Mira la tabla de la medida mp.info.6: qué se suma a la base en nivel MEDIO.' },
+      { id: 'm-copias-f2', tipo: 'user', nombre: 'Flag de usuario · Requisitos base', t: 'multiple', d: 2,
+        q: '¿Qué requisitos base de mp.info.6.2 están mal cubiertos en la normativa?',
+        o: ['Frecuencia de las copias', 'Requisitos de almacenamiento en otros lugares', 'Controles para el acceso autorizado a las copias', 'Periodicidad y plazos de retención determinados en la normativa interna'], c: [1, 2, 3],
+        x: 'La frecuencia sí está definida. Faltan: almacenamiento en otro lugar (todo está en el mismo CPD), control de acceso a las copias (seis administradores con acceso total, sin segregación) y la retención, que mp.info.6.1 exige fijar en la normativa: «la que permita el espacio» no es un plazo.',
+        ref: 'RD 311/2022, anexo II, mp.info.6.1 y 6.2', pista: 'Compara punto por punto la normativa con los requisitos a) a d) de mp.info.6.2 y con el 6.1.' },
+      { id: 'm-copias-f3', tipo: 'user', nombre: 'Flag de usuario · El correo de «OK»', t: 'unica', d: 2,
+        q: '¿Por qué el correo nocturno de «OK» no es evidencia suficiente de que las copias son recuperables?',
+        o: ['Porque los correos no son evidencias en una auditoría', 'Porque solo indica que el trabajo de copia terminó, no que los datos se puedan restaurar íntegros dentro del RTO', 'Porque debería enviarse por SMS', 'Sí es evidencia suficiente'], c: 1,
+        x: 'Un trabajo de copia puede terminar «bien» con ficheros corruptos, exclusiones mal configuradas o dependencias olvidadas. Lo que demuestra la recuperabilidad es una restauración probada, con tiempos medidos frente al RTO y el RPO (ISO/IEC 27001 8.13).',
+        ref: 'ISO/IEC 27001:2022, anexo A 8.13 · RD 311/2022, mp.info.6 r1', pista: '¿Qué demuestra exactamente ese correo?' },
+      { id: 'm-copias-f4', tipo: 'root', nombre: 'Flag de root · El escenario que lo tumba todo', t: 'unica', d: 3,
+        q: 'Un ransomware cifra los servidores y la NAS-02 con credenciales robadas a un administrador. ¿Qué medida habría evitado perder las copias y qué norma la exige en nivel ALTO?',
+        o: ['Un antivirus en la NAS; op.exp.6', 'Al menos una copia separada en un lugar diferente, que un mismo incidente no pueda alcanzar; mp.info.6 R2', 'Más frecuencia de copia; op.cont.1', 'Una segunda NAS en el mismo CPD; mp.if.1'], c: 1,
+        x: 'Las copias en la misma ubicación y con las mismas credenciales caen con el original. mp.info.6 R2 exige, en nivel ALTO, una copia separada que un incidente no pueda afectar a la vez. Aunque Hespéride sea de nivel MEDIO, el análisis de riesgos (art. 28.2) justificaría aplicarlo: las medidas son mínimos ampliables.',
+        ref: 'RD 311/2022, anexo II, mp.info.6 r2 y art. 28.2', pista: 'Busca el refuerzo de mp.info.6 que habla de un «lugar diferente».' },
+      { id: 'm-copias-f5', tipo: 'root', nombre: 'Flag de root · El hallazgo', t: 'unica', d: 3,
+        q: '¿Cómo redactarías el hallazgo principal para el informe de auditoría?',
+        o: ['«Las copias no son buenas.»', '«No conformidad: no existen pruebas regulares de restauración (mp.info.6 R1, exigible en nivel MEDIO). Evidencia: un único registro de restauración en 24 meses, con resultado parcial, y una normativa que deja las pruebas a criterio. Riesgo: imposibilidad de garantizar la recuperación dentro del RTO.»', '«Observación: se recomienda comprar otra NAS.»', '«Conformidad con salvedades.»'], c: 1,
+        x: 'Un buen hallazgo tiene criterio (qué requisito), evidencia (qué se vio, verificable) y, si aporta valor, el riesgo o la consecuencia. Sin evidencia ni criterio, el auditado puede rebatirlo; con ellos, es incontestable.',
+        ref: 'ISO 19011:2018 (hallazgos de auditoría) · RD 311/2022, art. 31.4', pista: 'Un hallazgo sólido tiene tres partes: criterio, evidencia y consecuencia.' }
+    ]
+  },
+  {
+    id: 'm-baja', nombre: 'El exempleado', dificultad: 'Fácil', icono: 'users', marcos: ['27001', 'ENS'],
+    empresa: 'Hespéride Servicios Digitales, S.L. (ficticia)',
+    brief: 'Un analista que dejó Hespéride el 30 de junio accedió el 14 de julio a la consola de administración del gestor de expedientes. El SOC lo detectó al revisar los registros. Te piden reconstruir qué falló.',
+    evidencias: [
+      { titulo: 'Ticket RRHH-2291 · Baja voluntaria', tipo: 'doc', texto: 'Empleado: A. Ferrán · Puesto: analista de sistemas · Último día: 30/06\nChecklist de salida:\n[x] Devolución del portátil\n[x] Firma del finiquito\n[ ] Comunicar a Sistemas para retirada de accesos  ← responsable: «pendiente de asignar»\n[ ] Recordatorio de deber de confidencialidad' },
+      { titulo: 'Registro del gestor de expedientes', tipo: 'log', texto: '2025-07-14 22:41:07  login OK      user=aferran  src=85.x.x.x (VPN)  mfa=no\n2025-07-14 22:43:55  export        user=aferran  obj=EXP-2025-*  filas=1.420\n2025-07-14 22:44:30  logout        user=aferran' },
+      { titulo: 'Configuración VPN', tipo: 'nota', texto: 'Autenticación de la VPN: usuario y contraseña del directorio corporativo. Doble factor «previsto para el próximo trimestre».' }
+    ],
+    flags: [
+      { id: 'm-baja-f1', tipo: 'user', nombre: 'Flag de usuario · Proceso roto', t: 'unica', d: 1,
+        q: '¿Qué control de la ISO/IEC 27001 falló en primer lugar?',
+        o: ['5.18 Derechos de acceso (retirada al terminar la relación)', '8.23 Filtrado web', '7.4 Monitorización física', '5.7 Inteligencia de amenazas'], c: 0,
+        x: 'El 5.18 exige provisionar, revisar, modificar y retirar los derechos de acceso. La tarea de retirada quedó «pendiente de asignar»: el proceso de baja no tenía dueño. En el ENS, op.acc.6.6 obliga a inhabilitar las credenciales cuando el usuario termina su relación.',
+        ref: 'ISO/IEC 27001:2022, anexo A 5.18 · RD 311/2022, op.acc.6.6', pista: 'Mira la casilla sin marcar del checklist.' },
+      { id: 'm-baja-f2', tipo: 'user', nombre: 'Flag de usuario · La puerta', t: 'unica', d: 2,
+        q: 'El acceso fue desde Internet por VPN sin doble factor. ¿Qué exige el ENS en todos los niveles para ese acceso?',
+        o: ['Nada, si la contraseña es robusta', 'Doble factor para el acceso desde o a través de zonas no controladas (op.acc.6 R8)', 'Certificado en tarjeta física obligatoriamente', 'Solo registro de accesos'], c: 1,
+        x: 'op.acc.6 R8 exige doble factor (R2, R3 o R4) en el acceso desde zonas no controladas como Internet, y se aplica en todos los niveles. Con doble factor, la contraseña de un exempleado no habría bastado.',
+        ref: 'RD 311/2022, anexo II, op.acc.6 r8', pista: 'Internet es el ejemplo de «zona no controlada».' },
+      { id: 'm-baja-f3', tipo: 'user', nombre: 'Flag de usuario · Lo que sí funcionó', t: 'unica', d: 2,
+        q: '¿Qué control permitió detectar y reconstruir el incidente?',
+        o: ['8.15 Registro de eventos (con usuario, origen, hora y objeto)', '5.11 Devolución de activos', '6.6 Acuerdos de confidencialidad', '8.10 Eliminación de información'], c: 0,
+        x: 'Los registros identifican al usuario, el origen, la hora y lo que exportó: es lo que permite investigar y, en su caso, exigir responsabilidades (ENS art. 24 y op.exp.8; ISO/IEC 27001 8.15). Sin ellos, el incidente habría pasado inadvertido.',
+        ref: 'ISO/IEC 27001:2022, anexo A 8.15 · RD 311/2022, art. 24 y op.exp.8', pista: '¿Qué evidencia te ha permitido saber qué pasó?' },
+      { id: 'm-baja-f4', tipo: 'root', nombre: 'Flag de root · Corrección o acción correctiva', t: 'multiple', d: 3,
+        q: '¿Qué acciones son acción correctiva (atacan la causa) y no simple corrección?',
+        o: ['Asignar un responsable fijo a la retirada de accesos en el checklist y automatizar la baja desde RRHH al directorio', 'Deshabilitar hoy la cuenta de aferran', 'Implantar doble factor en la VPN', 'Revisar periódicamente las cuentas activas frente a la plantilla en vigor'], c: [0, 2, 3],
+        x: 'Deshabilitar la cuenta es la corrección: trata el efecto. Las acciones correctivas eliminan las causas para que no se repita: dueño y automatización de la baja, doble factor y revisión periódica de accesos (5.18). La cláusula 10.2 exige además revisar su eficacia.',
+        ref: 'ISO/IEC 27001:2022, cláusula 10.2 y anexo A 5.18', pista: 'Corrección: tapar el agujero. Acción correctiva: que no vuelva a abrirse.' },
+      { id: 'm-baja-f5', tipo: 'root', nombre: 'Flag de root · A quién avisar', t: 'unica', d: 3,
+        q: 'Los expedientes exportados contienen datos personales de ciudadanos. Hespéride es privada y presta el servicio a diputaciones. ¿Qué notificaciones proceden?',
+        o: ['Ninguna: el empleado ya no trabaja allí', 'Al INCIBE-CERT por el ENS (que lo traslada al CCN-CERT), al responsable del tratamiento (las diputaciones) sin dilación como encargado, y valorar con ellas la notificación a la autoridad de protección de datos en 72 horas', 'Solo a la policía', 'Solo publicar una nota en la web'], c: 1,
+        x: 'Como privada que presta servicios al sector público, notifica al INCIBE-CERT (art. 33.7 del ENS). Como encargada del tratamiento, debe avisar sin dilación indebida a la diputación responsable (RGPD art. 33.2), que decide la notificación a la autoridad en 72 horas (art. 33.1).',
+        ref: 'RD 311/2022, art. 33.7 · Reglamento (UE) 2016/679, art. 33', pista: 'Hay dos regímenes a la vez: ENS para el incidente y RGPD para los datos personales.' }
+    ]
+  },
+  {
+    id: 'm-categoria', nombre: 'La categoría de Arcadia', dificultad: 'Media', icono: 'scale', marcos: ['ENS'],
+    empresa: 'Consorcio Digital de Arcadia (ficticio)',
+    brief: 'El Consorcio Digital de Arcadia gestiona la sede electrónica y la plataforma de ayudas sociales de varios municipios. Los responsables han valorado la información y los servicios. Tu misión es determinar la categoría y las consecuencias que tiene.',
+    evidencias: [
+      { titulo: 'Valoración de la información', tipo: 'tabla', texto: 'Información                     C       I       T       A\nSolicitudes de ayudas sociales  ALTO    MEDIO   MEDIO   MEDIO\nPublicaciones del tablón        —       MEDIO   BAJO    MEDIO\nEstadísticas anónimas           BAJO    BAJO    —       BAJO' },
+      { titulo: 'Valoración de los servicios', tipo: 'tabla', texto: 'Servicio                        D       RTO acordado\nSede electrónica                MEDIO   12 horas\nPlataforma de ayudas            MEDIO   18 horas (plazo legal de resolución no crítico)\nPortal de transparencia         BAJO    3 días' },
+      { titulo: 'Acta del comité de seguridad', tipo: 'nota', texto: '«El responsable del sistema propone rebajar la confidencialidad de las solicitudes de ayuda a MEDIO "para ahorrar costes". Se acuerda que la categoría del sistema sea MEDIA.»' }
+    ],
+    flags: [
+      { id: 'm-categoria-f1', tipo: 'user', nombre: 'Flag de usuario · La categoría', t: 'unica', d: 1,
+        q: 'Con la valoración tal y como está en las tablas, ¿qué categoría tiene el sistema?',
+        o: ['BÁSICA', 'MEDIA', 'ALTA', 'No se puede determinar'], c: 2,
+        x: 'La confidencialidad de las solicitudes de ayudas es ALTO y basta una dimensión en ALTO para que el sistema sea de categoría ALTA. El acta acordó MEDIA sin cambiar formalmente la valoración, lo cual es incoherente.',
+        ref: 'RD 311/2022, anexo I.4', pista: 'Busca el nivel más alto de cualquier dimensión en las dos tablas.' },
+      { id: 'm-categoria-f2', tipo: 'user', nombre: 'Flag de usuario · ¿Quién decide?', t: 'unica', d: 2,
+        q: '¿Qué problema de facultades hay en el acta del comité?',
+        o: ['Ninguno: el comité decide todo', 'Rebajar la confidencialidad corresponde al responsable de la información, no al responsable del sistema, y no se puede hacer por motivos de coste sin cambiar la valoración del impacto', 'Debería haberlo decidido el auditor', 'Debería haberlo decidido el CCN'], c: 1,
+        x: 'Valorar (y modificar la valoración) corresponde al responsable de la información o del servicio (art. 41.1). Además, la valoración se basa en el impacto de un incidente, no en el coste de protegerse. Abaratar la categoría bajando la valoración sin justificación es un hallazgo grave.',
+        ref: 'RD 311/2022, art. 41 y anexo I.3', pista: 'Lee el artículo 41: quién valora y quién determina la categoría.' },
+      { id: 'm-categoria-f3', tipo: 'user', nombre: 'Flag de usuario · Disponibilidad', t: 'unica', d: 2,
+        q: 'Con la disponibilidad tal como está valorada (máximo MEDIO), ¿qué medidas op.cont son exigibles?',
+        o: ['Ninguna', 'Solo op.cont.1 (análisis de impacto)', 'op.cont.1 a op.cont.4', 'op.cont.2 y op.cont.3'], c: 1,
+        x: 'Las medidas op.cont dependen del nivel de disponibilidad, no de la categoría. Con D en MEDIO solo aplica op.cont.1. Aunque el sistema sea de categoría ALTA por confidencialidad, no se exigen op.cont.2 a 4.',
+        ref: 'RD 311/2022, anexo II, op.cont · anexo I.4.2', pista: 'La tercera columna de op.cont indica «D»: ¿qué nivel de D hay?' },
+      { id: 'm-categoria-f4', tipo: 'root', nombre: 'Flag de root · Coherencia del RTO', t: 'unica', d: 3,
+        q: 'Según la tabla orientativa de la CCN-STIC 803, ¿qué nivel corresponde a un RTO de 12 horas para la sede electrónica?',
+        o: ['BAJO', 'MEDIO (entre 4 horas y 1 día)', 'ALTO', 'No hay relación entre RTO y nivel'], c: 1,
+        x: 'La 803 propone: menos de 4 horas, ALTO; entre 4 horas y 1 día, MEDIO; entre 1 y 5 días, BAJO. Las 12 horas encajan con D MEDIO, de modo que la valoración de la sede es coherente. El portal de transparencia, con 3 días, encaja con BAJO.',
+        ref: 'CCN-STIC 803, apdo. 2.2.2', pista: 'Recuerda los cortes de la tabla: 4 horas, 1 día y 5 días.' },
+      { id: 'm-categoria-f5', tipo: 'root', nombre: 'Flag de root · Consecuencias', t: 'multiple', d: 3,
+        q: 'Si el sistema es de categoría ALTA, ¿qué consecuencias tiene?',
+        o: ['Necesita una auditoría de certificación de conformidad, no basta la autoevaluación', 'El análisis de riesgos de op.pl.1 debe ser formal (R2), con asunción formal del riesgo residual', 'Su disponibilidad pasa automáticamente a nivel ALTO', 'Ante deficiencias graves, el responsable del sistema puede suspender temporalmente su operación'], c: [0, 1, 3],
+        x: 'Categoría ALTA: certificación por auditoría (art. 38), análisis de riesgos formal (op.pl.1 R2) y posibilidad de suspender la operación ante deficiencias graves (art. 31.6). La categoría no eleva los niveles de las dimensiones que no influyeron en ella (anexo I.4.2).',
+        ref: 'RD 311/2022, arts. 31.6 y 38 · anexo I.4.2 · op.pl.1', pista: 'Una de las cuatro confunde categoría con nivel de una dimensión.' }
+    ]
+  },
+  {
+    id: 'm-ransom', nombre: 'Noche de ransomware', dificultad: 'Media', icono: 'zap', marcos: ['ENS', '27001', 'BCM'],
+    empresa: 'Consorcio Digital de Arcadia (ficticio)',
+    brief: 'Viernes, 23:10. El SOC de Arcadia detecta cifrado masivo en los servidores de la plataforma de ayudas. Sigues la cronología del incidente y decides en cada punto como miembro del comité de crisis.',
+    evidencias: [
+      { titulo: 'Cronología', tipo: 'log', texto: '23:10  Alerta del EDR: cifrado de ficheros en 14 servidores.\n23:25  El técnico de guardia apaga dos servidores. No queda registro de cuáles.\n00:40  El responsable de seguridad confirma ransomware. Nadie avisa a la dirección «para no despertarles».\n03:00  Se descubre que las copias de la NAS también están cifradas.\n09:00  El comité de crisis se reúne por primera vez.\n09:30  Sistemas propone restaurar desde la copia offline del miércoles y volver a producción «cuanto antes».\n11:00  Una periodista pregunta en redes sociales por la caída de la plataforma.' },
+      { titulo: 'BIA de la plataforma de ayudas', tipo: 'tabla', texto: 'Función                 MTPD     RTO      RPO\nPlataforma de ayudas    48 h     24 h     24 h\nSede electrónica        24 h     12 h     4 h' },
+      { titulo: 'Plan de continuidad (extracto)', tipo: 'doc', texto: 'Criterio de activación: interrupción de un servicio crítico que previsiblemente supere el 50 % de su RTO.\nAutoridad para activar: director general o, en su ausencia, director de operaciones.\nComunicación externa: solo portavoz designado, con mensajes aprobados por el comité.' }
+    ],
+    flags: [
+      { id: 'm-ransom-f1', tipo: 'user', nombre: 'Flag de usuario · La activación', t: 'unica', d: 2,
+        q: 'Según el criterio del propio plan, ¿cuándo debió activarse como muy tarde para la plataforma de ayudas?',
+        o: ['Nunca: el RTO es de 24 horas', 'En cuanto fue previsible superar 12 horas de interrupción (el 50 % del RTO), es decir, en la madrugada, al confirmarse el ransomware y caer las copias', 'Solo al llegar la periodista', 'A las 09:00, como se hizo'], c: 1,
+        x: 'Con un ransomware confirmado (00:40) y las copias en línea perdidas (03:00), era previsible superar 12 horas. Esperar a las 09:00 y no avisar a quien puede activar el plan fue un fallo del proceso, no de la tecnología.',
+        ref: 'ISO 22301:2019, cláusula 8.4.2', pista: 'Calcula el 50 % del RTO de la plataforma de ayudas.' },
+      { id: 'm-ransom-f2', tipo: 'user', nombre: 'Flag de usuario · Pérdida de datos', t: 'unica', d: 2,
+        q: 'Si se restaura desde la copia offline del miércoles, ¿se cumple el RPO de 24 horas de la plataforma?',
+        o: ['Sí, de sobra', 'No: se pierden más de 48 horas de datos (miércoles a viernes), el doble del RPO', 'El RPO no aplica a ransomware', 'Depende del RTO'], c: 1,
+        x: 'Del miércoles al viernes por la noche son más de 48 horas de solicitudes. El RPO era de 24 horas. Habrá que reconstruir datos por otras vías (registros de entrada, correos, papel) y la estrategia de copias debe revisarse.',
+        ref: 'ISO 22301:2019, cláusula 8.3 · ISO/IEC 27001:2022, anexo A 8.13', pista: 'Cuenta las horas entre la copia y el incidente.' },
+      { id: 'm-ransom-f3', tipo: 'user', nombre: 'Flag de usuario · Evidencias', t: 'unica', d: 2,
+        q: '¿Qué error forense se cometió a las 23:25?',
+        o: ['Ninguno: apagar es lo correcto siempre', 'Apagar servidores sin registrarlo puede destruir evidencias volátiles y rompe la cadena de custodia; las acciones deben registrarse y seguir el procedimiento', 'No haber formateado los servidores', 'No haber llamado a la periodista'], c: 1,
+        x: 'Contener es correcto, pero el control 5.28 pide procedimientos para identificar, recopilar y conservar evidencias. El ENS (art. 25.2 y op.exp.9) exige registrar las actuaciones. Aislar de la red suele preferirse a apagar, y siempre dejando constancia.',
+        ref: 'ISO/IEC 27001:2022, anexo A 5.28 · RD 311/2022, art. 25.2 y op.exp.9', pista: '¿Qué se pierde al apagar una máquina y qué no quedó escrito?' },
+      { id: 'm-ransom-f4', tipo: 'root', nombre: 'Flag de root · Antes de volver a producción', t: 'unica', d: 3,
+        q: 'Sistemas quiere volver a producción «cuanto antes» tras restaurar. ¿Qué es imprescindible antes?',
+        o: ['Nada: el tiempo apremia', 'Comprobar la integridad del sistema, el firmware y la configuración, cerrar el vector de entrada y, en el sector público, seguir las indicaciones del CCN-CERT sobre el riesgo de reconexión', 'Pagar el rescate para obtener la clave', 'Cambiar el nombre de los servidores'], c: 1,
+        x: 'Restaurar sin cerrar el vector de entrada invita a un segundo cifrado. op.cont.2 R2 pide comprobar la integridad tras una caída, y el art. 33.6 del ENS atribuye al CCN-CERT determinar el riesgo de reconexión de los sistemas afectados.',
+        ref: 'RD 311/2022, art. 33.6 y op.cont.2 r2', pista: 'El ENS dice quién determina técnicamente el riesgo de reconexión.' },
+      { id: 'm-ransom-f5', tipo: 'root', nombre: 'Flag de root · La periodista', t: 'unica', d: 2,
+        q: '¿Quién responde a la periodista y cómo?',
+        o: ['El técnico de guardia, contando lo que sabe', 'El portavoz designado, con un mensaje aprobado por el comité de crisis, sin especular sobre causas ni datos no confirmados', 'Nadie, se borra el mensaje', 'Cualquier empleado con redes sociales'], c: 1,
+        x: 'El plan lo dice: solo el portavoz designado, con mensajes aprobados. Comunicar mal en una crisis amplifica el daño reputacional y puede comprometer la investigación. La ISO 22301 (8.4.3) pide procedimientos de comunicación con las partes interesadas, incluidos los medios.',
+        ref: 'ISO 22301:2019, cláusula 8.4.3', pista: 'El extracto del plan ya responde a esta pregunta.' }
+    ]
+  },
+  {
+    id: 'm-auditoria', nombre: 'Auditoría de certificación', dificultad: 'Difícil', icono: 'clipboard', marcos: ['27001', 'ENS'],
+    empresa: 'Hespéride Servicios Digitales, S.L. (ficticia)',
+    brief: 'Eres auditora jefe en la etapa 2 de la certificación ISO/IEC 27001 de Hespéride, que también quiere usar el trabajo para su certificación ENS de categoría MEDIA. Tienes cinco evidencias sobre la mesa. Clasifica y decide.',
+    evidencias: [
+      { titulo: 'E1 · Revisión por la dirección', tipo: 'nota', texto: 'No hay acta de revisión por la dirección. El director dice: «Lo hablamos en el comité de dirección, pero no se levanta acta de esos temas».' },
+      { titulo: 'E2 · Declaración de Aplicabilidad', tipo: 'tabla', texto: 'Control  Aplica  Justificación\n8.28     No      «No aplica»\n7.4      No      «No aplica»\n5.23     Sí      Implantado\n(Hespéride desarrolla internamente su gestor de expedientes y aloja copias en un proveedor de nube.)' },
+      { titulo: 'E3 · Auditoría interna', tipo: 'doc', texto: 'Programa 2025: auditoría interna completa realizada en mayo por el responsable de seguridad, que también diseñó e implantó la mayoría de los controles.' },
+      { titulo: 'E4 · Riesgos', tipo: 'tabla', texto: 'Riesgo R-12 (fuga por proveedor de nube): nivel ALTO. Tratamiento: aceptar. Aprobado por: técnico de sistemas. Dueño del riesgo según el registro: director de operaciones.' },
+      { titulo: 'E5 · Formación', tipo: 'nota', texto: 'Plan de concienciación anual. Asistencia: 92 % de la plantilla, con registros firmados. Dos personas de nueva incorporación aún no lo han recibido (incorporadas hace 3 semanas; el procedimiento da 2 meses).' }
+    ],
+    flags: [
+      { id: 'm-auditoria-f1', tipo: 'user', nombre: 'Flag de usuario · E1', t: 'unica', d: 2,
+        q: '¿Cómo se clasifica E1?',
+        o: ['Conformidad', 'Observación', 'No conformidad mayor: no hay evidencia de revisión por la dirección (9.3), que debe conservarse como información documentada', 'No conformidad menor'], c: 2,
+        x: 'La 9.3 exige revisar el SGSI a intervalos planificados con unas entradas mínimas y conservar evidencias de los resultados. Sin ningún registro, para el auditor no ha ocurrido: falta un requisito completo, así que es mayor.',
+        ref: 'ISO/IEC 27001:2022, cláusula 9.3', pista: '«Lo hablamos» no es información documentada.' },
+      { id: 'm-auditoria-f2', tipo: 'user', nombre: 'Flag de usuario · E2', t: 'multiple', d: 3,
+        q: '¿Qué problemas tiene la SoA de E2?',
+        o: ['Excluir 8.28 (codificación segura) no tiene sentido: la organización desarrolla software', 'Las exclusiones solo dicen «No aplica», sin justificación', 'Incluir 5.23 es correcto: usa servicios en la nube', 'Excluir 7.4 está prohibido siempre'], c: [0, 1, 2],
+        x: 'Las exclusiones deben justificarse (6.1.3 d) y ser coherentes con la realidad: si desarrollan su gestor, 8.28 aplica. 5.23 está bien incluido. 7.4 podría excluirse con una justificación razonable (por ejemplo, sin instalaciones propias de tratamiento), pero no con un simple «No aplica».',
+        ref: 'ISO/IEC 27001:2022, cláusula 6.1.3 d)', pista: 'Una de las afirmaciones es demasiado absoluta.' },
+      { id: 'm-auditoria-f3', tipo: 'user', nombre: 'Flag de usuario · E3', t: 'unica', d: 2,
+        q: '¿Qué falla en E3?',
+        o: ['Nada: se hizo la auditoría', 'La objetividad e imparcialidad: el auditor interno auditó controles que él mismo diseñó e implantó', 'Que se hiciera en mayo', 'Que sea completa'], c: 1,
+        x: 'La 9.2 exige auditores objetivos e imparciales, y la ISO 19011 incluye la independencia entre sus principios. Auditar el propio trabajo resta valor a los resultados. Suele clasificarse como no conformidad menor si el resto del programa existe.',
+        ref: 'ISO/IEC 27001:2022, cláusula 9.2.2 · ISO 19011:2018, cap. 4', pista: '¿Quién auditó y qué había hecho antes?' },
+      { id: 'm-auditoria-f4', tipo: 'root', nombre: 'Flag de root · E4', t: 'unica', d: 3,
+        q: '¿Qué requisito incumple E4 y por qué es especialmente grave?',
+        o: ['Ninguno: aceptar es una opción válida', '6.1.3 f): el riesgo residual debe aceptarlo su dueño (director de operaciones), no un técnico; y aceptar un riesgo ALTO de un proveedor de nube sin más contradice los criterios de aceptación habituales y deja sin tratar 5.23', 'Que el riesgo esté en una tabla', 'Que el dueño sea un director'], c: 1,
+        x: 'La aceptación del riesgo residual corresponde al dueño del riesgo. Que la firme un técnico vacía de sentido la gobernanza. Además, aceptar un riesgo ALTO exige que los criterios de aceptación lo permitan y una decisión consciente de quien tiene autoridad.',
+        ref: 'ISO/IEC 27001:2022, cláusulas 6.1.2 y 6.1.3 f)', pista: 'Compara quién aprobó con quién es el dueño.' },
+      { id: 'm-auditoria-f5', tipo: 'root', nombre: 'Flag de root · E5 y la decisión', t: 'unica', d: 3,
+        q: 'E5 muestra dos personas sin formar dentro del plazo del procedimiento. Con todo lo anterior, ¿qué recomiendas a la entidad de certificación?',
+        o: ['Certificar ya: E5 está bien y el resto son detalles', 'E5 es conforme. No recomendar la certificación hasta verificar la corrección y la acción correctiva de la no conformidad mayor (E1); las menores, con plan de acción aceptado', 'Denegar para siempre', 'Certificar solo en el ENS'], c: 1,
+        x: 'E5 cumple el procedimiento (plazo de 2 meses no vencido). Con una no conformidad mayor abierta (E1), la entidad debe verificar su corrección antes de decidir. Las menores (E3 y, según el criterio, E2 y E4) requieren un plan de acción aceptado. E4 podría considerarse mayor si se viera sistémico.',
+        ref: 'ISO/IEC 17021-1 (decisión de certificación) · ISO/IEC 27001:2022, cláusulas 9.3 y 10.2', pista: 'Una no conformidad mayor abierta bloquea la decisión de certificación.' }
+    ]
+  }
+];

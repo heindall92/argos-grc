@@ -1,0 +1,13 @@
+{
+  "name": "argos-grc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Laboratorio de práctica GRC de código abierto: ENS, ISO/IEC 27001 y continuidad de negocio con rutas, casos prácticos, simulacros, puntos y logros.",
+  "license": "GPL-2.0-only",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "node app/build.js",
+    "test:engine": "node --test tests/engine.test.js tests/banco.test.js",
+    "test": "bash run_tests.sh"
+  }
+}

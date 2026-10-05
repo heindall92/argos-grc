@@ -1,0 +1,13 @@
+# Dependencias y cachés
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+# Resultados de pruebas (se regeneran con ./run_tests.sh)
+tests/artifacts/
+# Sistema
+.DS_Store
+Thumbs.db
+# Ficheros temporales de Office
+~$*
