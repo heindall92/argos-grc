@@ -1,5 +1,15 @@
 # Cambios
 
+## 1.1.0 · octubre de 2026
+
+- **10 máquinas nuevas: 15 en total, 5 por dificultad, con 75 flags.**
+  - Fáciles: El correo del director (phishing), Puesto despejado y El contrato de nube.
+  - Medias: La SoA sospechosa, Viernes de despliegue y El BIA de Pegaso.
+  - Difíciles: Riesgo en euros (MAGERIT cuantitativo), La auditoría interna, Caída del proveedor crítico y Certificación ENS de Arcadia.
+- **Nueva organización ficticia:** Instituto Pegaso de Formación, una empresa privada certificada en ISO/IEC 27001.
+- **Vista de máquinas por dificultad**, con las resueltas y los XP de cada sección.
+- **Pruebas:** reparto 5 / 5 / 5, orden de dificultad, al menos 5 flags por máquina y axe-core en las 15 máquinas.
+
 ## 1.0.1 · octubre de 2026
 
 - **El ojo de Argos, más realista.** Esclerótica en almendra con volumen, iris con los tonos del pavo real, estrías, anillo limbal, pupila con brillos, sombra del párpado y pestañas. Los párpados se adaptan al tema claro y oscuro.

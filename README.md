@@ -41,7 +41,7 @@ Además, desde el 1 de abril de 2025 el CCN solo emite certificados en los curso
 | | |
 |---|---|
 | **Rutas y salas** | 3 rutas (ENS, ISO/IEC 27001 y continuidad de negocio), 19 salas y 190 preguntas. Cada respuesta se explica al momento y cita su fuente exacta. En el ENS, con el texto literal del BOE. |
-| **Máquinas** | 5 casos prácticos al estilo de un CTF, con 25 flags. Analizas evidencias (documentos, registros, tablas) de empresas ficticias y capturas flags de usuario (identificar el problema) y de root (clasificarlo y decidir). |
+| **Máquinas** | 15 casos prácticos al estilo de un CTF (5 fáciles, 5 medias y 5 difíciles), con 75 flags. Analizas evidencias (documentos, registros, tablas) de empresas ficticias y capturas flags de usuario (identificar el problema) y de root (clasificarlo y decidir). |
 | **Simulacros** | 3 exámenes cronometrados con preguntas al azar de todas las salas. Se corrigen al entregar, con el desglose por sala y la revisión de cada fallo. |
 | **Repaso espaciado** | Cada pregunta entra en un sistema de cajas de Leitner. Lo que fallas vuelve hoy y lo que aciertas, en 1, 3, 7, 14 y 30 días. |
 | **Puntos, rangos y logros** | 7 rangos, del «Primer ojo» a «Panoptes» (los cien ojos abiertos), 17 logros, racha diaria y anillos de actividad al estilo Apple. |
@@ -84,9 +84,21 @@ En ARGOS empiezas con un solo ojo abierto. Cada sala que superas, cada flag que 
 |---|---|---|
 | Copias de Hespéride | Fácil | Normativa de copias que no cumple mp.info.6 y un correo de «OK» que no prueba nada. |
 | El exempleado | Fácil | Un exanalista entra por VPN dos semanas después de irse. Retirada de accesos, doble factor y notificaciones. |
+| El correo del director | Fácil | Phishing a toda la plantilla: señales, notificación de eventos, contención y concienciación. |
+| Puesto despejado | Fácil | Ronda por la oficina: pantallas sin bloquear, una contraseña de administración en un pósit y un visitante sin identificar. |
+| El contrato de nube | Fácil | Revisar un contrato de nube: requisitos ENS en el pliego, alcance del certificado, POC de seguridad y ubicación de los datos. |
 | La categoría de Arcadia | Media | Valorar información y servicios, determinar la categoría y detectar quién no puede decidir qué. |
 | Noche de ransomware | Media | Cronología de una crisis: activación del plan, RPO, evidencias forenses, reconexión y comunicación. |
+| La SoA sospechosa | Media | Exclusiones que el ENS no permite, una medida compensatoria verbal y la firma equivocada. |
+| Viernes de despliegue | Media | Un cambio en producción sin aprobar tumba el campus antes de un examen: cambios, segregación y entornos. |
+| El BIA de Pegaso | Media | Cruzar el BIA con las capacidades reales: dependencias, RTO, RPO, MTPD y proveedores. |
 | Auditoría de certificación | Difícil | Etapa 2 de una certificación: clasificar no conformidades y decidir si se recomienda certificar. |
+| Riesgo en euros | Difícil | Análisis cuantitativo con MAGERIT: impacto, riesgo anual, salvaguardas, riesgo residual y criterio de aceptación. |
+| La auditoría interna | Difícil | Auditar la auditoría: programa, imparcialidad, hallazgos sin evidencia y acciones correctivas sin verificar. |
+| Caída del proveedor crítico | Difícil | La región de nube cae sin fecha: activar a tiempo, un respaldo inseguro y decidir con riesgo asumido. |
+| Certificación ENS de Arcadia | Difícil | Categoría ALTA: auditoría extraordinaria olvidada, plazos vencidos, el «atajo ISO» y el circuito del informe. |
+
+Las empresas son ficticias: Hespéride Servicios Digitales, el Consorcio Digital de Arcadia y el Instituto Pegaso de Formación.
 
 ## Uso
 

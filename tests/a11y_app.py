@@ -53,7 +53,7 @@ def states(page):
         page.click('.unlock [data-act="modal-next"]')
     yield "simulacro/resultado"
     page.click('.result [data-act="p-cerrar"]')
-    for m in ["m-copias", "m-baja", "m-categoria", "m-ransom", "m-auditoria"]:
+    for m in J(f"{A}.D.maquinas.map(m => m.id)"):
         J(f"{A}.go('maquina', '{m}')"); yield f"maquina/{m}"
     f = J(f"{A}.D.maquinas[0].flags[0]")
     J(f"{A}.go('maquina', 'm-copias')")

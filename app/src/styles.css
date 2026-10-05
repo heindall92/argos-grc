@@ -243,7 +243,6 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
 .machine h3 { font: 700 1.12rem/1.2 var(--f-d); }
 .diff { font-size: .78rem; font-weight: 700; }
 .diff.d-facil { color: var(--ok); } .diff.d-media { color: var(--warn); } .diff.d-dificil { color: var(--bad); }
-.pwned { position: absolute; top: 14px; right: 14px; }
 .flags-mini { display: flex; gap: 6px; }
 .flags-mini i { width: 22px; height: 6px; border-radius: 3px; background: var(--sunken); }
 .flags-mini i.on { background: var(--iri); }

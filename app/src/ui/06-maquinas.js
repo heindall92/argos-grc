@@ -4,15 +4,16 @@ const xpMaquina = (m) => m.flags.reduce((a, f) => a + E.xpFlag(f, m.dificultad, 
 function tarjetaMaquina(m) {
   const st = estMaq(m.id);
   return `<button type="button" class="card machine" data-act="go" data-view="maquina" data-param="${m.id}" aria-label="${esc(m.nombre)}, dificultad ${esc(m.dificultad)}, ${st.flags.length} de ${m.flags.length} flags">
-    ${st.completada ? `<span class="tag ok pwned">${icon('check', 14)}Resuelta</span>` : ''}
     <div class="m-top"><span class="m-ico" aria-hidden="true">${icon(m.icono, 26)}</span><div><h3>${esc(m.nombre)}</h3><p class="small"><span class="diff ${difCls(m.dificultad)}">${esc(m.dificultad)}</span> · <span class="muted">${xpMaquina(m)} XP</span></p></div></div>
     <p class="small muted">${esc(m.empresa)}</p>
-    <div class="row spread"><div class="flags-mini" aria-hidden="true">${m.flags.map((f) => `<i class="${st.flags.includes(f.id) ? 'on' : ''}"></i>`).join('')}</div><div class="row" style="gap:6px">${m.marcos.map((x) => `<span class="tag">${esc(x)}</span>`).join('')}</div></div></button>`;
+    <div class="row spread"><div class="row" style="gap:10px"><div class="flags-mini" aria-hidden="true">${m.flags.map((f) => `<i class="${st.flags.includes(f.id) ? 'on' : ''}"></i>`).join('')}</div>${st.completada ? `<span class="tag ok">${icon('check', 14)}Resuelta</span>` : ''}</div><div class="row" style="gap:6px">${m.marcos.map((x) => `<span class="tag">${esc(x)}</span>`).join('')}</div></div></button>`;
 }
 function vMaquinas() {
   const hechas = D.maquinas.filter((m) => estMaq(m.id).completada).length;
   return `<div class="hd"><div><h1 class="lt">Máquinas</h1><p class="lt-sub">Casos prácticos al estilo de un CTF: lees el briefing, analizas las evidencias y capturas las flags. ${hechas} de ${D.maquinas.length} resueltas.</p></div></div>
-    <div class="grid g3">${D.maquinas.map(tarjetaMaquina).join('')}</div>
+    ${['Fácil', 'Media', 'Difícil'].map((d) => { const ms = D.maquinas.filter((m) => m.dificultad === d); const ok = ms.filter((m) => estMaq(m.id).completada).length;
+      return `<section class="sec" aria-labelledby="dif-${difCls(d)}"><div class="sec-h"><h2 id="dif-${difCls(d)}"><span class="diff ${difCls(d)}" style="font-size:inherit">${esc(d)}</span></h2><span class="small muted">${ok} de ${ms.length} resueltas · ${ms.reduce((a, m) => a + xpMaquina(m), 0).toLocaleString('es-ES')} XP</span></div>
+        <div class="grid g3">${ms.map(tarjetaMaquina).join('')}</div></section>`; }).join('')}
     <p class="small muted sec">Las organizaciones, personas y datos de los casos son ficticios.</p>`;
 }
 function vMaquina() {
