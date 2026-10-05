@@ -90,6 +90,10 @@ def main():
 
         print("Sala perfecta: flujo completo con teclado y ratón")
         page.click('[data-act="sala"][data-id="ens-1"]')
+        try:
+            page.wait_for_function("document.activeElement && document.activeElement.id === 'qtext'", timeout=3000)  # el foco se mueve en el siguiente ciclo de eventos
+        except Exception:
+            pass
         ok(page.locator(".player").count() == 1 and J("document.activeElement.id") == "qtext", "La sala abre el modo foco con el foco en la pregunta")
         ok(page.locator('[data-act="p-check"]').is_disabled(), "Comprobar está desactivado hasta elegir una opción")
         xp0 = J(f"{A}.P.xp")
