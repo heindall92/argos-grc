@@ -47,7 +47,13 @@ Además, desde el 1 de abril de 2025 el CCN solo emite certificados en los curso
 | **Puntos, rangos y logros** | 7 rangos, del «Primer ojo» a «Panoptes» (los cien ojos abiertos), 17 logros, racha diaria y anillos de actividad al estilo Apple. |
 | **Tarjeta para LinkedIn** | Genera una imagen con tu rango y tu progreso, más el texto para publicarla. |
 
-En la mitología griega, Argos Panoptes era el gigante de los cien ojos que nunca dormía: la vigilancia continua hecha mito. Cuando murió, Hera puso sus ojos en la cola del pavo real. Por eso ARGOS se ve como se ve, y por eso cada rango abre más ojos.
+### ¿Por qué Argos?
+
+Argos Panoptes, el gigante de la mitología griega, tenía cien ojos y nunca los cerraba todos a la vez: mientras unos dormían, otros vigilaban. Nada se le escapaba.
+
+Eso es lo que se espera de quien audita un sistema de gestión.
+
+En ARGOS empiezas con un solo ojo abierto. Cada sala que superas, cada flag que capturas y cada simulacro que apruebas abren otro. Con los cien abiertos llegas a **Panoptes**: el que lo ve todo.
 
 ## Capturas
 
