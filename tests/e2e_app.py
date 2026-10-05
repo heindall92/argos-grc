@@ -319,6 +319,7 @@ def main():
         mp = m.new_page(); offline(mp)
         mp.goto(APP + "?test"); mp.wait_for_selector("#view h1")
         ok(mp.locator("#tabbar").is_visible() and not mp.locator(".nav").is_visible(), "En móvil se usa la barra de pestañas inferior")
+        ok(mp.evaluate("innerWidth - document.querySelector('.top-end').getBoundingClientRect().right") <= 24, "En móvil, racha, ayuda y perfil quedan alineados a la derecha de la barra superior")
         for v in ["hoy", "rutas", "maquinas", "simulacros", "logros", "perfil", "ayuda"]:
             mp.evaluate(f"window.__ARGOS__.go('{v}')")
             ok(mp.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{v}: sin desplazamiento horizontal")
