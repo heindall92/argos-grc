@@ -91,15 +91,44 @@ const ICONS = {
 };
 const icon = (name, size = 18, cls = '') => `<svg class="ic ${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
-/* Logotipo: el ojo de Argos con el iris iridiscente del pavo real. uid evita ids repetidos en el DOM. */
+/* El ojo de Argos, dibujado con algo de realismo: esclerótica en almendra, iris con los tonos del pavo real, estrías,
+ * anillo limbal, pupila con brillos, sombra del párpado y pestañas. Se pinta en un sistema de 64 × 64 centrado en (32, 32).
+ * k: prefijo único de ids (evita ids repetidos en el DOM). */
 let logoN = 0;
-function logo(size = 30, cls = 'logo') {
-  const id = 'lg' + (++logoN);
-  return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0FB5BA"/><stop offset=".55" stop-color="#2F6BFF"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="#0B1220"/><path d="M4 16c3.4-5.6 7.4-8.4 12-8.4S24.6 10.4 28 16c-3.4 5.6-7.4 8.4-12 8.4S7.4 21.6 4 16z" fill="none" stroke="url(#${id})" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="url(#${id})"/><circle cx="16" cy="16" r="2" fill="#0B1220"/></svg>`;
+function ojoSvg(k, lashes = true, lid = 'var(--eye-lid)') {
+  const almendra = 'M8 32C16 19.5 24 15 32 15S48 19.5 56 32C48 44.5 40 49 32 49S16 44.5 8 32Z';
+  const estrias = Array.from({ length: 28 }, (_, i) => { const a = (i / 28) * Math.PI * 2; const r1 = 5.2, r2 = 10.6 - (i % 3) * 0.9; return `<path d="M${(32 + Math.cos(a) * r1).toFixed(2)} ${(32 + Math.sin(a) * r1).toFixed(2)}L${(32 + Math.cos(a) * r2).toFixed(2)} ${(32 + Math.sin(a) * r2).toFixed(2)}"/>`; }).join('');
+  const pest = lashes ? [[14, 25.5, 10.5, 21.5], [19.5, 21, 17, 16.2], [25.5, 17.8, 24.2, 12.6], [32, 16.6, 32, 11.2], [38.5, 17.8, 39.8, 12.6], [44.5, 21, 47, 16.2], [50, 25.5, 53.5, 21.5]].map(([x1, y1, x2, y2]) => `<path d="M${x1} ${y1}Q${((x1 + x2) / 2 + (x2 - 32) * 0.08).toFixed(1)} ${((y1 + y2) / 2 - 0.6).toFixed(1)} ${x2} ${y2}"/>`).join('') : '';
+  return `<defs>
+    <radialGradient id="${k}s" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".65" stop-color="#EEF2F7"/><stop offset="1" stop-color="#B9C4D2"/></radialGradient>
+    <radialGradient id="${k}i" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#C7FFF6"/><stop offset=".3" stop-color="#2CC6C9"/><stop offset=".62" stop-color="#1E7BD8"/><stop offset=".86" stop-color="#3A2C9E"/><stop offset="1" stop-color="#14123D"/></radialGradient>
+    <linearGradient id="${k}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050A16" stop-opacity=".55"/><stop offset=".42" stop-color="#050A16" stop-opacity="0"/></linearGradient>
+    <clipPath id="${k}c"><path d="${almendra}"/></clipPath></defs>
+  <path d="${almendra}" fill="url(#${k}s)"/>
+  <g clip-path="url(#${k}c)">
+    <circle cx="32" cy="32" r="11.4" fill="url(#${k}i)"/>
+    <g stroke="#E8FFFB" stroke-opacity=".22" stroke-width=".55" stroke-linecap="round">${estrias}</g>
+    <circle cx="32" cy="32" r="11.4" fill="none" stroke="#0B1430" stroke-width="1.3" stroke-opacity=".85"/>
+    <circle cx="32" cy="32" r="4.7" fill="#04060C"/>
+    <rect x="0" y="0" width="64" height="64" fill="url(#${k}l)"/>
+    <circle cx="35.6" cy="28.4" r="2.1" fill="#FFFFFF" fill-opacity=".92"/><circle cx="28.4" cy="35.2" r=".95" fill="#FFFFFF" fill-opacity=".55"/>
+  </g>
+  <path d="M8 32C16 19.5 24 15 32 15S48 19.5 56 32" fill="none" style="stroke:${lid}" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M8.6 32.6C16.4 44 24.4 48.4 32 48.4S47.6 44 55.4 32.6" fill="none" style="stroke:${lid}" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"/>
+  <g fill="none" style="stroke:${lid}" stroke-width="1.15" stroke-linecap="round">${pest}</g>`;
 }
-/* Medalla de rango: un ojo con tantas «plumas» encendidas como ojos abiertos (de 0 a 100, en 20 segmentos) */
+/* Logotipo: el ojo sobre un cuadrado oscuro con borde iridiscente */
+function logo(size = 30, cls = 'logo') {
+  const k = 'lg' + (++logoN);
+  return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="${k}b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0FB5BA"/><stop offset=".55" stop-color="#2F6BFF"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="#0B1220"/><rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="url(#${k}b)" stroke-opacity=".7" stroke-width="2"/><g transform="translate(32 33) scale(1.12) translate(-32 -32)">${ojoSvg(k, false, '#8FA0B6')}</g></svg>`;
+}
+/* Medalla de rango: el ojo rodeado de 20 ocelos de pavo real que se encienden con el progreso (de 0 a 100 ojos) */
 function eyeMedal(ojos, size = 64) {
-  const id = 'em' + (++logoN); const seg = 20; const on = Math.round((Math.min(100, ojos) / 100) * seg);
-  const feathers = Array.from({ length: seg }, (_, i) => { const a = (i / seg) * Math.PI * 2 - Math.PI / 2; const x = 32 + Math.cos(a) * 27; const y = 32 + Math.sin(a) * 27; return `<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="2.6" fill="${i < on ? `url(#${id})` : 'currentColor'}" opacity="${i < on ? 1 : 0.18}"/>`; }).join('');
-  return `<svg class="eye-medal" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0FB5BA"/><stop offset=".55" stop-color="#2F6BFF"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>${feathers}<path d="M14 32c4.6-7.6 10.6-11.4 18-11.4S45.4 24.4 50 32c-4.6 7.6-10.6 11.4-18 11.4S18.6 39.6 14 32z" fill="none" stroke="url(#${id})" stroke-width="2.4"/><circle cx="32" cy="32" r="7.5" fill="url(#${id})"/><circle cx="32" cy="32" r="3" fill="#0B1220"/></svg>`;
+  const k = 'em' + (++logoN); const seg = 20; const on = Math.round((Math.min(100, ojos) / 100) * seg);
+  const ocelos = Array.from({ length: seg }, (_, i) => {
+    const a = (i / seg) * Math.PI * 2 - Math.PI / 2; const x = (32 + Math.cos(a) * 28.5).toFixed(2); const y = (32 + Math.sin(a) * 28.5).toFixed(2);
+    return i < on ? `<g transform="translate(${x} ${y}) rotate(${((a * 180) / Math.PI + 90).toFixed(1)})"><ellipse rx="2.4" ry="3.1" fill="#C9A227"/><ellipse rx="1.85" ry="2.45" fill="#13B6A8"/><ellipse cy=".25" rx="1.15" ry="1.5" fill="#1B2F8F"/><ellipse cy=".35" rx=".55" ry=".75" fill="#070B1E"/></g>`
+      : `<circle cx="${x}" cy="${y}" r="1.7" fill="currentColor" opacity=".18"/>`;
+  }).join('');
+  return `<svg class="eye-medal" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">${ocelos}<g transform="translate(32 32) scale(.78) translate(-32 -32)">${ojoSvg(k)}</g></svg>`;
 }

@@ -1,5 +1,13 @@
 # Cambios
 
+## 1.0.1 · octubre de 2026
+
+- **El ojo de Argos, más realista.** Esclerótica en almendra con volumen, iris con los tonos del pavo real, estrías, anillo limbal, pupila con brillos, sombra del párpado y pestañas. Los párpados se adaptan al tema claro y oscuro.
+- **Ocelos de pavo real.** Las «plumas» de progreso de la medalla de rango pasan a ser ocelos con su anillo dorado y turquesa.
+- **Un solo dibujo para toda la marca.** El mismo ojo aparece en la medalla, el logotipo, el favicon (generado en la construcción a partir del logotipo), la tarjeta para LinkedIn y la cabecera del README (`docs/assets/generar.js`).
+- **Tarjeta para LinkedIn:** se recolocan el anillo de ocelos y las barras de progreso para que no se solapen.
+- **Barra superior en móvil:** racha, ayuda y perfil, alineados a la derecha.
+
 ## 1.0.0 · octubre de 2026
 
 Primera versión.

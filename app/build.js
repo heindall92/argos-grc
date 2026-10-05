@@ -36,7 +36,10 @@ const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => s
 const styles = [...html.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => sha(m[1]));
 // Solo se ejecuta el código de este build. style-src-attr 'unsafe-inline' cubre los atributos style="" de las plantillas (no ejecuta código).
 const CSP = `default-src 'none'; script-src ${scripts.join(' ')}; style-src ${styles.join(' ')}; style-src-attr 'unsafe-inline'; font-src 'none'; img-src data: blob:; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'`;
-const icono = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0FB5BA"/><stop offset=".55" stop-color="#2F6BFF"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="#0B1220"/><path d="M4 16c3.4-5.6 7.4-8.4 12-8.4S24.6 10.4 28 16c-3.4 5.6-7.4 8.4-12 8.4S7.4 21.6 4 16z" fill="none" stroke="url(#g)" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="url(#g)"/><circle cx="16" cy="16" r="2" fill="#0B1220"/></svg>');
+// Favicon: el mismo logotipo que dibuja la app (01-icons.js), evaluado aquí para no duplicar el dibujo
+const vm = require('vm');
+const iconos = vm.runInNewContext(src('ui/01-icons.js') + '\n;({ logo })', {});
+const icono = 'data:image/svg+xml,' + encodeURIComponent(iconos.logo(64, 'x').replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" '));
 const standalone = '<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n<meta http-equiv="Content-Security-Policy" content="' + CSP + '">\n<meta name="referrer" content="no-referrer">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<meta name="color-scheme" content="light dark">\n<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">\n<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">\n<link rel="icon" href="' + icono + '">\n'
   + html.replace('<a class="skip"', '</head>\n<body>\n<a class="skip"') + '\n</body>\n</html>\n';
 fs.writeFileSync(path.join(DIST, 'index.html'), standalone);

@@ -60,19 +60,49 @@ function dibujarTarjeta(cv) {
   const W = 1200; const H = 630; const r = E.rangoDe(P.xp);
   const g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#071018'); g.addColorStop(1, '#14102b'); c.fillStyle = g; c.fillRect(0, 0, W, H);
   const iri = c.createLinearGradient(0, 0, W, 0); iri.addColorStop(0, '#0FB5BA'); iri.addColorStop(0.5, '#2F6BFF'); iri.addColorStop(1, '#8B5CF6');
-  // Plumas: los ojos abiertos del rango
-  const cx = 930; const cy = 300;
-  for (let i = 0; i < 40; i++) { const a = (i / 40) * Math.PI * 2; const on = i < Math.round((r.ojos / 100) * 40); c.beginPath(); c.arc(cx + Math.cos(a) * 190, cy + Math.sin(a) * 190, 9, 0, Math.PI * 2); c.fillStyle = on ? iri : 'rgba(255,255,255,.08)'; c.fill(); }
-  c.lineWidth = 8; c.strokeStyle = iri; c.beginPath(); c.moveTo(cx - 140, cy); c.quadraticCurveTo(cx, cy - 120, cx + 140, cy); c.quadraticCurveTo(cx, cy + 120, cx - 140, cy); c.stroke();
-  c.beginPath(); c.arc(cx, cy, 46, 0, Math.PI * 2); c.fillStyle = iri; c.fill(); c.beginPath(); c.arc(cx, cy, 18, 0, Math.PI * 2); c.fillStyle = '#071018'; c.fill();
+  // Ocelos de pavo real: los ojos abiertos del rango, alrededor del ojo de Argos
+  const cx = 975; const cy = 300; const total = 36; const on = Math.round((r.ojos / 100) * total);
+  for (let i = 0; i < total; i++) {
+    const a = (i / total) * Math.PI * 2 - Math.PI / 2; const x = cx + Math.cos(a) * 172; const y = cy + Math.sin(a) * 172;
+    c.save(); c.translate(x, y); c.rotate(a + Math.PI / 2);
+    if (i < on) for (const [rx, ry, col, dy] of [[11, 14, '#C9A227', 0], [8.5, 11, '#13B6A8', 0], [5.2, 6.8, '#1B2F8F', 1.1], [2.5, 3.4, '#070B1E', 1.5]]) { c.beginPath(); c.ellipse(0, dy, rx, ry, 0, 0, Math.PI * 2); c.fillStyle = col; c.fill(); }
+    else { c.beginPath(); c.arc(0, 0, 6, 0, Math.PI * 2); c.fillStyle = 'rgba(255,255,255,.08)'; c.fill(); }
+    c.restore();
+  }
+  pintarOjo(c, cx, cy, 4.4);
   const F = '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif';
   c.fillStyle = '#7fe3e7'; c.font = `700 26px ${F}`; c.fillText('A R G O S  ·  LABORATORIO GRC', 70, 92);
   c.fillStyle = '#ffffff'; c.font = `800 66px ${F}`; c.fillText((P.perfil.nombre || 'Analista GRC').slice(0, 26), 70, 190);
   c.fillStyle = '#c9d6e3'; c.font = `600 34px ${F}`; c.fillText(`Rango: ${r.rango.nombre} · ${r.ojos === 1 ? '1 ojo abierto' : `${r.ojos} ojos abiertos`}`, 70, 250);
   const st = [[`${P.xp.toLocaleString('es-ES')}`, 'XP'], [`${Object.keys(P.logros).length}/${E.LOGROS.length}`, 'logros'], [`${D.maquinas.filter((m) => estMaq(m.id).completada).length}/${D.maquinas.length}`, 'máquinas']];
   st.forEach(([v, k], i) => { const x = 70 + i * 220; c.fillStyle = '#ffffff'; c.font = `800 52px ${F}`; c.fillText(v, x, 350); c.fillStyle = '#93a4b5'; c.font = `600 24px ${F}`; c.fillText(k, x, 385); });
-  D.rutas.forEach((ru, i) => { const pr = E.progresoRuta(ru, P); const y = 440 + i * 46; c.fillStyle = '#c9d6e3'; c.font = `600 22px ${F}`; c.fillText(ru.nombre, 70, y); c.fillStyle = 'rgba(255,255,255,.1)'; c.fillRect(420, y - 16, 300, 14); c.fillStyle = iri; c.fillRect(420, y - 16, 300 * pr.pct, 14); c.fillStyle = '#93a4b5'; c.fillText(pct(pr.pct), 735, y); });
+  D.rutas.forEach((ru, i) => { const pr = E.progresoRuta(ru, P); const y = 440 + i * 46; c.fillStyle = '#c9d6e3'; c.font = `600 22px ${F}`; c.fillText(ru.nombre, 70, y); c.fillStyle = 'rgba(255,255,255,.1)'; c.fillRect(490, y - 16, 200, 14); c.fillStyle = iri; c.fillRect(490, y - 16, 200 * pr.pct, 14); c.fillStyle = '#93a4b5'; c.fillText(pct(pr.pct), 705, y); });
   c.fillStyle = '#6b7c8d'; c.font = `500 20px ${F}`; c.fillText('Laboratorio de práctica de código abierto · no es una certificación · github.com/heindall92/argos-grc', 70, 600);
+}
+/* El ojo de Argos en canvas, el mismo dibujo que ojoSvg() (sistema de 64 × 64, escala s) */
+function pintarOjo(c, cx, cy, s) {
+  c.save(); c.translate(cx - 32 * s, cy - 32 * s); c.scale(s, s);
+  const almendra = () => { c.beginPath(); c.moveTo(8, 32); c.bezierCurveTo(16, 19.5, 24, 15, 32, 15); c.bezierCurveTo(40, 15, 48, 19.5, 56, 32); c.bezierCurveTo(48, 44.5, 40, 49, 32, 49); c.bezierCurveTo(24, 49, 16, 44.5, 8, 32); c.closePath(); };
+  const esc = c.createRadialGradient(32, 29, 2, 32, 32, 26); esc.addColorStop(0, '#FFFFFF'); esc.addColorStop(0.65, '#EEF2F7'); esc.addColorStop(1, '#B9C4D2');
+  almendra(); c.fillStyle = esc; c.fill();
+  c.save(); almendra(); c.clip();
+  const iris = c.createRadialGradient(32, 32, 0, 32, 32, 11.4);
+  [[0, '#C7FFF6'], [0.3, '#2CC6C9'], [0.62, '#1E7BD8'], [0.86, '#3A2C9E'], [1, '#14123D']].forEach(([o, col]) => iris.addColorStop(o, col));
+  c.beginPath(); c.arc(32, 32, 11.4, 0, Math.PI * 2); c.fillStyle = iris; c.fill();
+  c.strokeStyle = 'rgba(232,255,251,.22)'; c.lineWidth = 0.55;
+  for (let i = 0; i < 28; i++) { const a = (i / 28) * Math.PI * 2; const r2 = 10.6 - (i % 3) * 0.9; c.beginPath(); c.moveTo(32 + Math.cos(a) * 5.2, 32 + Math.sin(a) * 5.2); c.lineTo(32 + Math.cos(a) * r2, 32 + Math.sin(a) * r2); c.stroke(); }
+  c.beginPath(); c.arc(32, 32, 11.4, 0, Math.PI * 2); c.strokeStyle = 'rgba(11,20,48,.85)'; c.lineWidth = 1.3; c.stroke();
+  c.beginPath(); c.arc(32, 32, 4.7, 0, Math.PI * 2); c.fillStyle = '#04060C'; c.fill();
+  const som = c.createLinearGradient(0, 15, 0, 49); som.addColorStop(0, 'rgba(5,10,22,.55)'); som.addColorStop(0.42, 'rgba(5,10,22,0)'); c.fillStyle = som; c.fillRect(0, 0, 64, 64);
+  c.fillStyle = 'rgba(255,255,255,.92)'; c.beginPath(); c.arc(35.6, 28.4, 2.1, 0, Math.PI * 2); c.fill();
+  c.fillStyle = 'rgba(255,255,255,.55)'; c.beginPath(); c.arc(28.4, 35.2, 0.95, 0, Math.PI * 2); c.fill();
+  c.restore();
+  c.strokeStyle = '#A9B6C8'; c.lineCap = 'round';
+  c.lineWidth = 2.6; c.beginPath(); c.moveTo(8, 32); c.bezierCurveTo(16, 19.5, 24, 15, 32, 15); c.bezierCurveTo(40, 15, 48, 19.5, 56, 32); c.stroke();
+  c.globalAlpha = 0.55; c.lineWidth = 1.1; c.beginPath(); c.moveTo(8.6, 32.6); c.bezierCurveTo(16.4, 44, 24.4, 48.4, 32, 48.4); c.bezierCurveTo(39.6, 48.4, 47.6, 44, 55.4, 32.6); c.stroke(); c.globalAlpha = 1;
+  c.lineWidth = 1.15;
+  for (const [x1, y1, x2, y2] of [[14, 25.5, 10.5, 21.5], [19.5, 21, 17, 16.2], [25.5, 17.8, 24.2, 12.6], [32, 16.6, 32, 11.2], [38.5, 17.8, 39.8, 12.6], [44.5, 21, 47, 16.2], [50, 25.5, 53.5, 21.5]]) { c.beginPath(); c.moveTo(x1, y1); c.quadraticCurveTo((x1 + x2) / 2 + (x2 - 32) * 0.08, (y1 + y2) / 2 - 0.6, x2, y2); c.stroke(); }
+  c.restore();
 }
 function textoLinkedIn() {
   const r = E.rangoDe(P.xp); const ru = D.rutas.map((x) => `${x.nombre}: ${pct(E.progresoRuta(x, P).pct)}`).join(' · ');
