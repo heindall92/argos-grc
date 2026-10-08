@@ -1,5 +1,9 @@
 # Cambios
 
+## 1.3.1 · octubre de 2026
+
+**Corregido: un documento interno ficticio parecía una norma oficial.** En la máquina «Copias de Hespéride», la pestaña de la primera evidencia se llamaba solo «NOR-COP-01» y la flag preguntaba qué incumplía «la normativa NOR-COP-01». Fuera de contexto parecía una norma que hubiera que conocer. Es el código interno de la normativa de copias de la empresa ficticia del caso, que desarrolla la medida mp.info.6 del ENS. Ahora la pestaña y las preguntas dicen «normativa interna de copias de Hespéride» y el briefing explica qué documentos entrega la empresa. Gracias a Sergio Henestrosa por señalarlo.
+
 ## 1.3.0 · octubre de 2026
 
 **Progresión sincronizada con el contenido.** Con 15 máquinas y 13 simulacros, los puntos posibles pasaron de unos 5.700 a 12.400. Los rangos se habían quedado cortos (Panoptes se alcanzaba con el 36 % del contenido) y las máquinas pesaban más que todas las preguntas juntas. Este es el reequilibrio:

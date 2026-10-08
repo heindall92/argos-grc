@@ -6,20 +6,20 @@ module.exports = [
   {
     id: 'm-copias', nombre: 'Copias de Hespéride', dificultad: 'Fácil', icono: 'hardDrive', marcos: ['ENS', '27001'],
     empresa: 'Hespéride Servicios Digitales, S.L. (ficticia)',
-    brief: 'Hespéride presta un servicio de registro electrónico a varias diputaciones y está certificada en el ENS de categoría MEDIA. Su sistema de expedientes tiene disponibilidad de nivel MEDIO. Antes de la auditoría bienal, te piden revisar la gestión de copias de seguridad.',
+    brief: 'Hespéride presta un servicio de registro electrónico a varias diputaciones y está certificada en el ENS de categoría MEDIA. Su sistema de expedientes tiene disponibilidad de nivel MEDIO. Antes de la auditoría bienal, te piden revisar la gestión de copias de seguridad. Te entregan su normativa interna de copias (el documento de la propia empresa que desarrolla la medida mp.info.6), el registro de restauraciones y una entrevista con el responsable del sistema.',
     evidencias: [
-      { titulo: 'NOR-COP-01 · Normativa de copias (extracto)', tipo: 'doc', texto: '3. Alcance: servidores de expedientes y base de datos de registro.\n4. Frecuencia: copia completa los domingos e incremental diaria a las 02:00.\n5. Almacenamiento: las copias se guardan en la cabina NAS-02, en el mismo CPD que los servidores.\n6. Retención: «la que permita el espacio disponible».\n7. Acceso: el equipo de sistemas (6 personas) tiene acceso de administración a la NAS-02.\n8. Pruebas de restauración: se realizarán cuando se considere necesario.' },
+      { titulo: 'Normativa interna de copias de Hespéride · extracto (documento interno NOR-COP-01)', tipo: 'doc', texto: '3. Alcance: servidores de expedientes y base de datos de registro.\n4. Frecuencia: copia completa los domingos e incremental diaria a las 02:00.\n5. Almacenamiento: las copias se guardan en la cabina NAS-02, en el mismo CPD que los servidores.\n6. Retención: «la que permita el espacio disponible».\n7. Acceso: el equipo de sistemas (6 personas) tiene acceso de administración a la NAS-02.\n8. Pruebas de restauración: se realizarán cuando se considere necesario.' },
       { titulo: 'Registro de restauraciones · últimos 24 meses', tipo: 'tabla', texto: 'Fecha        Sistema        Motivo                          Resultado\n2024-11-03   Expedientes    Borrado accidental de carpeta   Parcial (faltan 2 días)\n(sin más registros)' },
       { titulo: 'Entrevista al responsable del sistema', tipo: 'nota', texto: '«Las copias funcionan, el software envía un correo cada noche con "OK". Probar restauraciones completas es arriesgado, no queremos tocar producción. La retención la decidimos según el espacio que queda.»' }
     ],
     flags: [
       { id: 'm-copias-f1', tipo: 'user', nombre: 'Flag de usuario · El punto débil', t: 'unica', d: 1,
-        q: 'Con disponibilidad de nivel MEDIO, ¿qué refuerzo de mp.info.6 incumple claramente la normativa NOR-COP-01?',
+        q: 'Con disponibilidad de nivel MEDIO, ¿qué refuerzo de mp.info.6 incumple claramente la normativa interna de copias de Hespéride?',
         o: ['R1: pruebas regulares de recuperación', 'R2: copia en lugar separado', 'R3: cifrado de las copias', 'Ninguno: cumple el nivel MEDIO'], c: 0,
         x: 'Nivel MEDIO exige mp.info.6 + R1: los procedimientos de copia y restauración deben probarse regularmente. «Cuando se considere necesario» y una sola restauración parcial en dos años no lo cumplen. R2 (copia separada) solo es obligatorio en nivel ALTO, aunque aquí sería muy recomendable.',
         ref: 'RD 311/2022, anexo II, mp.info.6 r1', pista: 'Mira la tabla de la medida mp.info.6: qué se suma a la base en nivel MEDIO.' },
       { id: 'm-copias-f2', tipo: 'user', nombre: 'Flag de usuario · Requisitos base', t: 'multiple', d: 2,
-        q: '¿Qué requisitos base de mp.info.6.2 están mal cubiertos en la normativa?',
+        q: '¿Qué requisitos base de mp.info.6.2 están mal cubiertos en la normativa interna de Hespéride?',
         o: ['Frecuencia de las copias', 'Requisitos de almacenamiento en otros lugares', 'Controles para el acceso autorizado a las copias', 'Periodicidad y plazos de retención determinados en la normativa interna'], c: [1, 2, 3],
         x: 'La frecuencia sí está definida. Faltan: almacenamiento en otro lugar (todo está en el mismo CPD), control de acceso a las copias (seis administradores con acceso total, sin segregación) y la retención, que mp.info.6.1 exige fijar en la normativa: «la que permita el espacio» no es un plazo.',
         ref: 'RD 311/2022, anexo II, mp.info.6.1 y 6.2', pista: 'Compara punto por punto la normativa con los requisitos a) a d) de mp.info.6.2 y con el 6.1.' },
