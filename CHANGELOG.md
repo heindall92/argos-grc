@@ -1,5 +1,9 @@
 # Cambios
 
+## 1.3.2 · octubre de 2026
+
+- **Herramientas GRC del autor:** Ayuda → Acerca de pasa de cuatro a siete herramientas (se suman CTEM-Nexus, ENS AD Auditor y Norvik) y explica que comparten formato de intercambio. CTEM-Nexus enlaza cada hallazgo con la máquina de ARGOS que entrena su corrección.
+
 ## 1.3.1 · octubre de 2026
 
 **Corregido: un documento interno ficticio parecía una norma oficial.** En la máquina «Copias de Hespéride», la pestaña de la primera evidencia se llamaba solo «NOR-COP-01» y la flag preguntaba qué incumplía «la normativa NOR-COP-01». Fuera de contexto parecía una norma que hubiera que conocer. Es el código interno de la normativa de copias de la empresa ficticia del caso, que desarrolla la medida mp.info.6 del ENS. Ahora la pestaña y las preguntas dicen «normativa interna de copias de Hespéride» y el briefing explica qué documentos entrega la empresa. Gracias a Sergio Henestrosa por señalarlo.

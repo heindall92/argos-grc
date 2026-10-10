@@ -311,7 +311,7 @@ def main():
         legal = page.inner_text("#view")
         ok("sin relación con ISO, IEC, PECB, el CCN ni ninguna entidad de certificación" in legal and "no son una certificación" in legal, "Fuentes muestra el aviso legal completo")
         page.click('[data-act="help-tab"][data-tab="acerca"]')
-        ok(page.locator(".suite-card").count() == 4 and "ARGOS" in page.inner_text(".suite-card.here"), "Acerca de enlaza las 4 herramientas GRC y marca ARGOS")
+        ok(page.locator(".suite-card").count() == 7 and "ARGOS" in page.inner_text(".suite-card.here"), "Acerca de enlaza las 7 herramientas GRC y marca ARGOS")
         links = J("[...document.querySelectorAll('#view a[target=_blank]')].map(a => [a.href, a.rel])")
         ok(all("noopener" in r for _, r in links) and any("kairos" in h for h, _ in links) and any("rosetta" in h for h, _ in links), "Los enlaces externos abren en pestaña nueva con noopener")
 

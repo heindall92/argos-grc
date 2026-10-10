@@ -26,10 +26,13 @@ function vSimulacros() {
 const AUTOR = { nombre: 'Yoandy Ramírez Delgado', email: 'yoandyramirezdelgado@gmail.com', repo: 'https://github.com/heindall92/argos-grc',
   links: [['linkedin', 'LinkedIn', 'https://www.linkedin.com/in/yoandyrd92/'], ['github', 'GitHub', 'https://github.com/heindall92'], ['globe', 'Portafolio', 'https://yoandyramirez.com']] };
 const SUITE = [
-  ['argos', 'ARGOS', 'Laboratorio de práctica GRC: rutas, casos prácticos y simulacros de ENS, ISO/IEC 27001 y continuidad.', null, 'https://github.com/heindall92/argos-grc'],
-  ['rosetta', 'Rosetta', 'Mapa multinorma: ENS, ISO/IEC 27001, NIS2 e ISO/IEC 42001 en 115 controles unificados, alineado con la CCN-STIC 825.', 'https://heindall92.github.io/rosetta_multinorma/', 'https://github.com/heindall92/rosetta_multinorma'],
+  ['argos', 'ARGOS', 'Laboratorio de práctica GRC: rutas, máquinas con flags y simulacros cronometrados de ENS, ISO/IEC 27001 y continuidad, con rangos y logros.', null, 'https://github.com/heindall92/argos-grc'],
+  ['rosetta', 'Rosetta', 'Mapa multinorma: 15 normas y leyes de la UE, EE. UU. y Latinoamérica sobre 152 controles unificados, con equivalencias ENS ↔ ISO alineadas con la CCN-STIC 825.', 'https://heindall92.github.io/rosetta_multinorma/', 'https://github.com/heindall92/rosetta_multinorma'],
   ['ens', 'ENS Compliance Studio', 'Categorización, análisis de riesgos MAGERIT, Declaración de Aplicabilidad y preauditoría del ENS.', 'https://heindall92.github.io/grc_ens_compliance_studio/app/dist/ens-compliance-studio.html', 'https://github.com/heindall92/grc_ens_compliance_studio'],
-  ['kairos', 'KAIROS', 'Continuidad de negocio: BIA, BCP y DRP con la ruta crítica de recuperación de cada función.', 'https://heindall92.github.io/kairos/', 'https://github.com/heindall92/kairos']
+  ['kairos', 'KAIROS', 'Continuidad de negocio: BIA, BCP y DRP con la ruta crítica de recuperación de cada función.', 'https://heindall92.github.io/kairos/', 'https://github.com/heindall92/kairos'],
+  ['ctem', 'CTEM-Nexus', 'Gestión de la exposición: prioriza hallazgos de escáneres y pentest y dibuja las rutas de ataque hacia los activos críticos. Cada hallazgo enlaza a la máquina de ARGOS que entrena su corrección.', 'https://heindall92.github.io/ctem-nexus/', 'https://github.com/heindall92/ctem-nexus'],
+  ['adaudit', 'ENS AD Auditor', 'Audita el Directorio Activo frente a las medidas de control de acceso del ENS (op.acc).', 'https://heindall92.github.io/ens_ad-auditor/', 'https://github.com/heindall92/ens_ad-auditor'],
+  ['norvik', 'Norvik', 'Gobernanza de escritorio: roles, responsables y políticas que unen al resto de herramientas.', null, 'https://github.com/heindall92/Norvik_Gobernanza']
 ];
 const ext = (h, inner, cls = 'btn sm') => `<a class="${cls}" href="${esc(h)}" target="_blank" rel="noopener noreferrer">${inner}</a>`;
 const AVISO = 'ARGOS es un proyecto independiente y de código abierto, sin relación con ISO, IEC, PECB, el CCN ni ninguna entidad de certificación. ISO, ISO/IEC 27001 e ISO 22301 son marcas de la International Organization for Standardization. Todas las preguntas y casos son de elaboración propia: no reproducen el texto de ninguna norma ISO ni contienen preguntas de exámenes reales. Los logros y rangos miden tu progreso en el laboratorio y no son una certificación.';
@@ -54,7 +57,7 @@ function vAyuda() {
       <div class="row" style="margin-top:10px">${AUTOR.links.map(([ic, n, h]) => ext(h, `${icon(ic, 15)}${n}`)).join('')}${ext('mailto:' + AUTOR.email, `${icon('mail', 15)}Correo`)}</div></div></div>
     <p><b>ARGOS ${esc(VERSION)}</b> · Código bajo licencia GPLv2 y contenidos bajo CC BY-SA 4.0. Iconos Lucide (ISC). ${ext(AUTOR.repo, `${icon('github', 15)}github.com/heindall92/argos-grc`, 'btn ghost sm')}</p>
     <section class="sec" aria-labelledby="suite-h"><div class="sec-h"><h2 id="suite-h">Herramientas GRC del autor</h2></div>
-      <p class="small muted" style="margin-bottom:12px">Se complementan: ARGOS te entrena, Rosetta traduce entre marcos, ENS Compliance Studio prepara la conformidad con el ENS y KAIROS cubre la continuidad.</p>
+      <p class="small muted" style="margin-bottom:12px">Se complementan y comparten un formato de intercambio: ARGOS te entrena, Rosetta traduce entre marcos, ENS Compliance Studio prepara la conformidad con el ENS, KAIROS cubre la continuidad, CTEM-Nexus mide la exposición técnica, ENS AD Auditor revisa el directorio y Norvik gobierna el conjunto.</p>
       <div class="suite-grid">${SUITE.map(([id, n, d, app, repo]) => `<article class="card suite-card${id === 'argos' ? ' here' : ''}"><div class="row spread"><b>${esc(n)}</b>${id === 'argos' ? '<span class="tag ok">Estás aquí</span>' : ''}</div><p>${esc(d)}</p>
         <div class="row">${app ? ext(app, `${icon('arrowRight', 15)}Abrir la app`) : ''}${ext(repo, `${icon('github', 15)}Código`)}</div></article>`).join('')}</div></section></div>`;
   return `<div class="hd"><div><h1 class="lt">Ayuda</h1><p class="lt-sub">Cómo funciona ARGOS, de dónde salen las preguntas y quién lo hace.</p></div></div>
