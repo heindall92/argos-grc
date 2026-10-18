@@ -1,5 +1,10 @@
 # Cambios
 
+## 1.3.3 · octubre de 2026
+
+- **Herramientas GRC del autor:** Ayuda → Acerca de pasa a ocho herramientas. Se suma **MCP-Shield**, que audita las configuraciones MCP de los asistentes de IA (Claude Desktop, Cursor, VS Code): cadena de suministro, secretos, ficheros y *tool poisoning*. Sus hallazgos entran en CTEM-Nexus 1.2.1 con su sobre `yrd-ecosistema` y llegan a Rosetta como evidencia por control.
+- **Pruebas.** La e2e de Acerca de comprueba las ocho tarjetas.
+
 ## 1.3.2 · octubre de 2026
 
 - **Herramientas GRC del autor:** Ayuda → Acerca de pasa de cuatro a siete herramientas (se suman CTEM-Nexus, ENS AD Auditor y Norvik) y explica que comparten formato de intercambio. CTEM-Nexus enlaza cada hallazgo con la máquina de ARGOS que entrena su corrección.
