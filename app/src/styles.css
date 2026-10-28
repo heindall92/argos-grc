@@ -344,4 +344,11 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
 @media (min-width: 900px) and (max-width: 1100px) { .nav button { padding: 0 11px; } .nav button span { font-size: .86rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 @media (prefers-reduced-transparency: reduce) { .top, .tabbar { background: var(--card); backdrop-filter: none; -webkit-backdrop-filter: none; } }
-@media print { .top, .tabbar, .player-foot { display: none; } }
+.academy-links { flex-wrap: wrap; margin: 0 0 24px; gap: 8px; }
+.guide-steps { padding-left: 24px; line-height: 1.7; }
+.guide-steps li { margin: 12px 0; }
+.academy-form { display: grid; gap: 16px; }
+.academy-form label { display: grid; gap: 6px; font-weight: 600; }
+.academy-form textarea, .academy-form input, .academy-form select { width: 100%; max-width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--sep-2); border-radius: 10px; background: var(--card); color: var(--ink); font: inherit; }
+.academy-form textarea { min-height: 96px; resize: vertical; }
+@media print { .top, .tabbar, .player-foot, .academy-links { display: none; } }
