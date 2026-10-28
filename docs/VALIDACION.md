@@ -6,7 +6,7 @@ Fecha de comprobación: 28 de octubre de 2026. Implementación en cinco ramas en
 |---|---|
 | Motor, banco, progreso, competencias, casos, privacidad y paquetes (`node --test tests/*.test.js`) | 43/43 pruebas superadas |
 | Suite original de la aplicación en Chromium (`tests/e2e_app.py`) | 98/98 comprobaciones superadas |
-| Recorridos del roadmap (`tests/e2e_roadmap.py`) | Superados en Chromium y WebKit |
+| Recorridos del roadmap (`tests/e2e_roadmap.py`) | Superados en Chromium, Firefox y WebKit (CI en Ubuntu). En Windows, Firefox no terminó la ejecución local en 45 segundos |
 | Accesibilidad automática (`tests/a11y_app.py`) | 212 estados auditados; 0 nodos con infracciones |
 | Construcción y validación del banco | Correctas: 190 preguntas, 19 salas, 15 máquinas y 13 simulacros |
 | Plantilla comunitaria (`node tools/validar-pack.js community/ejemplo.json`) | Formato válido |
@@ -17,7 +17,6 @@ Los recorridos nuevos cubren recuperación de sesión sin pagar dos veces, plazo
 
 ## Pendientes que requieren otro entorno o personas
 
-- Firefox no completó la ejecución local en Windows dentro de 45 segundos. Se detuvo exclusivamente el proceso de esa prueba y sus hijos. No se declara validado. CI incluye Chromium, Firefox y WebKit en Ubuntu para verificarlo al subir las ramas.
 - Observación con cinco usuarios nuevos, siguiendo `GUIA_SHOWCASE.md`.
 - Revisión experta de contenido normativo y de la calidad de las justificaciones abiertas.
 - Prueba manual con lector de pantalla y ensayo con la organización del evento.

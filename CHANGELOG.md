@@ -12,6 +12,7 @@ Implementación en cinco ramas encadenadas para revisión antes de integrar en `
 - Laboratorio con tres situaciones reproducibles por semilla: RTO, RPO y evidencia insuficiente. Borrador persistente, rúbrica e informe Markdown.
 - Taller por semilla con selección de datos y previsualización. El facilitador importa resúmenes compatibles y ve agregados sin nombres ni textos.
 - Editor de paquetes declarativos, plantilla, validación y práctica sin XP del perfil. Validador CLI y ejemplo comunitario comprobado en la construcción.
+- Espaciado coherente con tokens `--sp-*`: las acciones se separan del texto y entre sí, las tarjetas consecutivas no se tocan y en móvil el pie del simulacro cabe en una fila.
 - Las justificaciones, la prueba con cinco usuarios y la exactitud normativa requieren revisión humana.
 
 ### Progreso fiable

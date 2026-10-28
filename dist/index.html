@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-+0PeIDbijigZ/oe6EBoh6z+t8QjRi+afN9GavSrxqyM=' 'sha256-qxfzuTqKjNya+rxbqDdNiPQibEox/fF+4pL5IrAMAtI=' 'sha256-1za3T56nhmyok11s0bcAeERN0LiC9C4xkh2qds9Yw0o='; style-src 'sha256-kV9ovbzP6Mja17LMe8MWnRmAUXgwdQcSyle/FYb/Gak='; style-src-attr 'unsafe-inline'; font-src 'none'; img-src data: blob:; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-+0PeIDbijigZ/oe6EBoh6z+t8QjRi+afN9GavSrxqyM=' 'sha256-qxfzuTqKjNya+rxbqDdNiPQibEox/fF+4pL5IrAMAtI=' 'sha256-1za3T56nhmyok11s0bcAeERN0LiC9C4xkh2qds9Yw0o='; style-src 'sha256-aR1YMQyfSKv18sqJC7Mp08KweQabs3cNe/tOf3huXDk='; style-src-attr 'unsafe-inline'; font-src 'none'; img-src data: blob:; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -36,6 +36,7 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 16px rgba(0, 0, 0, .05);
   --shadow-lg: 0 10px 40px rgba(0, 0, 0, .14);
   --r-sm: 10px; --r: 14px; --r-lg: 20px; --r-xl: 28px;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
   --ease: cubic-bezier(.2, .8, .2, 1);
   --eye-lid: #0a1220;
   color-scheme: light;
@@ -369,6 +370,37 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
 .academy-form input[type="checkbox"] { width: 24px; height: 24px; flex: none; }
 .explain a { color: var(--ink); text-decoration: underline; font-weight: 600; }
 #pack-editor { min-height: 320px; font-family: var(--f-m); font-size: .85rem; }
+/* ---------- Espaciado de acciones y tarjetas ----------
+ * Escala --sp-*: el texto respira dentro de la tarjeta, las acciones se separan del contenido que las precede
+ * y entre sí, y las tarjetas consecutivas no se tocan. :where() mantiene la especificidad a cero para que
+ * cualquier regla de componente o estilo en línea siga mandando. */
+:where(.card.pad:not(.academy-form, .stack, .prose)) > * + * { margin-top: var(--sp-2); }
+:where(.card.pad:not(.academy-form, .stack, .prose)) > * + .row { margin-top: var(--sp-4); }
+:where(.card.pad:not(.academy-form, .stack, .prose), .sec:not(.grid, .stack, .review)) > .btn { margin-top: var(--sp-4); margin-right: var(--sp-2); }
+:where(.card.pad, .sec) > :where(h2, h3, h4) + .row { margin-top: var(--sp-3); }
+:where(.card.pad, .sec) > .row + p { margin-top: var(--sp-3); }
+:where(#view) > :where(section, article, .card, .grid, .hd + *) + :where(section.card:not(.sec), article.card:not(.sec)) { margin-top: var(--sp-5); }
+.academy-links + .legal { align-items: center; flex-wrap: wrap; margin-bottom: var(--sp-5); }
+.academy-form { gap: var(--sp-4); }
+.academy-form > .row { gap: var(--sp-2); }
+.academy-form > .row .btn { margin: 0; }
+.academy-form fieldset { display: grid; gap: var(--sp-1); padding: var(--sp-3) var(--sp-4); border: 1px solid var(--sep-2); border-radius: var(--r-sm); }
+.academy-form label.row { flex-wrap: nowrap; align-items: flex-start; gap: var(--sp-3); }
+.academy-form label.row input[type="checkbox"] { margin-top: 0; }
+.academy-form legend { padding: 0 var(--sp-1); font-weight: 600; }
+.academy-form h2 + p { margin-top: calc(var(--sp-2) - var(--sp-4)); }
+#pack-preview .card details + details { margin-top: var(--sp-2); }
+#pack-preview .card details summary { cursor: pointer; padding: var(--sp-1) 0; }
+#pack-preview .card .sec { margin-top: var(--sp-5); }
+.explain > .small.muted { margin-top: var(--sp-3); }
+.explain > a.small { display: inline-block; margin-top: var(--sp-1); }
+.dialog > .btn, .dialog > .row { margin-top: var(--sp-2); }
+@media (min-width: 900px) { .academy-form > .btn { justify-self: start; } }
+@media (max-width: 899px) {
+  .player-foot .row.spread { flex-wrap: nowrap; gap: var(--sp-2); }
+  .player-foot .row.spread [data-act="p-marcar"] { padding: 0 var(--sp-3); }
+  .player-foot .row.spread [data-act="p-marcar"] span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 @media print { .top, .tabbar, .player-foot, .academy-links { display: none; } }
 
 </style>
