@@ -12,6 +12,8 @@ Implementación en ramas encadenadas; `main` permanece intacta. Cada rama parte 
 
 ## Revisión y publicación
 
+Las cinco fases tienen implementación en la candidata 1.4.0-rc.1. Los resultados y límites de las comprobaciones se recogen en [VALIDACION.md](VALIDACION.md). La subida al repositorio se entrega al propietario; no se ha fusionado ni publicado la candidata.
+
 Revisar en orden y fusionar hacia la rama precedente o retargetear tras cada integración. Nunca publicar automáticamente. El último hito contiene el conjunto completo para la revisión funcional.
 
 ## Compatibilidad de progreso

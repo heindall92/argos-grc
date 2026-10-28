@@ -1,0 +1,113 @@
+{
+  "schema": "argos-pack/v1",
+  "id": "pack-recuperacion",
+  "titulo": "Recuperación con evidencias",
+  "autor": "Completar autor",
+  "licencia": "CC-BY-SA-4.0",
+  "estado": "borrador",
+  "fuente": {
+    "referencia": "Política ficticia POL-BCP-01 del caso",
+    "edicion": "1",
+    "url": "https://github.com/heindall92/argos-grc"
+  },
+  "casos": [
+    {
+      "id": "pack-caso-1",
+      "titulo": "Prueba de recuperación",
+      "brief": "La política ficticia fija un RTO de 30 minutos. El acta registra recuperación en 25 minutos, pero no contiene la hora del último dato recuperable.",
+      "evidencias": [
+        {
+          "id": "doc-1",
+          "titulo": "POL-BCP-01 y acta de prueba",
+          "texto": "RTO: 30 minutos. Recuperación medida: 25 minutos. Copias: OK, sin hora del último dato recuperable."
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "pack-q-1",
+          "t": "unica",
+          "q": "¿Cuál es el límite de recuperación fijado por la política ficticia?",
+          "o": [
+            "30 minutos",
+            "60 minutos",
+            "90 minutos"
+          ],
+          "c": 0,
+          "d": 1,
+          "x": "El criterio y los datos proceden exclusivamente de la política ficticia y del acta entregada. Revisa qué permiten afirmar las evidencias y qué información falta.",
+          "ref": "POL-BCP-01 ficticia y acta del caso"
+        },
+        {
+          "id": "pack-q-2",
+          "t": "unica",
+          "q": "¿Qué evidencia permite contrastar el tiempo real de recuperación?",
+          "o": [
+            "Acta fechada de la prueba",
+            "Una promesa verbal",
+            "El nombre del proveedor"
+          ],
+          "c": 0,
+          "d": 1,
+          "x": "El criterio y los datos proceden exclusivamente de la política ficticia y del acta entregada. Revisa qué permiten afirmar las evidencias y qué información falta.",
+          "ref": "POL-BCP-01 ficticia y acta del caso"
+        },
+        {
+          "id": "pack-q-3",
+          "t": "unica",
+          "q": "¿Qué dato falta para evaluar la pérdida de datos frente al RPO?",
+          "o": [
+            "La hora del último dato recuperable",
+            "El color del servidor",
+            "El número de empleados"
+          ],
+          "c": 0,
+          "d": 1,
+          "x": "El criterio y los datos proceden exclusivamente de la política ficticia y del acta entregada. Revisa qué permiten afirmar las evidencias y qué información falta.",
+          "ref": "POL-BCP-01 ficticia y acta del caso"
+        },
+        {
+          "id": "pack-q-4",
+          "t": "unica",
+          "q": "¿Qué conclusión permite un registro de copias que solo dice OK?",
+          "o": [
+            "Falta evidencia para concluir sobre el RPO",
+            "Siempre cumple el RPO",
+            "Siempre incumple el RPO"
+          ],
+          "c": 0,
+          "d": 1,
+          "x": "El criterio y los datos proceden exclusivamente de la política ficticia y del acta entregada. Revisa qué permiten afirmar las evidencias y qué información falta.",
+          "ref": "POL-BCP-01 ficticia y acta del caso"
+        },
+        {
+          "id": "pack-q-5",
+          "t": "unica",
+          "q": "¿Cómo se comprueba la eficacia de una mejora de recuperación?",
+          "o": [
+            "Repitiendo una prueba con tiempos y datos registrados",
+            "Cerrando el ticket sin prueba",
+            "Cambiando el nombre del procedimiento"
+          ],
+          "c": 0,
+          "d": 1,
+          "x": "El criterio y los datos proceden exclusivamente de la política ficticia y del acta entregada. Revisa qué permiten afirmar las evidencias y qué información falta.",
+          "ref": "POL-BCP-01 ficticia y acta del caso"
+        },
+        {
+          "id": "pack-q-6",
+          "t": "unica",
+          "q": "¿Qué distingue el criterio de la evidencia en este caso práctico?",
+          "o": [
+            "La política fija el límite y el acta describe lo observado",
+            "Son exactamente lo mismo",
+            "El acta sustituye todos los criterios"
+          ],
+          "c": 0,
+          "d": 1,
+          "x": "El criterio y los datos proceden exclusivamente de la política ficticia y del acta entregada. Revisa qué permiten afirmar las evidencias y qué información falta.",
+          "ref": "POL-BCP-01 ficticia y acta del caso"
+        }
+      ]
+    }
+  ]
+}

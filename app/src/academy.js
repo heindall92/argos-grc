@@ -39,8 +39,9 @@
     return { inicial: tasa(iniciales), reciente: tasa(recientes), preguntas: iniciales.length };
   }
   function semilla(texto) { let n=2166136261; for (const c of texto) n=Math.imul(n ^ c.codePointAt(0),16777619); return n>>>0; }
+  function normalizarSemilla(s) { return String(s||'').replace(/[^\p{L}\p{N} _.-]/gu,'').trim().slice(0,40)||'ARGOS'; }
   function caso(seed) {
-    const codigo = String(seed || 'ARGOS').trim().slice(0,40) || 'ARGOS'; const n=semilla(codigo);
+    const codigo = normalizarSemilla(seed); const n=semilla(codigo);
     const variante=n%3; const rto=[60,90,120][(n>>>3)%3]; const rpo=[15,30,60][(n>>>5)%3];
     const recuperacion=variante===0?rto+30:rto-15; const perdida=variante===1?rpo+30:rpo-5;
     const foco=['rto','rpo','evidencia'][variante];
@@ -54,12 +55,14 @@
   function limpiarBorrador(raw) {
     if (!raw || typeof raw!=='object' || typeof raw.seed!=='string') return null;
     const campos=['foco','criterio','clasificacion','accion','hallazgo','justificacion','verificacion'];
-    const valores={}; for(const k of campos) valores[k]=typeof raw.valores?.[k]==='string'?raw.valores[k].replace(/[\u0000-\u001f\u007f]/g,' ').slice(0,2000):'';
+    const valores={}; for(const k of campos) valores[k]=typeof raw.valores?.[k]==='string'?raw.valores[k].replace(/\r\n?/g,'\n').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,' ').slice(0,2000):'';
+    const opciones={foco:['rto','rpo','evidencia'],criterio:['rto','rpo'],clasificacion:['desviacion','insuficiente','conforme'],accion:['recuperacion','copias','registro']};
+    for(const [k,validas] of Object.entries(opciones))if(!validas.includes(valores[k]))valores[k]='';
     valores.evidencias=Array.isArray(raw.valores?.evidencias)?[...new Set(raw.valores.evidencias.filter(x=>['E1','E2','E3','E4'].includes(x)))]:[];
-    return { seed:raw.seed.replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,40)||'ARGOS', valores };
+    return { seed:normalizarSemilla(raw.seed), valores };
   }
   function rubrica(c, v) {
-    const esperadas=c.foco==='rto'?['E1','E2','E3']:['E1','E4'];
+    const esperadas=c.foco==='rto'?['E1','E3']:['E1','E4'];
     const clasificacion=c.foco==='evidencia'?'insuficiente':'desviacion';
     const accion=c.foco==='rto'?'recuperacion':c.foco==='rpo'?'copias':'registro';
     const criterios=[
@@ -71,9 +74,61 @@
     return { criterios, puntos:criterios.filter(x=>x.ok).length, max:criterios.length, textosCompletos:['hallazgo','justificacion','verificacion'].every(k=>(v[k]||'').trim().length>=30) };
   }
   function informe(c,v,version) {
-    const r=rubrica(c,v); const texto=s=>String(s||'Sin completar').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).split('\n').map(l=>'> '+l).join('\n');
+    const r=rubrica(c,v); const texto=s=>String(s||'Sin completar').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(/[\\`*_[\]{}()#!|]/g,'\\$&').split('\n').map(l=>'> '+l).join('\n');
     return `# ARGOS · Informe de práctica\n\nVersión: ${version}\nCaso: recuperación de Pegaso · Semilla: ${c.codigo.replace(/[\r\n<>]/g,'')}\nOrganización ficticia. Autoevaluación, sin valor de certificación.\n\n## Criterio interno\n\nRTO: ${c.rto} min. RPO: ${c.rpo} min. POL-BCP-01.\n\n## Evidencias\n\n${(v.evidencias||[]).join(', ')||'Sin seleccionar'}\n\n## Hallazgo\n\n${texto(v.hallazgo)}\n\n## Justificación\n\n${texto(v.justificacion)}\n\n## Decisiones\n\nFoco: ${v.foco||'pendiente'}. Criterio: ${v.criterio||'pendiente'}. Clasificación: ${v.clasificacion||'pendiente'}. Acción: ${v.accion||'pendiente'}.\n\n## Comprobación de eficacia propuesta\n\n${texto(v.verificacion)}\n\n## Retroalimentación automática\n\n${r.puntos}/${r.max} comprobaciones estructuradas. Los textos requieren valoración humana.\n\n${r.criterios.map(x=>`- ${x.ok?'OK':'Revisar'}: ${x.nombre}. ${x.ayuda}`).join('\n')}\n`;
   }
-  const API = { COMPETENCIAS, estado, competencias, recomendar, evolucion, caso, limpiarBorrador, rubrica, informe };
+  function resumenTaller(banco,p,hoy,version,opciones={}) {
+    const b=limpiarBorrador(p.laboratorio); const out={app:'argos-taller',schema:1,version,fecha:hoy,semilla:b?.seed||'ARGOS',autoevaluacion:true};
+    if(opciones.nombre) out.nombre=String(p.perfil?.nombre||'').slice(0,60);
+    if(opciones.competencias) out.competencias=competencias(banco,p,hoy).map(c=>({id:c.id,total:c.total,retenidas:c.estados.retenida,acertadas:c.estados.acertada}));
+    if(opciones.laboratorio && b){const r=rubrica(caso(b.seed),b.valores);out.laboratorio={puntos:r.puntos,max:r.max,foco:b.valores.foco,criterio:b.valores.criterio,clasificacion:b.valores.clasificacion,accion:b.valores.accion};}
+    if(opciones.textos && b) out.textos={hallazgo:b.valores.hallazgo,justificacion:b.valores.justificacion,verificacion:b.valores.verificacion};
+    return out;
+  }
+  function agregarResumenes(resumenes,version,seed) {
+    const validos=[];const errores=[];
+    resumenes.forEach((r,i)=>{if(!r||r.app!=='argos-taller'||r.schema!==1||r.version!==version||r.semilla!==seed||r.autoevaluacion!==true){errores.push(`Archivo ${i+1}: versión o semilla incompatible.`);return;}
+      if(r.laboratorio && (r.laboratorio.max!==4||!Number.isInteger(r.laboratorio.puntos)||r.laboratorio.puntos<0||r.laboratorio.puntos>4)){errores.push(`Archivo ${i+1}: puntuación inválida.`);return;}
+      if(r.competencias!==undefined && (!Array.isArray(r.competencias)||r.competencias.length>COMPETENCIAS.length||r.competencias.some(c=>!c||!COMPETENCIAS.some(x=>x.id===c.id)||![c.total,c.retenidas,c.acertadas].every(Number.isInteger)||c.total<1||c.total>190||c.retenidas<0||c.acertadas<0||c.retenidas+c.acertadas>c.total)||new Set(r.competencias.map(c=>c.id)).size!==r.competencias.length)){errores.push(`Archivo ${i+1}: competencias inválidas.`);return;}
+      validos.push(r);
+    });
+    const notas=validos.filter(r=>r.laboratorio).map(r=>r.laboratorio.puntos);
+    const cs=COMPETENCIAS.map(c=>{const filas=validos.flatMap(r=>(r.competencias||[]).filter(x=>x.id===c.id));return {id:c.id,nombre:c.nombre,muestras:filas.length,total:filas.reduce((n,f)=>n+f.total,0),retenidas:filas.reduce((n,f)=>n+f.retenidas,0)};}).filter(c=>c.muestras);
+    return {participantes:validos.length,conLaboratorio:notas.length,media:notas.length?notas.reduce((a,b)=>a+b,0)/notas.length:null,competencias:cs,errores};
+  }
+  function plantillaPack() {
+    const preguntas=[
+      ['¿Cuál es el límite de recuperación fijado por la política ficticia?', ['30 minutos','60 minutos','90 minutos'],0],
+      ['¿Qué evidencia permite contrastar el tiempo real de recuperación?', ['Acta fechada de la prueba','Una promesa verbal','El nombre del proveedor'],0],
+      ['¿Qué dato falta para evaluar la pérdida de datos frente al RPO?', ['La hora del último dato recuperable','El color del servidor','El número de empleados'],0],
+      ['¿Qué conclusión permite un registro de copias que solo dice OK?', ['Falta evidencia para concluir sobre el RPO','Siempre cumple el RPO','Siempre incumple el RPO'],0],
+      ['¿Cómo se comprueba la eficacia de una mejora de recuperación?', ['Repitiendo una prueba con tiempos y datos registrados','Cerrando el ticket sin prueba','Cambiando el nombre del procedimiento'],0],
+      ['¿Qué distingue el criterio de la evidencia en este caso práctico?', ['La política fija el límite y el acta describe lo observado','Son exactamente lo mismo','El acta sustituye todos los criterios'],0]
+    ];
+    return {schema:'argos-pack/v1',id:'pack-recuperacion',titulo:'Recuperación con evidencias',autor:'Completar autor',licencia:'CC-BY-SA-4.0',estado:'borrador',fuente:{referencia:'Política ficticia POL-BCP-01 del caso',edicion:'1',url:'https://github.com/heindall92/argos-grc'},casos:[{id:'pack-caso-1',titulo:'Prueba de recuperación',brief:'La política ficticia fija un RTO de 30 minutos. El acta registra recuperación en 25 minutos, pero no contiene la hora del último dato recuperable.',evidencias:[{id:'doc-1',titulo:'POL-BCP-01 y acta de prueba',texto:'RTO: 30 minutos. Recuperación medida: 25 minutos. Copias: OK, sin hora del último dato recuperable.'}],preguntas:preguntas.map(([q,o,c],i)=>({id:`pack-q-${i+1}`,t:'unica',q,o,c,d:1,x:'El criterio y los datos proceden exclusivamente de la política ficticia y del acta entregada. Revisa qué permiten afirmar las evidencias y qué información falta.',ref:'POL-BCP-01 ficticia y acta del caso'}))}]};
+  }
+  function validarPack(p,engine) {
+    const errores=[];
+    if(!p||typeof p!=='object'||Array.isArray(p)) return ['El paquete debe ser un objeto JSON.'];
+    if(Object.keys(p).some(k=>!['schema','id','titulo','autor','licencia','estado','fuente','casos','revision'].includes(k)))errores.push('El paquete contiene campos no admitidos.');
+    if(p.schema!=='argos-pack/v1'||!/^pack-[a-z0-9-]{1,60}$/.test(p.id||'')) errores.push('Esquema o id de paquete inválido.');
+    for(const k of ['titulo','autor'])if(typeof p[k]!=='string'||!p[k].trim()||p[k].length>120)errores.push(`Campo ${k} vacío o demasiado largo.`);
+    if(p.licencia!=='CC-BY-SA-4.0'||!['borrador','revision','publicado'].includes(p.estado))errores.push('Licencia o estado editorial inválido.');
+    if(!p.fuente||typeof p.fuente.referencia!=='string'||!p.fuente.referencia.trim()||typeof p.fuente.edicion!=='string'||!p.fuente.edicion.trim()||typeof p.fuente.url!=='string'||!/^https:\/\//.test(p.fuente.url))errores.push('Falta referencia, edición o URL HTTPS de la fuente.');
+    if(p.estado==='publicado'&&(!p.revision||typeof p.revision.revisor!=='string'||!p.revision.revisor.trim()||!/^\d{4}-\d{2}-\d{2}$/.test(p.revision.fecha||'')))errores.push('Publicar requiere revisión documentada.');
+    if(!Array.isArray(p.casos)||!p.casos.length||p.casos.length>10)return [...errores,'El paquete necesita entre 1 y 10 casos.'];
+    for(const c of p.casos){
+      if(!c||typeof c!=='object'){errores.push('Caso inválido.');continue;}
+      if(!/^pack-[a-z0-9-]{1,60}$/.test(c.id||'')||typeof c.titulo!=='string'||!c.titulo.trim()||typeof c.brief!=='string'||c.brief.length<30||c.brief.length>10000)errores.push('Caso sin id, título o briefing válido.');
+      if(!Array.isArray(c.evidencias)||!c.evidencias.length||c.evidencias.length>10||c.evidencias.some(e=>!e||typeof e.id!=='string'||typeof e.titulo!=='string'||typeof e.texto!=='string'||e.texto.length>20000))errores.push('Evidencias inválidas o demasiado grandes.');
+      if(!Array.isArray(c.preguntas)||c.preguntas.length<6||c.preguntas.length>20){errores.push('Cada caso necesita entre 6 y 20 preguntas.');continue;}
+      if(c.preguntas.some(q=>!q||typeof q!=='object'||(typeof q.q==='string'&&q.q.length>2000)||(typeof q.x==='string'&&q.x.length>5000))) {errores.push('Pregunta inválida o demasiado grande.');continue;}
+      try{errores.push(...engine.validarBanco({rutas:[{id:p.id,nombre:p.titulo,salas:[{id:c.id,nombre:c.titulo,resumen:c.brief,preguntas:c.preguntas}]}],maquinas:[],simulacros:[]}));}catch(e){errores.push('Formato de pregunta inválido.');}
+    }
+    const ids=p.casos.flatMap(c=>c&&typeof c==='object'?[c.id,...(Array.isArray(c.preguntas)?c.preguntas.map(q=>q?.id):[])]:[]);
+    if(new Set(ids).size!==ids.length)errores.push('Ids repetidos entre casos o preguntas.');
+    return errores;
+  }
+  const API = { COMPETENCIAS, estado, competencias, recomendar, evolucion, caso, limpiarBorrador, rubrica, informe, resumenTaller, agregarResumenes, plantillaPack, validarPack, normalizarSemilla };
   if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.ArgosAcademy = Object.freeze(API);
 })(typeof window !== 'undefined' ? window : this);

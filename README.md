@@ -102,9 +102,22 @@ Las empresas son ficticias: Hespéride Servicios Digitales, el Consorcio Digital
 
 ## Uso
 
+### Versión candidata 1.4
+
+- **Empieza aquí:** recorrido guiado y demostración con progreso independiente (`?demo#inicio`).
+- **Progreso fiable:** XP de sala independientes del simulacro, intervalos de repaso, copia previa local y recuperación de sesiones con plazo original.
+- **Competencias:** siete áreas, preguntas vistas/acertadas/retenidas y recomendaciones explicadas. La ficha editorial muestra las revisiones que una persona haya documentado.
+- **Laboratorio:** casos variables por semilla sobre RTO, RPO y evidencia insuficiente; hallazgo estructurado, rúbrica e informe Markdown. Las justificaciones abiertas necesitan revisión humana.
+- **Taller:** enlace por semilla, selección y vista previa de datos, exportación JSON e importación de resúmenes para el facilitador.
+- **Crear contenido:** plantilla funcional, validación y práctica en vista previa sin modificar el banco ni conceder XP del perfil.
+
+Guías: [fases y compatibilidad](docs/FASES.md), [presentación](docs/GUIA_SHOWCASE.md), [laboratorio](docs/LABORATORIO.md), [talleres y autores](docs/TALLERES_Y_AUTORES.md), [revisión editorial](docs/EDITORIAL.md).
+
+Las pruebas con cinco usuarios y la revisión experta externa siguen pendientes. Esta candidata se revisa por fases antes de integrarse.
+
 **En línea:** [heindall92.github.io/argos-grc](https://heindall92.github.io/argos-grc/).
 
-**Sin conexión:** descarga [`dist/index.html`](dist/index.html) y ábrelo en el navegador. Es un único fichero de unos 280 KB, sin dependencias.
+**Sin conexión:** descarga [`dist/index.html`](dist/index.html) y ábrelo en el navegador. Es un único fichero autónomo, sin dependencias.
 
 Tu progreso se guarda solo en ese navegador. En *Perfil → Tus datos* puedes exportarlo a un JSON e importarlo en otro equipo.
 
@@ -142,9 +155,9 @@ tests/               node:test (motor y banco), Playwright (extremo a extremo) y
 
 | Prueba | Comprobaciones | Qué cubre |
 |---|---|---|
-| Motor (`tests/engine.test.js`) | 13 | Corrección de los tres tipos de pregunta, XP, rangos, fechas, cajas de Leitner, rachas, barajado sin sesgo, simulacros, logros y validación. |
-| Banco (`tests/banco.test.js`) | 12 | Integridad del banco, variedad de tipos y dificultades, pistas, fuentes, **citas literales comprobadas contra el BOE** y ausencia de texto de normas ISO o de promesas de certificación. |
-| Extremo a extremo (`tests/e2e_app.py`) | 96 | Recorre la app en Chromium: salas, repaso, simulacros y tiempo agotado, máquinas con pistas, perfil, tarjeta PNG, exportación e importación de JSON hostil, almacenamiento manipulado, CSP, inyección, atajos y móvil sin desbordes. |
+| Motor (`tests/engine.test.js`) | 15 | Corrección de los tres tipos de pregunta, XP, rangos, fechas, cajas de Leitner, rachas, barajado sin sesgo, simulacros, logros y validación. |
+| Banco (`tests/banco.test.js`) | 13 | Integridad del banco, variedad de tipos y dificultades, pistas, fuentes, **citas literales comprobadas contra el BOE** y ausencia de texto de normas ISO o de promesas de certificación. |
+| Extremo a extremo (`tests/e2e_app.py`) | 98 | Recorre la app en Chromium: salas, repaso, simulacros y tiempo agotado, máquinas con pistas, perfil, tarjeta PNG, exportación e importación de JSON hostil, almacenamiento manipulado, CSP, inyección, atajos y móvil sin desbordes. |
 | Accesibilidad (`tests/a11y_app.py`) | axe-core | WCAG 2.2 A/AA en todas las vistas y estados (también el jugador, los diálogos y los resultados), en claro y oscuro, a 1440 y 390 px. **0 infracciones.** |
 
 La construcción falla si el banco tiene un solo error: ids repetidos, respuestas fuera de rango, explicaciones vacías o simulacros que piden más preguntas de las que hay.

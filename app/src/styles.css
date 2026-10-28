@@ -351,5 +351,8 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
 .academy-form label { display: grid; gap: 6px; font-weight: 600; }
 .academy-form textarea, .academy-form input, .academy-form select { width: 100%; max-width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--sep-2); border-radius: 10px; background: var(--card); color: var(--ink); font: inherit; }
 .academy-form textarea { min-height: 96px; resize: vertical; }
+.academy-form label.row { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 4px 0; }
+.academy-form input[type="checkbox"] { width: 24px; height: 24px; flex: none; }
 .explain a { color: var(--ink); text-decoration: underline; font-weight: 600; }
+#pack-editor { min-height: 320px; font-family: var(--f-m); font-size: .85rem; }
 @media print { .top, .tabbar, .player-foot, .academy-links { display: none; } }
