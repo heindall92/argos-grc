@@ -74,11 +74,24 @@ test('repaso espaciado (Leitner): aciertos suben de caja, un fallo vuelve a la c
   e = E.repasar(e, true, '2026-10-02'); assert.deepEqual([e.caja, e.due], [2, '2026-10-05']);
   e = E.repasar(e, true, '2026-10-05'); assert.deepEqual([e.caja, e.due], [3, '2026-10-12']);
   e = E.repasar(e, false, '2026-10-12'); assert.deepEqual([e.caja, e.due, e.fallos], [1, '2026-10-12', 1]);
-  for (let i = 0; i < 10; i++) e = E.repasar(e, true, '2026-11-01');
+  e = E.repasar(e, true, '2026-10-13');
+  for (let i = 0; i < 3; i++) e = E.repasar(e, true, e.due);
   assert.equal(e.caja, 5, 'la caja máxima es la 5');
-  assert.equal(e.due, '2026-12-01', 'la caja 5 vuelve en 30 días');
+  assert.equal(E.diasEntre(e.ultima, e.due), 30, 'la caja 5 vuelve en 30 días');
   const resp = { a: { caja: 1, due: '2026-10-01' }, b: { caja: 3, due: '2026-09-20' }, c: { caja: 2, due: '2026-10-30' } };
   assert.deepEqual(E.pendientes(resp, '2026-10-05'), ['b', 'a'], 'pendientes ordenadas por fecha de repaso');
+});
+
+test('repetir antes de plazo no sube de caja ni aplaza el repaso', () => {
+  let e = E.repasar(undefined, true, '2026-10-01');
+  for (let i = 0; i < 5; i++) e = E.repasar(e, true, '2026-10-01');
+  assert.equal(e.caja, 1); assert.equal(e.due, '2026-10-02');
+  e = E.repasar(e, true, e.due);
+  const due = e.due;
+  e = E.repasar(e, true, '2026-10-03');
+  assert.equal(e.caja, 2); assert.equal(e.due, due);
+  e = E.repasar(e, false, '2026-10-03'); e = E.repasar(e, true, '2026-10-03');
+  assert.equal(e.caja, 1); assert.equal(e.due, '2026-10-04');
 });
 
 test('rachas: actual y mejor racha', () => {

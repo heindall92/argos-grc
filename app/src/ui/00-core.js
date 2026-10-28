@@ -22,18 +22,21 @@ const RUTA_CLS = { ens: 'ens', iso27001: 'iso', continuidad: 'cont' };
 
 /* ---------- Almacenamiento: localStorage si está disponible; si no, memoria ---------- */
 const MEM = {};
+const VOLATIL = new Set();
 let avisoGuardado = false;
 const store = {
-  get(k) { try { const v = localStorage.getItem(k); return v ? safeParse(v) : (MEM[k] ?? null); } catch (e) { return MEM[k] ?? null; } },
+  get(k) { if (VOLATIL.has(k)) return MEM[k] ?? null; try { const v = localStorage.getItem(k); return v ? safeParse(v) : (MEM[k] ?? null); } catch (e) { return MEM[k] ?? null; } },
   set(k, v) {
     MEM[k] = v;
-    try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {
+    try { localStorage.setItem(k, JSON.stringify(v)); VOLATIL.delete(k); } catch (e) {
+      VOLATIL.add(k);
       if (!avisoGuardado) { avisoGuardado = true; setTimeout(() => toast('Este navegador no permite guardar. Exporta tu progreso para no perderlo.', 'error'), 0); }
     }
   },
   del(k) { delete MEM[k]; try { localStorage.removeItem(k); } catch (e) { /* nada */ } }
 };
 const KEY = 'argos/v1/progreso';
+const PROGRESO_VERSION = 2;
 
 /* ---------- Progreso: todo lo que entra (almacenamiento o importación) se valida ---------- */
 const BAD_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
@@ -45,9 +48,9 @@ const fecha = (v) => (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && 
 const okKey = (o, k, set) => Object.prototype.hasOwnProperty.call(o, k) && !BAD_KEYS.has(k) && set.has(k);
 
 function nuevoProgreso() {
-  return { v: 1, perfil: { nombre: '', color: 'teal' }, ajustes: { tema: 'sistema', meta: 100 }, xp: 0, respuestas: {}, salas: {}, maquinas: {}, simulacros: {}, dias: {}, logros: {}, repasosOk: 0, creado: hoy() };
+  return { v: PROGRESO_VERSION, perfil: { nombre: '', color: 'teal' }, ajustes: { tema: 'sistema', meta: 100 }, xp: 0, respuestas: {}, salas: {}, maquinas: {}, simulacros: {}, dias: {}, logros: {}, repasosOk: 0, creado: hoy(), sesion: null };
 }
-function sanear(raw) {
+function sanear(raw, recuperarSesion = true) {
   const r = isObj(raw) ? raw : {}; const p = nuevoProgreso();
   const pf = isObj(r.perfil) ? r.perfil : {};
   p.perfil = { nombre: str(pf.nombre, 60), color: COLORES.includes(pf.color) ? pf.color : 'teal' };
@@ -60,6 +63,8 @@ function sanear(raw) {
   if (isObj(r.respuestas)) for (const k of Object.keys(r.respuestas)) {
     const e = r.respuestas[k]; if (!okKey(r.respuestas, k, qids) || !isObj(e)) continue;
     p.respuestas[k] = { caja: Math.round(num(e.caja, 0, 5, 0)), aciertos: Math.round(num(e.aciertos, 0, 1e5, 0)), fallos: Math.round(num(e.fallos, 0, 1e5, 0)), due: fecha(e.due), ultima: fecha(e.ultima) };
+    // v1 no distinguía un acierto de su recompensa. Conservamos los XP antiguos sin volver a concederlos.
+    p.respuestas[k].xpConcedida = p.respuestas[k].aciertos > 0 && (r.v === PROGRESO_VERSION ? e.xpConcedida === true : true);
   }
   const sids = new Set(Object.keys(SALA));
   if (isObj(r.salas)) for (const k of Object.keys(r.salas)) {
@@ -88,11 +93,12 @@ function sanear(raw) {
   // Solo se conservan los logros que el progreso saneado justifica: no se pueden «regalar» editando el almacenamiento o un JSON
   const cumplidos = E.logrosCumplidos(p, D, hoy());
   if (isObj(r.logros)) for (const k of Object.keys(r.logros)) if (okKey(r.logros, k, lids) && cumplidos.has(k)) p.logros[k] = fecha(r.logros[k]) || hoy();
+  p.sesion = recuperarSesion ? sanearSesion(r.sesion) : null;
   return p;
 }
 
 let P = sanear(store.get(KEY));
-const guardar = () => store.set(KEY, P);
+const guardar = () => { P.sesion = copiaSesion(ui.sesion); store.set(KEY, P); };
 
 /* ---------- Estado de la interfaz ---------- */
 const ui = { view: 'hoy', param: null, sesion: null, evTab: {}, flagSel: {}, flagErr: {}, helpTab: 'como', modal: null, tick: null };
@@ -100,14 +106,17 @@ const ui = { view: 'hoy', param: null, sesion: null, evTab: {}, flagSel: {}, fla
 /* ---------- Registro de actividad y recompensas ---------- */
 const diaHoy = () => { const d = hoy(); P.dias[d] = P.dias[d] || { xp: 0, preguntas: 0, repasos: 0 }; return P.dias[d]; };
 function sumarXp(n) { if (!n) return 0; P.xp += n; diaHoy().xp += n; return n; }
-/* Registra una respuesta: actualiza la caja de repaso y devuelve los XP ganados (solo el primer acierto de cada pregunta da XP completos) */
+/* La recompensa de una pregunta es independiente de haberla acertado en un simulacro o repaso. */
 function registrarRespuesta(qid, acierto, modo) {
-  const q = IDX.preguntas.get(qid); const previo = P.respuestas[qid]; const primerAcierto = acierto && !(previo && previo.aciertos > 0);
+  const q = IDX.preguntas.get(qid); const previo = P.respuestas[qid];
   P.respuestas[qid] = E.repasar(previo, acierto, hoy());
+  P.respuestas[qid].xpConcedida = previo?.xpConcedida === true;
   const d = diaHoy(); d.preguntas++;
   let xp = 0;
   if (modo === 'repaso') { d.repasos++; if (acierto) { P.repasosOk++; xp = sumarXp(E.XP.repaso); } }
-  else if (primerAcierto && modo !== 'simulacro') xp = sumarXp(E.xpPregunta(q));
+  else if (acierto && modo === 'sala' && !previo?.xpConcedida) {
+    xp = sumarXp(E.xpPregunta(q)); P.respuestas[qid].xpConcedida = true;
+  }
   return xp;
 }
 /* Comprueba logros nuevos; los registra y los devuelve para celebrarlos */

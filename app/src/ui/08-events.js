@@ -25,7 +25,8 @@ const ACCIONES = {
   'share-text': () => copiarTexto(textoLinkedIn()),
   exportar: () => exportar(),
   importar: () => $('#file-import').click(),
-  reset: () => confirmar('¿Borrar todo el progreso?', 'Se perderán tus puntos, logros y el historial de este navegador. Exporta antes si quieres conservarlo.', () => { P = nuevoProgreso(); guardar(); go('hoy'); toast('Progreso borrado'); }, 'Borrar', true),
+  reset: () => confirmar('¿Borrar todo el progreso?', 'Exporta tu progreso para conservarlo fuera de este navegador. Se guardará una copia previa local.', () => { store.set(KEY + '/respaldo', P); P = nuevoProgreso(); guardar(); go('hoy'); toast('Progreso borrado'); }, 'Borrar', true),
+  restaurar: () => confirmar('¿Restaurar la copia previa?', 'Se sustituirá el progreso actual. Puedes exportarlo antes.', () => { const previo = store.get(KEY + '/respaldo'); if (!previo) return; store.set(KEY + '/respaldo', P); P = sanear(previo, false); guardar(); render(); toast('Copia restaurada'); }, 'Restaurar'),
   'help-tab': (b) => { ui.helpTab = b.dataset.tab; render(); document.querySelector(`[data-act="help-tab"][data-tab="${b.dataset.tab}"]`)?.focus(); },
   'modal-ok': () => { const a = ui.modal && ui.modal.accion; cerrarModal(); if (a) a(); },
   'modal-close': (b, ev) => { if (ev.target === b) cerrarModal(); },
@@ -86,8 +87,11 @@ window.addEventListener('storage', (ev) => { if (ev.key === KEY && !ui.sesion) {
 /* ---------- Arranque ---------- */
 (function arrancar() {
   const h = desdeHash();
-  if (!store.get(KEY)) guardar();
+  const anterior = store.get(KEY);
+  if (anterior && anterior.v !== PROGRESO_VERSION) store.set(KEY + '/respaldo', anterior);
   go(h.view, h.param, { keepScroll: true });
+  recuperarSesion();
+  guardar();
   // Logros que el progreso ya cumple (por ejemplo, tras importar una copia antigua)
   const nuevos = revisarLogros(); if (nuevos.length) guardar();
   // Gancho para las pruebas automatizadas (solo lectura del estado y navegación)

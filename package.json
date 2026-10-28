@@ -7,7 +7,7 @@
   "engines": { "node": ">=18" },
   "scripts": {
     "build": "node app/build.js",
-    "test:engine": "node --test tests/engine.test.js tests/banco.test.js",
+    "test:engine": "node --test tests/*.test.js",
     "test": "bash run_tests.sh"
   }
 }

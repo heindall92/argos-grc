@@ -74,7 +74,14 @@
   const INTERVALOS = [0, 1, 3, 7, 14, 30];
   function repasar(estado, acierto, hoy) {
     const e = estado ? { ...estado } : { caja: 0, aciertos: 0, fallos: 0 };
-    if (acierto) { e.caja = Math.min(5, (e.caja || 0) + 1); e.aciertos = (e.aciertos || 0) + 1; e.due = sumarDias(hoy, INTERVALOS[e.caja]); }
+    if (acierto) {
+      e.aciertos = (e.aciertos || 0) + 1;
+      // Practicar antes de la fecha prevista no acredita retención ni aplaza el repaso.
+      if (!(e.caja > 0 && e.due && e.due > hoy)) {
+        e.caja = e.ultima === hoy ? Math.max(1, e.caja || 0) : Math.min(5, (e.caja || 0) + 1);
+        e.due = sumarDias(hoy, INTERVALOS[e.caja]);
+      }
+    }
     else { e.caja = 1; e.fallos = (e.fallos || 0) + 1; e.due = hoy; }
     e.ultima = hoy;
     return e;
