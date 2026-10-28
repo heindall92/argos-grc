@@ -21,7 +21,7 @@ A = "window.__ARGOS__"
 def states(page):
     """Recorre las vistas y los estados que cambian el DOM: jugador (sin responder, acierto, fallo, resumen), simulacro, máquinas, diálogos."""
     J = page.evaluate
-    for v in ["hoy", "rutas", "maquinas", "simulacros", "logros", "perfil"]:
+    for v in ["hoy", "rutas", "maquinas", "simulacros", "logros", "perfil", "inicio", "competencias"]:
         J(f"{A}.go('{v}')"); yield v
     for t in ["como", "atajos", "fuentes", "acerca"]:
         J(f"{A}.go('ayuda')"); page.click(f'[data-act="help-tab"][data-tab="{t}"]'); yield f"ayuda/{t}"
