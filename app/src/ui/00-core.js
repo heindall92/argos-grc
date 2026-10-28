@@ -1,6 +1,7 @@
 /* ---------- Núcleo: datos, almacenamiento y progreso ---------- */
 const D = window.ARGOS_DATA;
 const E = window.ArgosEngine;
+const A = window.ArgosAcademy;
 const VERSION = D.version;
 const IDX = E.indexar(D.rutas);
 const RUTA = Object.fromEntries(D.rutas.map((r) => [r.id, r]));
@@ -66,6 +67,7 @@ function sanear(raw, recuperarSesion = true) {
     p.respuestas[k] = { caja: Math.round(num(e.caja, 0, 5, 0)), aciertos: Math.round(num(e.aciertos, 0, 1e5, 0)), fallos: Math.round(num(e.fallos, 0, 1e5, 0)), due: fecha(e.due), ultima: fecha(e.ultima) };
     // v1 no distinguía un acierto de su recompensa. Conservamos los XP antiguos sin volver a concederlos.
     p.respuestas[k].xpConcedida = p.respuestas[k].aciertos > 0 && (r.v === PROGRESO_VERSION ? e.xpConcedida === true : true);
+    p.respuestas[k].historial = Array.isArray(e.historial) ? e.historial.slice(-30).filter((h) => isObj(h) && fecha(h.fecha) && typeof h.acierto === 'boolean' && ['sala','repaso','simulacro'].includes(h.modo)).map((h) => ({ fecha: h.fecha, acierto: h.acierto, modo: h.modo })) : [];
   }
   const sids = new Set(Object.keys(SALA));
   if (isObj(r.salas)) for (const k of Object.keys(r.salas)) {
@@ -112,6 +114,7 @@ function registrarRespuesta(qid, acierto, modo) {
   const q = IDX.preguntas.get(qid); const previo = P.respuestas[qid];
   P.respuestas[qid] = E.repasar(previo, acierto, hoy());
   P.respuestas[qid].xpConcedida = previo?.xpConcedida === true;
+  P.respuestas[qid].historial = [...(previo?.historial || []), { fecha: hoy(), acierto, modo }].slice(-30);
   const d = diaHoy(); d.preguntas++;
   let xp = 0;
   if (modo === 'repaso') { d.repasos++; if (acierto) { P.repasosOk++; xp = sumarXp(E.XP.repaso); } }

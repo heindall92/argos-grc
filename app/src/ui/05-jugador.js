@@ -132,7 +132,7 @@ function cabeceraPregunta(q, conSala) {
 }
 const pistaTipo = (q) => (q.t === 'multiple' ? 'Elige todas las correctas.' : q.t === 'vf' ? '¿Verdadero o falso?' : 'Elige una respuesta.');
 function bloqueExplicacion(q, desplazable = false) {
-  return `<div class="explain"${desplazable ? ' tabindex="0" role="region" aria-label="Explicación"' : ''}><p>${esc(q.x)}</p><p class="ref">${icon('bookmark', 15)}<span>${esc(q.ref)}</span></p>${q.cita ? `<blockquote class="cita"><b>Texto literal (BOE)</b>${esc(q.cita)}</blockquote>` : ''}</div>`;
+  return `<div class="explain"${desplazable ? ' tabindex="0" role="region" aria-label="Explicación"' : ''}><p>${esc(q.x)}</p><p class="ref">${icon('bookmark', 15)}<span>${esc(q.ref)}</span></p>${q.cita ? `<blockquote class="cita"><b>Texto literal (BOE)</b>${esc(q.cita)}</blockquote>` : ''}<p class="small muted">Contenido ${esc(VERSION)} · ${fichaEditorial(q)}</p>${enlaceCorreccion(q)}</div>`;
 }
 function renderPlayer() {
   const el = $('#player'); const s = ui.sesion;

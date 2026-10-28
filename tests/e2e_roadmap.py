@@ -56,6 +56,9 @@ def main():
             page.click('[data-act="demo-reset"]')
             page.click('[data-act="modal-ok"]')
             assert page.evaluate("localStorage.getItem('argos/v1/progreso')") == personal
+            page.click('[data-view="competencias"]')
+            assert page.locator('#view article').count() == 7
+            assert 'Tu siguiente práctica' in page.inner_text('#view')
             assert not errors, errors
             browser.close()
             print(f'{name}: recuperación, reloj e idempotencia OK')
