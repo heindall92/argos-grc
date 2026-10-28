@@ -39,7 +39,7 @@ test('recuperar sala conserva correcciones y XP sin volver a pagar', () => {
 });
 test('simulacro conserva plazo, selección y marcas; finalizar es idempotente', () => {
   const run = app();
-  run("iniciarSimulacro('sim-ens'); seleccionar(qActual().c); marcar(); const finOriginal = ui.sesion.fin; guardar(); P = sanear(store.get(KEY)); ui.sesion = P.sesion");
+  run("iniciarSimulacro('sim-ens'); { const q = qActual(); if(q.t === 'multiple') q.c.forEach(seleccionar); else seleccionar(q.t === 'vf' ? (q.c ? 0 : 1) : q.c); } marcar(); const finOriginal = ui.sesion.fin; guardar(); P = sanear(store.get(KEY)); ui.sesion = P.sesion");
   assert.equal(run('ui.sesion.fin === finOriginal'), true);
   assert.equal(run('Object.keys(ui.sesion.resp).length'), 1); assert.equal(run('ui.sesion.marcadas.length'), 1);
   run('finalizar(); finalizar()'); assert.equal(run("P.simulacros['sim-ens'].intentos"), 1);
