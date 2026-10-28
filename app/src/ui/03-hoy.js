@@ -90,6 +90,7 @@ function vPerfil() {
     <section class="sec"><div class="sec-h"><h2>Tus datos</h2></div><div class="card list">
       <div class="li"><div class="grow"><b>Exportar progreso</b><p class="small muted">Un archivo JSON para guardarlo o pasarlo a otro navegador.</p></div><button type="button" class="btn sm" data-act="exportar">${icon('download', 16)}<span>Exportar</span></button></div>
       <div class="li"><div class="grow"><b>Importar progreso</b><p class="small muted">Sustituye el progreso actual por el del archivo.</p></div><button type="button" class="btn sm" data-act="importar">${icon('upload', 16)}<span>Importar</span></button></div>
+      ${store.get(KEY + '/respaldo') ? '<div class="li"><div class="grow"><b>Copia previa local</b><p class="small muted">Recupera el estado anterior a la última importación, actualización o borrado.</p></div><button type="button" class="btn sm" data-act="restaurar">Restaurar copia</button></div>' : ''}
       <div class="li"><div class="grow"><b>Empezar de cero</b><p class="small muted">Borra todo el progreso de este navegador.</p></div><button type="button" class="btn sm danger" data-act="reset">${icon('trash', 16)}<span>Borrar</span></button></div>
     </div></section>
     <p class="small muted sec center">ARGOS ${esc(VERSION)} · <button type="button" class="btn ghost sm" data-act="go" data-view="ayuda">Ayuda, fuentes y aviso legal</button></p>`;

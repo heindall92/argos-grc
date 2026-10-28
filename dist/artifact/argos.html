@@ -440,7 +440,14 @@ window.ARGOS_DATA = {"version":"1.3.3","rutas":[{"id":"ens","nombre":"Esquema Na
   const INTERVALOS = [0, 1, 3, 7, 14, 30];
   function repasar(estado, acierto, hoy) {
     const e = estado ? { ...estado } : { caja: 0, aciertos: 0, fallos: 0 };
-    if (acierto) { e.caja = Math.min(5, (e.caja || 0) + 1); e.aciertos = (e.aciertos || 0) + 1; e.due = sumarDias(hoy, INTERVALOS[e.caja]); }
+    if (acierto) {
+      e.aciertos = (e.aciertos || 0) + 1;
+      // Practicar antes de la fecha prevista no acredita retención ni aplaza el repaso.
+      if (!(e.caja > 0 && e.due && e.due > hoy)) {
+        e.caja = e.ultima === hoy ? Math.max(1, e.caja || 0) : Math.min(5, (e.caja || 0) + 1);
+        e.due = sumarDias(hoy, INTERVALOS[e.caja]);
+      }
+    }
     else { e.caja = 1; e.fallos = (e.fallos || 0) + 1; e.due = hoy; }
     e.ultima = hoy;
     return e;
@@ -681,18 +688,21 @@ const RUTA_CLS = { ens: 'ens', iso27001: 'iso', continuidad: 'cont' };
 
 /* ---------- Almacenamiento: localStorage si está disponible; si no, memoria ---------- */
 const MEM = {};
+const VOLATIL = new Set();
 let avisoGuardado = false;
 const store = {
-  get(k) { try { const v = localStorage.getItem(k); return v ? safeParse(v) : (MEM[k] ?? null); } catch (e) { return MEM[k] ?? null; } },
+  get(k) { if (VOLATIL.has(k)) return MEM[k] ?? null; try { const v = localStorage.getItem(k); return v ? safeParse(v) : (MEM[k] ?? null); } catch (e) { return MEM[k] ?? null; } },
   set(k, v) {
     MEM[k] = v;
-    try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {
+    try { localStorage.setItem(k, JSON.stringify(v)); VOLATIL.delete(k); } catch (e) {
+      VOLATIL.add(k);
       if (!avisoGuardado) { avisoGuardado = true; setTimeout(() => toast('Este navegador no permite guardar. Exporta tu progreso para no perderlo.', 'error'), 0); }
     }
   },
   del(k) { delete MEM[k]; try { localStorage.removeItem(k); } catch (e) { /* nada */ } }
 };
 const KEY = 'argos/v1/progreso';
+const PROGRESO_VERSION = 2;
 
 /* ---------- Progreso: todo lo que entra (almacenamiento o importación) se valida ---------- */
 const BAD_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
@@ -704,9 +714,9 @@ const fecha = (v) => (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && 
 const okKey = (o, k, set) => Object.prototype.hasOwnProperty.call(o, k) && !BAD_KEYS.has(k) && set.has(k);
 
 function nuevoProgreso() {
-  return { v: 1, perfil: { nombre: '', color: 'teal' }, ajustes: { tema: 'sistema', meta: 100 }, xp: 0, respuestas: {}, salas: {}, maquinas: {}, simulacros: {}, dias: {}, logros: {}, repasosOk: 0, creado: hoy() };
+  return { v: PROGRESO_VERSION, perfil: { nombre: '', color: 'teal' }, ajustes: { tema: 'sistema', meta: 100 }, xp: 0, respuestas: {}, salas: {}, maquinas: {}, simulacros: {}, dias: {}, logros: {}, repasosOk: 0, creado: hoy(), sesion: null };
 }
-function sanear(raw) {
+function sanear(raw, recuperarSesion = true) {
   const r = isObj(raw) ? raw : {}; const p = nuevoProgreso();
   const pf = isObj(r.perfil) ? r.perfil : {};
   p.perfil = { nombre: str(pf.nombre, 60), color: COLORES.includes(pf.color) ? pf.color : 'teal' };
@@ -719,6 +729,8 @@ function sanear(raw) {
   if (isObj(r.respuestas)) for (const k of Object.keys(r.respuestas)) {
     const e = r.respuestas[k]; if (!okKey(r.respuestas, k, qids) || !isObj(e)) continue;
     p.respuestas[k] = { caja: Math.round(num(e.caja, 0, 5, 0)), aciertos: Math.round(num(e.aciertos, 0, 1e5, 0)), fallos: Math.round(num(e.fallos, 0, 1e5, 0)), due: fecha(e.due), ultima: fecha(e.ultima) };
+    // v1 no distinguía un acierto de su recompensa. Conservamos los XP antiguos sin volver a concederlos.
+    p.respuestas[k].xpConcedida = p.respuestas[k].aciertos > 0 && (r.v === PROGRESO_VERSION ? e.xpConcedida === true : true);
   }
   const sids = new Set(Object.keys(SALA));
   if (isObj(r.salas)) for (const k of Object.keys(r.salas)) {
@@ -747,11 +759,12 @@ function sanear(raw) {
   // Solo se conservan los logros que el progreso saneado justifica: no se pueden «regalar» editando el almacenamiento o un JSON
   const cumplidos = E.logrosCumplidos(p, D, hoy());
   if (isObj(r.logros)) for (const k of Object.keys(r.logros)) if (okKey(r.logros, k, lids) && cumplidos.has(k)) p.logros[k] = fecha(r.logros[k]) || hoy();
+  p.sesion = recuperarSesion ? sanearSesion(r.sesion) : null;
   return p;
 }
 
 let P = sanear(store.get(KEY));
-const guardar = () => store.set(KEY, P);
+const guardar = () => { P.sesion = copiaSesion(ui.sesion); store.set(KEY, P); };
 
 /* ---------- Estado de la interfaz ---------- */
 const ui = { view: 'hoy', param: null, sesion: null, evTab: {}, flagSel: {}, flagErr: {}, helpTab: 'como', modal: null, tick: null };
@@ -759,14 +772,17 @@ const ui = { view: 'hoy', param: null, sesion: null, evTab: {}, flagSel: {}, fla
 /* ---------- Registro de actividad y recompensas ---------- */
 const diaHoy = () => { const d = hoy(); P.dias[d] = P.dias[d] || { xp: 0, preguntas: 0, repasos: 0 }; return P.dias[d]; };
 function sumarXp(n) { if (!n) return 0; P.xp += n; diaHoy().xp += n; return n; }
-/* Registra una respuesta: actualiza la caja de repaso y devuelve los XP ganados (solo el primer acierto de cada pregunta da XP completos) */
+/* La recompensa de una pregunta es independiente de haberla acertado en un simulacro o repaso. */
 function registrarRespuesta(qid, acierto, modo) {
-  const q = IDX.preguntas.get(qid); const previo = P.respuestas[qid]; const primerAcierto = acierto && !(previo && previo.aciertos > 0);
+  const q = IDX.preguntas.get(qid); const previo = P.respuestas[qid];
   P.respuestas[qid] = E.repasar(previo, acierto, hoy());
+  P.respuestas[qid].xpConcedida = previo?.xpConcedida === true;
   const d = diaHoy(); d.preguntas++;
   let xp = 0;
   if (modo === 'repaso') { d.repasos++; if (acierto) { P.repasosOk++; xp = sumarXp(E.XP.repaso); } }
-  else if (primerAcierto && modo !== 'simulacro') xp = sumarXp(E.xpPregunta(q));
+  else if (acierto && modo === 'sala' && !previo?.xpConcedida) {
+    xp = sumarXp(E.xpPregunta(q)); P.respuestas[qid].xpConcedida = true;
+  }
   return xp;
 }
 /* Comprueba logros nuevos; los registra y los devuelve para celebrarlos */
@@ -1091,6 +1107,7 @@ function vPerfil() {
     <section class="sec"><div class="sec-h"><h2>Tus datos</h2></div><div class="card list">
       <div class="li"><div class="grow"><b>Exportar progreso</b><p class="small muted">Un archivo JSON para guardarlo o pasarlo a otro navegador.</p></div><button type="button" class="btn sm" data-act="exportar">${icon('download', 16)}<span>Exportar</span></button></div>
       <div class="li"><div class="grow"><b>Importar progreso</b><p class="small muted">Sustituye el progreso actual por el del archivo.</p></div><button type="button" class="btn sm" data-act="importar">${icon('upload', 16)}<span>Importar</span></button></div>
+      ${store.get(KEY + '/respaldo') ? '<div class="li"><div class="grow"><b>Copia previa local</b><p class="small muted">Recupera el estado anterior a la última importación, actualización o borrado.</p></div><button type="button" class="btn sm" data-act="restaurar">Restaurar copia</button></div>' : ''}
       <div class="li"><div class="grow"><b>Empezar de cero</b><p class="small muted">Borra todo el progreso de este navegador.</p></div><button type="button" class="btn sm danger" data-act="reset">${icon('trash', 16)}<span>Borrar</span></button></div>
     </div></section>
     <p class="small muted sec center">ARGOS ${esc(VERSION)} · <button type="button" class="btn ghost sm" data-act="go" data-view="ayuda">Ayuda, fuentes y aviso legal</button></p>`;
@@ -1126,11 +1143,61 @@ function vRuta() {
     }).join('')}</ol>`;
 }
 
+/* ===== 04-sesion.js ===== */
+/* ---------- Recuperación: el checkpoint y las recompensas se guardan juntos ---------- */
+function copiaSesion(s) {
+  if (!s || s.estado !== 'jugando') return null;
+  const { modo, id, titulo, ids, i, seed, resp, comprobada, xpQ, inicio, fin, marcadas } = s;
+  return { v: 1, banco: VERSION, modo, id, titulo, ids, i, seed, resp, comprobada, xpQ, inicio, fin, marcadas };
+}
+function sanearSesion(raw) {
+  if (!isObj(raw) || raw.v !== 1 || raw.banco !== VERSION || !['sala', 'repaso', 'simulacro'].includes(raw.modo)) return null;
+  const { modo, id } = raw;
+  if ((modo === 'sala' && !SALA[id]) || (modo === 'simulacro' && !SIM[id]) || (modo === 'repaso' && id !== 'repaso')) return null;
+  if (!Array.isArray(raw.ids) || !raw.ids.length || raw.ids.length > 200 || new Set(raw.ids).size !== raw.ids.length) return null;
+  const ids = raw.ids;
+  const elegibles = modo === 'sala' ? SALA[id].preguntas.map((q) => q.id) : modo === 'simulacro' ? E.preguntasDeSimulacro(D.rutas, SIM[id]).flatMap((s) => s.preguntas.map((q) => q.id)) : [...IDX.preguntas.keys()];
+  if (!ids.every((qid) => elegibles.includes(qid)) || (modo === 'sala' && ids.length !== elegibles.length) || (modo === 'simulacro' && ids.length !== SIM[id].n) || (modo === 'repaso' && ids.length > 20)) return null;
+  if (!Number.isInteger(raw.i) || raw.i < 0 || raw.i >= ids.length || typeof raw.seed !== 'string' || !raw.seed || raw.seed.length > 80) return null;
+  if (!Number.isSafeInteger(raw.inicio) || raw.inicio <= 0 || raw.inicio > Date.now()) return null;
+  if (modo === 'simulacro' && raw.fin !== raw.inicio + SIM[id].minutos * 60000) return null;
+  const resp = {}; const comprobada = {}; const xpQ = {};
+  for (const qid of ids) {
+    const q = IDX.preguntas.get(qid); const r = isObj(raw.resp) ? raw.resp[qid] : undefined;
+    if (r !== undefined) {
+      const opcion = (n) => Number.isInteger(n) && n >= 0 && n < q.o.length;
+      if (q.t === 'vf' ? typeof r !== 'boolean' : q.t === 'multiple' ? !Array.isArray(r) || !r.length || !r.every(opcion) || new Set(r).size !== r.length : !opcion(r)) return null;
+      resp[qid] = r;
+    }
+    if (modo !== 'simulacro' && isObj(raw.comprobada) && typeof raw.comprobada[qid] === 'boolean') {
+      if (r === undefined) return null;
+      comprobada[qid] = E.evaluar(q, r);
+      xpQ[qid] = num(raw.xpQ?.[qid], 0, modo === 'repaso' ? E.XP.repaso : E.xpPregunta(q), 0);
+    }
+  }
+  if (modo !== 'simulacro' && ids.some((qid, i) => i < raw.i ? comprobada[qid] === undefined : i > raw.i && comprobada[qid] !== undefined)) return null;
+  const titulo = modo === 'sala' ? SALA[id].nombre : modo === 'simulacro' ? SIM[id].nombre : 'Repaso espaciado';
+  return { modo, id, titulo, ids: [...ids], i: raw.i, seed: raw.seed, resp, comprobada, xpQ, xp: Object.values(xpQ).reduce((a, n) => a + n, 0), aciertos: Object.values(comprobada).filter(Boolean).length, inicio: raw.inicio, fin: raw.fin, marcadas: Array.isArray(raw.marcadas) ? [...new Set(raw.marcadas.filter((qid) => ids.includes(qid)))] : [], estado: 'jugando', logros: [] };
+}
+function recuperarSesion() {
+  if (!P.sesion) return;
+  ui.sesion = P.sesion;
+  document.body.style.overflow = 'hidden';
+  render();
+  if (ui.sesion.modo === 'simulacro') {
+    if (ui.sesion.fin <= Date.now()) { finalizar(); toast('El simulacro venció mientras estabas fuera. Se ha corregido.'); return; }
+    arrancarReloj();
+  }
+  enfocarPregunta();
+  toast('Sesión recuperada. Continúas donde lo dejaste.');
+}
+
 /* ===== 05-jugador.js ===== */
 /* ---------- Jugador en modo foco: salas, repaso espaciado y simulacros ---------- */
 function nuevaSesion(modo, id, titulo, ids, extra = {}) {
   ui.sesion = { modo, id, titulo, ids, i: 0, seed: `${Date.now()}`, resp: {}, comprobada: {}, xpQ: {}, xp: 0, aciertos: 0, marcadas: [], inicio: Date.now(), estado: 'jugando', logros: [], ...extra };
   document.body.style.overflow = 'hidden';
+  guardar();
   render();
   enfocarPregunta();
 }
@@ -1146,11 +1213,13 @@ function iniciarRepaso() {
 function iniciarSimulacro(id) {
   const sim = SIM[id]; if (!sim) return;
   const ids = E.generarSimulacro(D.rutas, sim, `${Date.now()}|${id}`);
-  nuevaSesion('simulacro', id, sim.nombre, ids, { fin: Date.now() + sim.minutos * 60000 });
+  const inicio = Date.now();
+  nuevaSesion('simulacro', id, sim.nombre, ids, { inicio, fin: inicio + sim.minutos * 60000 });
   arrancarReloj();
 }
 function cerrarSesion() {
   ui.sesion = null; clearInterval(ui.tick); ui.tick = null; document.body.style.overflow = '';
+  guardar();
   render();
 }
 function salir() {
@@ -1168,6 +1237,7 @@ function seleccionar(origIdx) {
   if (q.t === 'multiple') { const cur = new Set(s.resp[q.id] || []); cur.has(origIdx) ? cur.delete(origIdx) : cur.add(origIdx); s.resp[q.id] = [...cur]; if (!s.resp[q.id].length) delete s.resp[q.id]; }
   else if (q.t === 'vf') s.resp[q.id] = origIdx === 0;
   else s.resp[q.id] = origIdx;
+  guardar();
   renderPlayer();
   document.querySelector(`.opt[data-o="${origIdx}"]`)?.focus();
 }
@@ -1183,15 +1253,17 @@ function comprobar() {
 }
 function siguiente() {
   const s = ui.sesion;
-  if (s.i + 1 < s.ids.length) { s.i++; renderPlayer(); enfocarPregunta(); } else finalizar();
+  if (s.i + 1 < s.ids.length) { s.i++; guardar(); renderPlayer(); enfocarPregunta(); } else finalizar();
 }
-function irA(i) { const s = ui.sesion; if (i < 0 || i >= s.ids.length) return; s.i = i; renderPlayer(); enfocarPregunta(); }
-function marcar() { const s = ui.sesion; const id = s.ids[s.i]; s.marcadas = s.marcadas.includes(id) ? s.marcadas.filter((x) => x !== id) : [...s.marcadas, id]; renderPlayer(); }
+function irA(i) { const s = ui.sesion; if (i < 0 || i >= s.ids.length) return; s.i = i; guardar(); renderPlayer(); enfocarPregunta(); }
+function marcar() { const s = ui.sesion; const id = s.ids[s.i]; s.marcadas = s.marcadas.includes(id) ? s.marcadas.filter((x) => x !== id) : [...s.marcadas, id]; guardar(); renderPlayer(); }
 function enfocarPregunta() { setTimeout(() => document.getElementById('qtext')?.focus({ preventScroll: true }), 0); }
 
 /* ---------- Cierre y puntuación ---------- */
 function finalizar() {
-  const s = ui.sesion; const hoyD = hoy();
+  const s = ui.sesion; if (!s || s.estado !== 'jugando') return;
+  ui.modal = null;
+  const hoyD = hoy();
   if (s.modo === 'simulacro') {
     clearInterval(ui.tick); ui.tick = null;
     const sim = SIM[s.id]; const res = E.corregirSimulacro(IDX, s.ids, s.resp, sim);
@@ -1550,7 +1622,8 @@ function importar(file) {
   rd.onload = () => {
     let data; try { data = safeParse(String(rd.result)); } catch (e) { toast('El archivo no es un JSON válido.', 'error'); return; }
     if (!isObj(data) || data.app !== 'argos' || !isObj(data.progreso)) { toast('No es una copia de progreso de ARGOS.', 'error'); return; }
-    confirmar('¿Sustituir tu progreso?', 'Se reemplazará el progreso de este navegador por el del archivo.', () => { P = sanear(data.progreso); guardar(); render(); toast('Progreso importado'); }, 'Importar');
+    if (Number(data.progreso.v) > PROGRESO_VERSION) { toast('Esta copia necesita una versión más reciente de ARGOS.', 'error'); return; }
+    confirmar('¿Sustituir tu progreso?', 'Se guardará una copia local previa y se reemplazará tu progreso.', () => { store.set(KEY + '/respaldo', P); P = sanear(data.progreso, false); guardar(); render(); toast('Progreso importado. Se conserva una copia previa en este navegador.'); }, 'Importar');
   };
   rd.readAsText(file);
 }
@@ -1583,7 +1656,8 @@ const ACCIONES = {
   'share-text': () => copiarTexto(textoLinkedIn()),
   exportar: () => exportar(),
   importar: () => $('#file-import').click(),
-  reset: () => confirmar('¿Borrar todo el progreso?', 'Se perderán tus puntos, logros y el historial de este navegador. Exporta antes si quieres conservarlo.', () => { P = nuevoProgreso(); guardar(); go('hoy'); toast('Progreso borrado'); }, 'Borrar', true),
+  reset: () => confirmar('¿Borrar todo el progreso?', 'Exporta tu progreso para conservarlo fuera de este navegador. Se guardará una copia previa local.', () => { store.set(KEY + '/respaldo', P); P = nuevoProgreso(); guardar(); go('hoy'); toast('Progreso borrado'); }, 'Borrar', true),
+  restaurar: () => confirmar('¿Restaurar la copia previa?', 'Se sustituirá el progreso actual. Puedes exportarlo antes.', () => { const previo = store.get(KEY + '/respaldo'); if (!previo) return; store.set(KEY + '/respaldo', P); P = sanear(previo, false); guardar(); render(); toast('Copia restaurada'); }, 'Restaurar'),
   'help-tab': (b) => { ui.helpTab = b.dataset.tab; render(); document.querySelector(`[data-act="help-tab"][data-tab="${b.dataset.tab}"]`)?.focus(); },
   'modal-ok': () => { const a = ui.modal && ui.modal.accion; cerrarModal(); if (a) a(); },
   'modal-close': (b, ev) => { if (ev.target === b) cerrarModal(); },
@@ -1644,8 +1718,11 @@ window.addEventListener('storage', (ev) => { if (ev.key === KEY && !ui.sesion) {
 /* ---------- Arranque ---------- */
 (function arrancar() {
   const h = desdeHash();
-  if (!store.get(KEY)) guardar();
+  const anterior = store.get(KEY);
+  if (anterior && anterior.v !== PROGRESO_VERSION) store.set(KEY + '/respaldo', anterior);
   go(h.view, h.param, { keepScroll: true });
+  recuperarSesion();
+  guardar();
   // Logros que el progreso ya cumple (por ejemplo, tras importar una copia antigua)
   const nuevos = revisarLogros(); if (nuevos.length) guardar();
   // Gancho para las pruebas automatizadas (solo lectura del estado y navegación)
