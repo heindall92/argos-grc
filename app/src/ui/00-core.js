@@ -97,6 +97,7 @@ function sanear(raw, recuperarSesion = true) {
   const cumplidos = E.logrosCumplidos(p, D, hoy());
   if (isObj(r.logros)) for (const k of Object.keys(r.logros)) if (okKey(r.logros, k, lids) && cumplidos.has(k)) p.logros[k] = fecha(r.logros[k]) || hoy();
   p.sesion = recuperarSesion ? sanearSesion(r.sesion) : null;
+  p.laboratorio = A.limpiarBorrador(r.laboratorio);
   return p;
 }
 

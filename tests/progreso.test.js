@@ -5,9 +5,11 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const E = require('../app/src/engine.js');
 const B = require('../app/data/index.js');
+const Academy = require('../app/src/academy.js');
 function app() {
   const saved = new Map();
   const c = vm.createContext({ window: { ARGOS_DATA: { ...B, version: 'test' }, ArgosEngine: E }, document: { body: { style: {} }, querySelector: () => null, getElementById: () => null }, localStorage: { getItem: (k) => saved.get(k) || null, setItem: (k, v) => saved.set(k, v) }, setTimeout: () => {}, setInterval: () => 1, clearInterval: () => {} });
+  c.window.ArgosAcademy = Academy;
   vm.runInContext("const location = {search:''};\n" + ['00-core', '04-sesion', '05-jugador'].map((p) => fs.readFileSync(`${__dirname}/../app/src/ui/${p}.js`, 'utf8')).join('\n'), c);
   vm.runInContext('render = () => {}; renderPlayer = () => {}; renderTop = () => {}; celebrar = () => {}; enfocarPregunta = () => {};', c);
   return (code) => vm.runInContext(code, c);

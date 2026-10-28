@@ -1,6 +1,6 @@
 /* ---------- Inicio guiado y demostración independiente ---------- */
 function enlacesAcademia() {
-  return `<nav class="academy-links row" aria-label="Aprendizaje práctico"><button class="btn sm" data-act="go" data-view="inicio">Empieza aquí</button><button class="btn sm" data-act="go" data-view="competencias">Competencias</button></nav>${MODO_DEMO ? '<p class="legal small">Modo demostración: progreso separado de tu perfil habitual. <button class="btn sm" data-act="demo-reset">Restablecer demo</button></p>' : ''}`;
+  return `<nav class="academy-links row" aria-label="Aprendizaje práctico"><button class="btn sm" data-act="go" data-view="inicio">Empieza aquí</button><button class="btn sm" data-act="go" data-view="competencias">Competencias</button><button class="btn sm" data-act="go" data-view="laboratorio">Laboratorio</button></nav>${MODO_DEMO ? '<p class="legal small">Modo demostración: progreso separado de tu perfil habitual. <button class="btn sm" data-act="demo-reset">Restablecer demo</button></p>' : ''}`;
 }
 function vCompetencias() {
   const cs = A.competencias(D, P, hoy()); const rec = A.recomendar(D, P, hoy()); const ev = A.evolucion(P);
