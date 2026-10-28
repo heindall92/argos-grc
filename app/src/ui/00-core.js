@@ -35,7 +35,8 @@ const store = {
   },
   del(k) { delete MEM[k]; try { localStorage.removeItem(k); } catch (e) { /* nada */ } }
 };
-const KEY = 'argos/v1/progreso';
+const MODO_DEMO = /[?&]demo(?:[=&]|$)/.test(location.search);
+const KEY = MODO_DEMO ? 'argos/demo/progreso' : 'argos/v1/progreso';
 const PROGRESO_VERSION = 2;
 
 /* ---------- Progreso: todo lo que entra (almacenamiento o importación) se valida ---------- */

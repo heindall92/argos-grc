@@ -347,7 +347,14 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
 @media (min-width: 900px) and (max-width: 1100px) { .nav button { padding: 0 11px; } .nav button span { font-size: .86rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 @media (prefers-reduced-transparency: reduce) { .top, .tabbar { background: var(--card); backdrop-filter: none; -webkit-backdrop-filter: none; } }
-@media print { .top, .tabbar, .player-foot { display: none; } }
+.academy-links { flex-wrap: wrap; margin: 0 0 24px; gap: 8px; }
+.guide-steps { padding-left: 24px; line-height: 1.7; }
+.guide-steps li { margin: 12px 0; }
+.academy-form { display: grid; gap: 16px; }
+.academy-form label { display: grid; gap: 6px; font-weight: 600; }
+.academy-form textarea, .academy-form input, .academy-form select { width: 100%; max-width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--sep-2); border-radius: 10px; background: var(--card); color: var(--ink); font: inherit; }
+.academy-form textarea { min-height: 96px; resize: vertical; }
+@media print { .top, .tabbar, .player-foot, .academy-links { display: none; } }
 
 </style>
 <a class="skip" href="#view">Ir al contenido</a>
@@ -701,7 +708,8 @@ const store = {
   },
   del(k) { delete MEM[k]; try { localStorage.removeItem(k); } catch (e) { /* nada */ } }
 };
-const KEY = 'argos/v1/progreso';
+const MODO_DEMO = /[?&]demo(?:[=&]|$)/.test(location.search);
+const KEY = MODO_DEMO ? 'argos/demo/progreso' : 'argos/v1/progreso';
 const PROGRESO_VERSION = 2;
 
 /* ---------- Progreso: todo lo que entra (almacenamiento o importación) se valida ---------- */
@@ -952,12 +960,12 @@ function renderTop() {
   $('#tabbar').innerHTML = SECCIONES.map(([id, n, ic]) => `<button type="button" data-act="go" data-view="${id}"${cur === id ? ' aria-current="page"' : ''}>${icon(ic, 22)}<span>${n}</span></button>`).join('');
 }
 
-const VISTAS = { hoy: vHoy, rutas: vRutas, ruta: vRuta, maquinas: vMaquinas, maquina: vMaquina, simulacros: vSimulacros, logros: vLogros, perfil: vPerfil, ayuda: vAyuda };
+const VISTAS = { inicio: vInicio, hoy: vHoy, rutas: vRutas, ruta: vRuta, maquinas: vMaquinas, maquina: vMaquina, simulacros: vSimulacros, logros: vLogros, perfil: vPerfil, ayuda: vAyuda };
 function render() {
   aplicarTema();
   renderTop();
   const fn = VISTAS[ui.view] || vHoy;
-  $('#view').innerHTML = fn();
+  $('#view').innerHTML = enlacesAcademia() + fn();
   if (ui.view === 'perfil') dibujarTarjeta($('#share-canvas'));
   renderPlayer();
   renderModal();
@@ -1631,6 +1639,7 @@ function importar(file) {
 /* ===== 08-events.js ===== */
 /* ---------- Eventos: un único escuchador delegado por tipo ---------- */
 const ACCIONES = {
+  'demo-reset': () => { if (!MODO_DEMO) return; confirmar('¿Restablecer la demostración?', 'Solo se borrará el progreso de demostración.', () => { cerrarSesion(); P = nuevoProgreso(); guardar(); go('inicio'); }, 'Restablecer'); },
   go: (b) => go(b.dataset.view, b.dataset.param || null),
   sala: (b) => iniciarSala(b.dataset.id),
   repaso: () => iniciarRepaso(),
@@ -1730,6 +1739,21 @@ window.addEventListener('storage', (ev) => { if (ev.key === KEY && !ui.sesion) {
     Object.defineProperty(window, '__ARGOS__', { value: Object.freeze({ go, iniciarSala, iniciarRepaso, iniciarSimulacro, finalizar, get P() { return P; }, get ui() { return ui; }, D, E }) });
   }
 })();
+
+/* ===== 09-academia.js ===== */
+/* ---------- Inicio guiado y demostración independiente ---------- */
+function enlacesAcademia() {
+  return `<nav class="academy-links row" aria-label="Aprendizaje práctico"><button class="btn sm" data-act="go" data-view="inicio">Empieza aquí</button></nav>${MODO_DEMO ? '<p class="legal small">Modo demostración: progreso separado de tu perfil habitual. <button class="btn sm" data-act="demo-reset">Restablecer demo</button></p>' : ''}`;
+}
+function vInicio() {
+  return `<div class="hd"><div><p class="eyebrow">Tu primer recorrido · 10–15 minutos</p><h1 class="lt">De la evidencia a la decisión</h1><p class="lt-sub">Practica cómo actuar ante un incidente y explica por qué. ARGOS ${esc(VERSION)} funciona también como HTML descargado.</p></div></div>
+    <section class="card pad"><h2>Elige tu punto de partida</h2><p>Las rutas son abiertas: puedes cambiar cuando quieras.</p><div class="row">
+    <button class="btn" data-act="go" data-view="ruta" data-param="ens">Empiezo con ENS</button><button class="btn" data-act="go" data-view="ruta" data-param="iso27001">Preparo ISO/IEC 27001</button><button class="btn" data-act="go" data-view="ruta" data-param="continuidad">Practico continuidad</button></div></section>
+    <section class="sec"><h2>Recorrido recomendado: Noche de ransomware</h2><p class="muted">Necesitas nociones básicas de copias de seguridad. Trabajarás con una organización ficticia.</p>
+    <ol class="guide-steps"><li><b>Contexto · 2 min.</b> Lee el briefing y distingue el incidente de sus consecuencias.</li><li><b>Evidencias · 4 min.</b> Recorre las pestañas y localiza horarios, pérdidas de datos y decisiones.</li><li><b>Decisión · 5 min.</b> Resuelve las flags y contrasta tu criterio con la explicación.</li><li><b>Reflexión · 2 min.</b> Explica qué dato cambiaría tu decisión y qué evidencia pedirías después.</li></ol>
+    <button class="btn primary" data-act="go" data-view="maquina" data-param="m-ransom">Comenzar el caso</button><button class="btn" data-act="sala" data-id="cont-1">Repasar BIA primero</button></section>
+    <section class="card pad"><h2>Ensaya con tranquilidad</h2><p>La demostración usa datos independientes. Puedes restablecerla sin borrar tu perfil habitual.</p><a class="btn" href="?demo#inicio" target="_blank" rel="noopener noreferrer">Abrir demostración</a><p class="small muted">Sin conexión: guarda el HTML completo. El progreso depende del navegador y de la ubicación del archivo; exporta una copia para trasladarlo.</p></section>`;
+}
 
 })();
 </script>

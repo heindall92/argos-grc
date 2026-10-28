@@ -11,7 +11,8 @@ A = 'window.__ARGOS__'
 def main():
     with sync_playwright() as pw:
         for name in os.getenv('ARGOS_BROWSERS', 'chromium').split(','):
-            browser = getattr(pw, name).launch()
+            print(f'Iniciando {name}', flush=True)
+            browser = getattr(pw, name).launch(timeout=30000)
             page = browser.new_page()
             errors = []
             page.on('pageerror', lambda error: errors.append(str(error)))
@@ -47,6 +48,14 @@ def main():
             assert page.evaluate(f"{A}.P.simulacros['sim-ens'].intentos") == 1
             page.reload()
             assert page.evaluate(f"{A}.P.simulacros['sim-ens'].intentos") == 1
+            personal = page.evaluate("localStorage.getItem('argos/v1/progreso')")
+            page.goto(URL + '&demo#inicio')
+            page.wait_for_selector('#view h1')
+            assert 'De la evidencia' in page.inner_text('#view h1')
+            assert page.evaluate(f'{A}.P.xp') == 0
+            page.click('[data-act="demo-reset"]')
+            page.click('[data-act="modal-ok"]')
+            assert page.evaluate("localStorage.getItem('argos/v1/progreso')") == personal
             assert not errors, errors
             browser.close()
             print(f'{name}: recuperación, reloj e idempotencia OK')
