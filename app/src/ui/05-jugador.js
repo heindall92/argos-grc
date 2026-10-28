@@ -2,6 +2,7 @@
 function nuevaSesion(modo, id, titulo, ids, extra = {}) {
   ui.sesion = { modo, id, titulo, ids, i: 0, seed: `${Date.now()}`, resp: {}, comprobada: {}, xpQ: {}, xp: 0, aciertos: 0, marcadas: [], inicio: Date.now(), estado: 'jugando', logros: [], ...extra };
   document.body.style.overflow = 'hidden';
+  guardar();
   render();
   enfocarPregunta();
 }
@@ -17,11 +18,13 @@ function iniciarRepaso() {
 function iniciarSimulacro(id) {
   const sim = SIM[id]; if (!sim) return;
   const ids = E.generarSimulacro(D.rutas, sim, `${Date.now()}|${id}`);
-  nuevaSesion('simulacro', id, sim.nombre, ids, { fin: Date.now() + sim.minutos * 60000 });
+  const inicio = Date.now();
+  nuevaSesion('simulacro', id, sim.nombre, ids, { inicio, fin: inicio + sim.minutos * 60000 });
   arrancarReloj();
 }
 function cerrarSesion() {
   ui.sesion = null; clearInterval(ui.tick); ui.tick = null; document.body.style.overflow = '';
+  guardar();
   render();
 }
 function salir() {
@@ -39,6 +42,7 @@ function seleccionar(origIdx) {
   if (q.t === 'multiple') { const cur = new Set(s.resp[q.id] || []); cur.has(origIdx) ? cur.delete(origIdx) : cur.add(origIdx); s.resp[q.id] = [...cur]; if (!s.resp[q.id].length) delete s.resp[q.id]; }
   else if (q.t === 'vf') s.resp[q.id] = origIdx === 0;
   else s.resp[q.id] = origIdx;
+  guardar();
   renderPlayer();
   document.querySelector(`.opt[data-o="${origIdx}"]`)?.focus();
 }
@@ -54,15 +58,17 @@ function comprobar() {
 }
 function siguiente() {
   const s = ui.sesion;
-  if (s.i + 1 < s.ids.length) { s.i++; renderPlayer(); enfocarPregunta(); } else finalizar();
+  if (s.i + 1 < s.ids.length) { s.i++; guardar(); renderPlayer(); enfocarPregunta(); } else finalizar();
 }
-function irA(i) { const s = ui.sesion; if (i < 0 || i >= s.ids.length) return; s.i = i; renderPlayer(); enfocarPregunta(); }
-function marcar() { const s = ui.sesion; const id = s.ids[s.i]; s.marcadas = s.marcadas.includes(id) ? s.marcadas.filter((x) => x !== id) : [...s.marcadas, id]; renderPlayer(); }
+function irA(i) { const s = ui.sesion; if (i < 0 || i >= s.ids.length) return; s.i = i; guardar(); renderPlayer(); enfocarPregunta(); }
+function marcar() { const s = ui.sesion; const id = s.ids[s.i]; s.marcadas = s.marcadas.includes(id) ? s.marcadas.filter((x) => x !== id) : [...s.marcadas, id]; guardar(); renderPlayer(); }
 function enfocarPregunta() { setTimeout(() => document.getElementById('qtext')?.focus({ preventScroll: true }), 0); }
 
 /* ---------- Cierre y puntuación ---------- */
 function finalizar() {
-  const s = ui.sesion; const hoyD = hoy();
+  const s = ui.sesion; if (!s || s.estado !== 'jugando') return;
+  ui.modal = null;
+  const hoyD = hoy();
   if (s.modo === 'simulacro') {
     clearInterval(ui.tick); ui.tick = null;
     const sim = SIM[s.id]; const res = E.corregirSimulacro(IDX, s.ids, s.resp, sim);
@@ -126,7 +132,7 @@ function cabeceraPregunta(q, conSala) {
 }
 const pistaTipo = (q) => (q.t === 'multiple' ? 'Elige todas las correctas.' : q.t === 'vf' ? '¿Verdadero o falso?' : 'Elige una respuesta.');
 function bloqueExplicacion(q, desplazable = false) {
-  return `<div class="explain"${desplazable ? ' tabindex="0" role="region" aria-label="Explicación"' : ''}><p>${esc(q.x)}</p><p class="ref">${icon('bookmark', 15)}<span>${esc(q.ref)}</span></p>${q.cita ? `<blockquote class="cita"><b>Texto literal (BOE)</b>${esc(q.cita)}</blockquote>` : ''}</div>`;
+  return `<div class="explain"${desplazable ? ' tabindex="0" role="region" aria-label="Explicación"' : ''}><p>${esc(q.x)}</p><p class="ref">${icon('bookmark', 15)}<span>${esc(q.ref)}</span></p>${q.cita ? `<blockquote class="cita"><b>Texto literal (BOE)</b>${esc(q.cita)}</blockquote>` : ''}<p class="small muted">Contenido ${esc(VERSION)} · ${fichaEditorial(q)}</p>${enlaceCorreccion(q)}</div>`;
 }
 function renderPlayer() {
   const el = $('#player'); const s = ui.sesion;

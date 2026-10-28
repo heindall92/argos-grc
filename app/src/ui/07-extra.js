@@ -146,7 +146,8 @@ function importar(file) {
   rd.onload = () => {
     let data; try { data = safeParse(String(rd.result)); } catch (e) { toast('El archivo no es un JSON válido.', 'error'); return; }
     if (!isObj(data) || data.app !== 'argos' || !isObj(data.progreso)) { toast('No es una copia de progreso de ARGOS.', 'error'); return; }
-    confirmar('¿Sustituir tu progreso?', 'Se reemplazará el progreso de este navegador por el del archivo.', () => { P = sanear(data.progreso); guardar(); render(); toast('Progreso importado'); }, 'Importar');
+    if (Number(data.progreso.v) > PROGRESO_VERSION) { toast('Esta copia necesita una versión más reciente de ARGOS.', 'error'); return; }
+    confirmar('¿Sustituir tu progreso?', 'Se guardará una copia local previa y se reemplazará tu progreso.', () => { store.set(KEY + '/respaldo', P); P = sanear(data.progreso, false); guardar(); render(); toast('Progreso importado. Se conserva una copia previa en este navegador.'); }, 'Importar');
   };
   rd.readAsText(file);
 }

@@ -18,11 +18,11 @@ function vRuta() {
   return `<div class="hd"><div><button type="button" class="btn ghost sm" style="padding:0;min-height:32px" data-act="go" data-view="rutas">${icon('chevronLeft', 16)}<span>Rutas</span></button>
       <div class="row" style="margin-top:8px">${glyph(r.id, 26)}<h1 class="lt">${esc(r.nombre)}</h1></div>
       <p class="lt-sub">${esc(r.descripcion)}</p><p class="small muted" style="margin-top:6px">Fuentes: ${esc(r.fuente)}</p></div></div>
-    <div class="card pad" style="margin-bottom:18px"><div class="row spread"><b>${pr.superadas} de ${pr.salas} salas superadas</b><span class="small muted">${pr.dominadas} de ${pr.total} preguntas dominadas</span></div><div style="margin-top:10px">${barra(pr.pct, cls)}</div></div>
+    <div class="card pad" style="margin-bottom:18px"><div class="row spread"><b>${pr.superadas} de ${pr.salas} salas superadas</b><span class="small muted">${pr.dominadas} de ${pr.total} preguntas acertadas</span></div><div style="margin-top:10px">${barra(pr.pct, cls)}</div></div>
     <ol class="path" aria-label="Salas de la ruta">${r.salas.map((s, i) => {
       const st = P.salas[s.id]; const done = st && st.mejor >= 0.8; const dom = s.preguntas.filter((q) => P.respuestas[q.id] && P.respuestas[q.id].aciertos > 0).length;
       return `<li class="card room${done ? ' done' : st ? ' part' : ''}"><span class="node" aria-hidden="true">${done ? icon('check', 22) : i + 1}</span>
-        <div><h3>${esc(s.nombre)}</h3><p>${esc(s.resumen)}</p><div class="score"><span>${plural(s.preguntas.length, 'pregunta', 'preguntas')}</span>${st ? `<span>Mejor: <b>${pct(st.mejor)}</b></span><span>${plural(st.intentos, 'intento', 'intentos')}</span>` : ''}<span>${dom} dominadas</span></div></div>
+        <div><h3>${esc(s.nombre)}</h3><p>${esc(s.resumen)}</p><div class="score"><span>${plural(s.preguntas.length, 'pregunta', 'preguntas')}</span>${st ? `<span>Mejor: <b>${pct(st.mejor)}</b></span><span>${plural(st.intentos, 'intento', 'intentos')}</span>` : ''}<span>${dom} acertadas</span></div></div>
         <button type="button" class="btn ${done ? '' : 'primary'}" data-act="sala" data-id="${s.id}" aria-label="${done ? 'Repetir' : st ? 'Continuar' : 'Empezar'} la sala ${esc(s.nombre)}">${done ? icon('refresh', 17) : icon('arrowRight', 17)}<span>${done ? 'Repetir' : st ? 'Reintentar' : 'Empezar'}</span></button></li>`;
     }).join('')}</ol>`;
 }

@@ -1,5 +1,28 @@
 # Cambios
 
+## 1.4.0-rc.1 · candidata · octubre de 2026
+
+Implementación en cinco ramas encadenadas para revisión antes de integrar en `main`.
+
+### Aprendizaje y comunidad
+
+- Inicio guiado, demostración con progreso separado y guía para el showcase.
+- Siete competencias con distinción entre acierto y retención, recomendaciones explicadas e historial acotado.
+- Registro editorial con edición, fuente, URL, revisor y fecha, sin atribuir revisiones no realizadas.
+- Laboratorio con tres situaciones reproducibles por semilla: RTO, RPO y evidencia insuficiente. Borrador persistente, rúbrica e informe Markdown.
+- Taller por semilla con selección de datos y previsualización. El facilitador importa resúmenes compatibles y ve agregados sin nombres ni textos.
+- Editor de paquetes declarativos, plantilla, validación y práctica sin XP del perfil. Validador CLI y ejemplo comunitario comprobado en la construcción.
+- Las justificaciones, la prueba con cinco usuarios y la exactitud normativa requieren revisión humana.
+
+### Progreso fiable
+
+- XP de preguntas separados de los aciertos en simulacros y repasos. No se duplican al recargar.
+- El repaso anticipado conserva fecha y caja; reforzar un fallo el mismo día no acredita otra etapa de retención.
+- Checkpoints validados de salas, repasos y simulacros, con respuestas, orden, posición y plazo absoluto. La corrección final es idempotente.
+- Progreso v2 con migración conservadora desde v1 y copia previa local restaurable. Importar no reanuda sesiones ajenas.
+- Regresiones de recuperación en tres motores y pruebas de migración, recompensas y datos hostiles.
+
+
 ## 1.3.3 · octubre de 2026
 
 - **Herramientas GRC del autor:** Ayuda → Acerca de pasa a ocho herramientas. Se suma **MCP-Shield**, que audita las configuraciones MCP de los asistentes de IA (Claude Desktop, Cursor, VS Code): cadena de suministro, secretos, ficheros y *tool poisoning*. Sus hallazgos entran en CTEM-Nexus 1.2.1 con su sobre `yrd-ecosistema` y llegan a Rosetta como evidencia por control.
