@@ -21,8 +21,13 @@ A = "window.__ARGOS__"
 def states(page):
     """Recorre las vistas y los estados que cambian el DOM: jugador (sin responder, acierto, fallo, resumen), simulacro, máquinas, diálogos."""
     J = page.evaluate
-    for v in ["hoy", "rutas", "maquinas", "simulacros", "logros", "perfil"]:
+    for v in ["hoy", "rutas", "maquinas", "simulacros", "logros", "perfil", "inicio", "competencias", "laboratorio", "taller", "autores"]:
         J(f"{A}.go('{v}')"); yield v
+    page.click('[data-act="pack-validar"]'); yield 'autores/vista-previa'
+    page.fill('#pack-editor', '{"schema":"incorrecto"}')
+    page.click('[data-act="pack-validar"]'); yield 'autores/errores'
+    J(f"{A}.go('laboratorio')"); page.click('[data-act="lab-evaluar"]'); yield 'laboratorio/rubrica'
+    J(f"{A}.go('taller')"); page.click('[data-act="taller-previsualizar"]'); yield 'taller/resumen'
     for t in ["como", "atajos", "fuentes", "acerca"]:
         J(f"{A}.go('ayuda')"); page.click(f'[data-act="help-tab"][data-tab="{t}"]'); yield f"ayuda/{t}"
     for r in ["ens", "iso27001", "continuidad"]:
@@ -70,7 +75,7 @@ def states(page):
 
 
 def main():
-    total, report = 0, []
+    total, report, auditorias = 0, [], 0
     with sync_playwright() as p:
         b = p.chromium.launch()
         for scheme in ["light", "dark"]:
@@ -81,6 +86,7 @@ def main():
                 page.goto(APP); page.wait_for_selector("#view h1")
                 page.add_script_tag(path=str(AXE))
                 for name in states(page):
+                    auditorias += 1
                     page.wait_for_timeout(60)
                     res = page.evaluate("tags => axe.run(document, { runOnly: { type: 'tag', values: tags }, resultTypes: ['violations'] })", TAGS)
                     for v in res["violations"]:
@@ -90,9 +96,10 @@ def main():
                 ctx.close()
         b.close()
     (OUT / "a11y.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    (OUT / "a11y-summary.json").write_text(json.dumps({"auditorias": auditorias, "nodos_con_infracciones": total, "combinaciones_con_error": len(report), "motor": "chromium", "temas": ["light", "dark"], "anchos": [1440, 390]}, indent=2), encoding="utf-8")
     for r in report:
         print(f"  ✘ {r['tema']:5} {r['ancho']:4} {r['estado']:24} {r['regla']:24} {r['nodos']:3}  {r['ejemplo']}  {r['detalle'][:140]}")
-    print(f"\naxe-core: {total} nodos con infracciones en {len(report)} combinaciones")
+    print(f"\naxe-core: {auditorias} estados auditados; {total} nodos con infracciones en {len(report)} combinaciones")
     sys.exit(1 if total else 0)
 
 

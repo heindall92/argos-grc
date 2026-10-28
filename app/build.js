@@ -10,6 +10,12 @@ const path = require('path');
 const crypto = require('crypto');
 const E = require('./src/engine.js');
 const BANCO = require('./data/index.js');
+const Academy = require('./src/academy.js');
+const comunidad = path.join(__dirname, '..', 'community');
+if (fs.existsSync(comunidad)) for (const f of fs.readdirSync(comunidad).filter((f) => f.endsWith('.json'))) {
+  const erroresPack = Academy.validarPack(JSON.parse(fs.readFileSync(path.join(comunidad, f), 'utf8')), E);
+  if (erroresPack.length) throw Error(`${f}: ${erroresPack.join('; ')}`);
+}
 
 const errores = E.validarBanco(BANCO);
 if (errores.length) { console.error('El banco de preguntas tiene errores:\n - ' + errores.join('\n - ')); process.exit(1); }
@@ -19,13 +25,18 @@ const DIST = path.join(ROOT, '..', 'dist');
 const src = (f) => fs.readFileSync(path.join(ROOT, 'src', f), 'utf8');
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, '..', 'package.json'), 'utf8'));
 
-const DATA_JS = 'window.ARGOS_DATA = ' + JSON.stringify({ version: pkg.version, ...BANCO }).replace(/<\//g, '<\\/') + ';';
+const editorial = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'revisiones.json'), 'utf8'));
+const preguntas = [...BANCO.rutas.flatMap((r) => r.salas.flatMap((s) => s.preguntas)), ...BANCO.maquinas.flatMap((m) => m.flags)];
+for (const [id, r] of Object.entries(editorial.registros)) {
+  if (!preguntas.some((q) => q.id === id) || !r.revisor || !/^\d{4}-\d{2}-\d{2}$/.test(r.fecha) || !r.fuente || !r.edicion || !/^https:\/\//.test(r.url)) throw Error(`Revisión editorial incompleta: ${id}`);
+}
+const DATA_JS = 'window.ARGOS_DATA = ' + JSON.stringify({ version: pkg.version, editorial, ...BANCO }).replace(/<\//g, '<\\/') + ';';
 const APP = '(function () {\n\'use strict\';\ntry { Object.freeze(Object.prototype); Object.freeze(Array.prototype); } catch (e) { /* entorno que no lo permite */ }\n'
   + fs.readdirSync(path.join(ROOT, 'src', 'ui')).filter((f) => f.endsWith('.js')).sort().map((f) => `/* ===== ${f} ===== */\n` + src('ui/' + f)).join('\n') + '\n})();';
 const html = src('index.html')
   .replace('/*__STYLES__*/', () => src('styles.css'))
   .replace('/*__DATA__*/', () => DATA_JS)
-  .replace('/*__ENGINE__*/', () => src('engine.js'))
+  .replace('/*__ENGINE__*/', () => src('engine.js') + '\n' + src('academy.js'))
   .replace('/*__APP__*/', () => APP);
 
 fs.mkdirSync(path.join(DIST, 'artifact'), { recursive: true });

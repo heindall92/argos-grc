@@ -17,20 +17,20 @@ function renderTop() {
   $('#tabbar').innerHTML = SECCIONES.map(([id, n, ic]) => `<button type="button" data-act="go" data-view="${id}"${cur === id ? ' aria-current="page"' : ''}>${icon(ic, 22)}<span>${n}</span></button>`).join('');
 }
 
-const VISTAS = { hoy: vHoy, rutas: vRutas, ruta: vRuta, maquinas: vMaquinas, maquina: vMaquina, simulacros: vSimulacros, logros: vLogros, perfil: vPerfil, ayuda: vAyuda };
+const VISTAS = { autores: vAutores, taller: vTaller, laboratorio: vLaboratorio, competencias: vCompetencias, inicio: vInicio, hoy: vHoy, rutas: vRutas, ruta: vRuta, maquinas: vMaquinas, maquina: vMaquina, simulacros: vSimulacros, logros: vLogros, perfil: vPerfil, ayuda: vAyuda };
 function render() {
   aplicarTema();
   renderTop();
   const fn = VISTAS[ui.view] || vHoy;
-  $('#view').innerHTML = fn();
+  $('#view').innerHTML = enlacesAcademia() + fn();
   if (ui.view === 'perfil') dibujarTarjeta($('#share-canvas'));
   renderPlayer();
   renderModal();
 }
 function go(view, param = null, opts = {}) {
-  if (!VISTAS[view]) view = 'hoy';
-  if (view === 'ruta' && !RUTA[param]) view = 'rutas';
-  if (view === 'maquina' && !MAQ[param]) view = 'maquinas';
+  if (!Object.hasOwn(VISTAS,view)) view = 'hoy';
+  if (view === 'ruta' && !Object.hasOwn(RUTA,param)) view = 'rutas';
+  if (view === 'maquina' && !Object.hasOwn(MAQ,param)) view = 'maquinas';
   ui.view = view; ui.param = (view === 'ruta' || view === 'maquina') ? param : null;
   const hash = '#' + view + (ui.param ? '/' + ui.param : '');
   if (location.hash !== hash) { try { history.replaceState(null, '', hash); } catch (e) { /* entorno sin historial */ } }
@@ -40,7 +40,7 @@ function go(view, param = null, opts = {}) {
 }
 function desdeHash() {
   const [v, p] = (location.hash || '').replace('#', '').split('/');
-  return { view: VISTAS[v] ? v : 'hoy', param: p || null };
+  return { view: Object.hasOwn(VISTAS,v) ? v : 'hoy', param: p || null };
 }
 
 /* ---------- Avisos ---------- */

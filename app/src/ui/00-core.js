@@ -1,6 +1,7 @@
 /* ---------- Núcleo: datos, almacenamiento y progreso ---------- */
 const D = window.ARGOS_DATA;
 const E = window.ArgosEngine;
+const A = window.ArgosAcademy;
 const VERSION = D.version;
 const IDX = E.indexar(D.rutas);
 const RUTA = Object.fromEntries(D.rutas.map((r) => [r.id, r]));
@@ -35,7 +36,8 @@ const store = {
   },
   del(k) { delete MEM[k]; try { localStorage.removeItem(k); } catch (e) { /* nada */ } }
 };
-const KEY = 'argos/v1/progreso';
+const MODO_DEMO = /[?&]demo(?:[=&]|$)/.test(location.search);
+const KEY = MODO_DEMO ? 'argos/demo/progreso' : 'argos/v1/progreso';
 const PROGRESO_VERSION = 2;
 
 /* ---------- Progreso: todo lo que entra (almacenamiento o importación) se valida ---------- */
@@ -44,7 +46,11 @@ function safeParse(text) { return JSON.parse(text, (k, v) => (BAD_KEYS.has(k) ? 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const str = (v, max = 80) => (typeof v === 'string' ? v.replace(/[\u0000-\u001F\u007F]/g, '').slice(0, max) : '');
 const num = (v, min, max, def = min) => { const n = Number(v); return Number.isFinite(n) ? Math.max(min, Math.min(max, n)) : def; };
-const fecha = (v) => (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(Date.parse(v)) ? v : '');
+const fecha = (v) => {
+  if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return '';
+  const d = new Date(v + 'T00:00:00Z');
+  return !isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v ? v : '';
+};
 const okKey = (o, k, set) => Object.prototype.hasOwnProperty.call(o, k) && !BAD_KEYS.has(k) && set.has(k);
 
 function nuevoProgreso() {
@@ -65,6 +71,7 @@ function sanear(raw, recuperarSesion = true) {
     p.respuestas[k] = { caja: Math.round(num(e.caja, 0, 5, 0)), aciertos: Math.round(num(e.aciertos, 0, 1e5, 0)), fallos: Math.round(num(e.fallos, 0, 1e5, 0)), due: fecha(e.due), ultima: fecha(e.ultima) };
     // v1 no distinguía un acierto de su recompensa. Conservamos los XP antiguos sin volver a concederlos.
     p.respuestas[k].xpConcedida = p.respuestas[k].aciertos > 0 && (r.v === PROGRESO_VERSION ? e.xpConcedida === true : true);
+    p.respuestas[k].historial = Array.isArray(e.historial) ? e.historial.slice(-30).filter((h) => isObj(h) && fecha(h.fecha) && typeof h.acierto === 'boolean' && ['sala','repaso','simulacro'].includes(h.modo)).map((h) => ({ fecha: h.fecha, acierto: h.acierto, modo: h.modo })) : [];
   }
   const sids = new Set(Object.keys(SALA));
   if (isObj(r.salas)) for (const k of Object.keys(r.salas)) {
@@ -94,6 +101,7 @@ function sanear(raw, recuperarSesion = true) {
   const cumplidos = E.logrosCumplidos(p, D, hoy());
   if (isObj(r.logros)) for (const k of Object.keys(r.logros)) if (okKey(r.logros, k, lids) && cumplidos.has(k)) p.logros[k] = fecha(r.logros[k]) || hoy();
   p.sesion = recuperarSesion ? sanearSesion(r.sesion) : null;
+  p.laboratorio = A.limpiarBorrador(r.laboratorio);
   return p;
 }
 
@@ -111,6 +119,7 @@ function registrarRespuesta(qid, acierto, modo) {
   const q = IDX.preguntas.get(qid); const previo = P.respuestas[qid];
   P.respuestas[qid] = E.repasar(previo, acierto, hoy());
   P.respuestas[qid].xpConcedida = previo?.xpConcedida === true;
+  P.respuestas[qid].historial = [...(previo?.historial || []), { fecha: hoy(), acierto, modo }].slice(-30);
   const d = diaHoy(); d.preguntas++;
   let xp = 0;
   if (modo === 'repaso') { d.repasos++; if (acierto) { P.repasosOk++; xp = sumarXp(E.XP.repaso); } }

@@ -1,5 +1,6 @@
 /* ---------- Eventos: un único escuchador delegado por tipo ---------- */
 const ACCIONES = {
+  'demo-reset': () => { if (!MODO_DEMO) return; confirmar('¿Restablecer la demostración?', 'Solo se borrará el progreso de demostración.', () => { cerrarSesion(); P = nuevoProgreso(); guardar(); go('inicio'); }, 'Restablecer'); },
   go: (b) => go(b.dataset.view, b.dataset.param || null),
   sala: (b) => iniciarSala(b.dataset.id),
   repaso: () => iniciarRepaso(),
