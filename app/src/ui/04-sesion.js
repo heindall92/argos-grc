@@ -7,7 +7,7 @@ function copiaSesion(s) {
 function sanearSesion(raw) {
   if (!isObj(raw) || raw.v !== 1 || raw.banco !== VERSION || !['sala', 'repaso', 'simulacro'].includes(raw.modo)) return null;
   const { modo, id } = raw;
-  if ((modo === 'sala' && !SALA[id]) || (modo === 'simulacro' && !SIM[id]) || (modo === 'repaso' && id !== 'repaso')) return null;
+  if ((modo === 'sala' && !Object.hasOwn(SALA,id)) || (modo === 'simulacro' && !Object.hasOwn(SIM,id)) || (modo === 'repaso' && id !== 'repaso')) return null;
   if (!Array.isArray(raw.ids) || !raw.ids.length || raw.ids.length > 200 || new Set(raw.ids).size !== raw.ids.length) return null;
   const ids = raw.ids;
   const elegibles = modo === 'sala' ? SALA[id].preguntas.map((q) => q.id) : modo === 'simulacro' ? E.preguntasDeSimulacro(D.rutas, SIM[id]).flatMap((s) => s.preguntas.map((q) => q.id)) : [...IDX.preguntas.keys()];

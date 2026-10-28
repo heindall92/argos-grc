@@ -10,6 +10,12 @@ const path = require('path');
 const crypto = require('crypto');
 const E = require('./src/engine.js');
 const BANCO = require('./data/index.js');
+const Academy = require('./src/academy.js');
+const comunidad = path.join(__dirname, '..', 'community');
+if (fs.existsSync(comunidad)) for (const f of fs.readdirSync(comunidad).filter((f) => f.endsWith('.json'))) {
+  const erroresPack = Academy.validarPack(JSON.parse(fs.readFileSync(path.join(comunidad, f), 'utf8')), E);
+  if (erroresPack.length) throw Error(`${f}: ${erroresPack.join('; ')}`);
+}
 
 const errores = E.validarBanco(BANCO);
 if (errores.length) { console.error('El banco de preguntas tiene errores:\n - ' + errores.join('\n - ')); process.exit(1); }

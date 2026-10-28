@@ -46,7 +46,11 @@ function safeParse(text) { return JSON.parse(text, (k, v) => (BAD_KEYS.has(k) ? 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const str = (v, max = 80) => (typeof v === 'string' ? v.replace(/[\u0000-\u001F\u007F]/g, '').slice(0, max) : '');
 const num = (v, min, max, def = min) => { const n = Number(v); return Number.isFinite(n) ? Math.max(min, Math.min(max, n)) : def; };
-const fecha = (v) => (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) && !isNaN(Date.parse(v)) ? v : '');
+const fecha = (v) => {
+  if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return '';
+  const d = new Date(v + 'T00:00:00Z');
+  return !isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v ? v : '';
+};
 const okKey = (o, k, set) => Object.prototype.hasOwnProperty.call(o, k) && !BAD_KEYS.has(k) && set.has(k);
 
 function nuevoProgreso() {

@@ -68,6 +68,29 @@ def main():
             with page.expect_download() as download:
                 page.click('[data-act="lab-exportar"]')
             assert download.value.suggested_filename.endswith('.md')
+            page.click('[data-view="taller"]')
+            page.click('[data-act="taller-previsualizar"]')
+            preview = page.inner_text('#resumen-preview')
+            assert '"nombre"' not in preview and '"textos"' not in preview
+            with page.expect_download() as download:
+                page.click('[data-act="taller-exportar"]')
+            page.set_input_files('#taller-archivos', download.value.path())
+            page.wait_for_function("() => document.querySelector('#taller-agregado').textContent.includes('1 resúmenes válidos')")
+            page.fill('#taller-codigo', 'OTRO-TALLER')
+            page.set_input_files('#taller-archivos', download.value.path())
+            page.wait_for_function("() => document.querySelector('#taller-agregado').textContent.includes('0 resúmenes válidos')")
+            page.click('[data-view="autores"]')
+            page.click('[data-act="pack-validar"]')
+            assert page.locator('[data-act="pack-opcion"]').count() == 18
+            page.click('[data-act="pack-opcion"] >> nth=0')
+            assert 'Coincide' in page.inner_text('#pack-res-0-0')
+            page.fill('#pack-editor', '{"schema":"incorrecto"}')
+            page.click('[data-act="pack-validar"]')
+            assert 'inválido' in page.inner_text('#view')
+            for v in ['inicio','competencias','laboratorio','taller','autores']:
+                page.evaluate(f"{A}.go('{v}')")
+                page.set_viewport_size({'width':390,'height':844})
+                assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), v
             assert not errors, errors
             browser.close()
             print(f'{name}: recuperación, reloj e idempotencia OK')

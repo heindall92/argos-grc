@@ -1,6 +1,21 @@
 # Cambios
 
-## En desarrollo · Fase 1 · progreso fiable
+## 1.4.0-rc.1 · candidata · octubre de 2026
+
+Implementación en cinco ramas encadenadas para revisión antes de integrar en `main`.
+
+### Aprendizaje y comunidad
+
+- Inicio guiado, demostración con progreso separado y guía para el showcase.
+- Siete competencias con distinción entre acierto y retención, recomendaciones explicadas e historial acotado.
+- Registro editorial con edición, fuente, URL, revisor y fecha, sin atribuir revisiones no realizadas.
+- Laboratorio con tres situaciones reproducibles por semilla: RTO, RPO y evidencia insuficiente. Borrador persistente, rúbrica e informe Markdown.
+- Taller por semilla con selección de datos y previsualización. El facilitador importa resúmenes compatibles y ve agregados sin nombres ni textos.
+- Editor de paquetes declarativos, plantilla, validación y práctica sin XP del perfil. Validador CLI y ejemplo comunitario comprobado en la construcción.
+- Espaciado coherente con tokens `--sp-*`: las acciones se separan del texto y entre sí, las tarjetas consecutivas no se tocan y en móvil el pie del simulacro cabe en una fila.
+- Las justificaciones, la prueba con cinco usuarios y la exactitud normativa requieren revisión humana.
+
+### Progreso fiable
 
 - XP de preguntas separados de los aciertos en simulacros y repasos. No se duplican al recargar.
 - El repaso anticipado conserva fecha y caja; reforzar un fallo el mismo día no acredita otra etapa de retención.

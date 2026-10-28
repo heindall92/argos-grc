@@ -24,7 +24,7 @@ function vLaboratorio() {
 function guardarLab(ev) {
   const el=ev.target; if (!el.dataset.lab && !el.dataset.labEvidencia) return;
   const b=borradorLab();
-  if (el.dataset.lab) b.valores[el.dataset.lab]=str(el.value,2000);
+  if (el.dataset.lab) b.valores[el.dataset.lab]=el.value;
   else { const set=new Set(b.valores.evidencias); el.checked?set.add(el.dataset.labEvidencia):set.delete(el.dataset.labEvidencia); b.valores.evidencias=[...set]; }
   P.laboratorio=A.limpiarBorrador(b); guardar();
   $('#lab-guardado').textContent=avisoGuardado?'Guardado solo en memoria. Exporta tu progreso para conservarlo.':'Borrador guardado en este navegador.';
