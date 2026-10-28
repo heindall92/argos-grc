@@ -59,6 +59,15 @@ def main():
             page.click('[data-view="competencias"]')
             assert page.locator('#view article').count() == 7
             assert 'Tu siguiente práctica' in page.inner_text('#view')
+            page.click('[data-view="laboratorio"]')
+            page.fill('[data-lab="hallazgo"]', 'El acta y la política muestran una diferencia que debe investigarse con evidencias.')
+            page.reload()
+            assert 'diferencia' in page.input_value('[data-lab="hallazgo"]')
+            page.click('[data-act="lab-evaluar"]')
+            assert 'revisión humana' in page.inner_text('#lab-feedback')
+            with page.expect_download() as download:
+                page.click('[data-act="lab-exportar"]')
+            assert download.value.suggested_filename.endswith('.md')
             assert not errors, errors
             browser.close()
             print(f'{name}: recuperación, reloj e idempotencia OK')

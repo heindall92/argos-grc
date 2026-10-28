@@ -3,6 +3,23 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const A = require('../app/src/academy.js');
 const B = require('../app/data');
+test('las variantes son reproducibles y la rúbrica distingue RTO, RPO y falta de evidencia', () => {
+  const tipos=new Set();
+  for(let i=0;i<30;i++){
+    const c=A.caso('taller-'+i); tipos.add(c.foco); assert.deepEqual(c,A.caso('taller-'+i));
+    const v={foco:c.foco,criterio:c.foco==='rto'?'rto':'rpo',evidencias:['E1','E2','E3','E4'],clasificacion:c.foco==='evidencia'?'insuficiente':'desviacion',accion:c.foco==='rto'?'recuperacion':c.foco==='rpo'?'copias':'registro'};
+    assert.equal(A.rubrica(c,v).puntos,4);
+    assert.equal(A.rubrica(c,{}).puntos,0);
+    assert.equal(A.rubrica(c,v).textosCompletos,false,'el acierto estructurado no valida las justificaciones');
+  }
+  assert.equal(tipos.size,3);
+});
+test('borradores acotados y exportaciones que preservan el texto como contenido', () => {
+  const b=A.limpiarBorrador({seed:'prueba',valores:{hallazgo:'<script>oops</script>',evidencias:['E1','E1','inventada'],accion:5}});
+  assert.deepEqual(b.valores.evidencias,['E1']);assert.equal(b.valores.accion,'');
+  const informe=A.informe(A.caso('prueba'),b.valores,'test');
+  assert.ok(informe.includes('&lt;script&gt;'));assert.ok(!informe.includes('<script>'));
+});
 test('las competencias cubren cada sala y cada caso una sola vez', () => {
   const salas = A.COMPETENCIAS.flatMap((c) => c.salas).sort();
   assert.deepEqual(salas, B.rutas.flatMap((r) => r.salas.map((s) => s.id)).sort());

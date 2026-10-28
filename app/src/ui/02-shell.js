@@ -17,7 +17,7 @@ function renderTop() {
   $('#tabbar').innerHTML = SECCIONES.map(([id, n, ic]) => `<button type="button" data-act="go" data-view="${id}"${cur === id ? ' aria-current="page"' : ''}>${icon(ic, 22)}<span>${n}</span></button>`).join('');
 }
 
-const VISTAS = { competencias: vCompetencias, inicio: vInicio, hoy: vHoy, rutas: vRutas, ruta: vRuta, maquinas: vMaquinas, maquina: vMaquina, simulacros: vSimulacros, logros: vLogros, perfil: vPerfil, ayuda: vAyuda };
+const VISTAS = { laboratorio: vLaboratorio, competencias: vCompetencias, inicio: vInicio, hoy: vHoy, rutas: vRutas, ruta: vRuta, maquinas: vMaquinas, maquina: vMaquina, simulacros: vSimulacros, logros: vLogros, perfil: vPerfil, ayuda: vAyuda };
 function render() {
   aplicarTema();
   renderTop();
