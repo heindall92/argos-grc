@@ -1,0 +1,12 @@
+node_modules/
+build/
+out/
+public/generated/
+public/clips/*.mp4
+public/clips_proxy/
+voz_propia/
+src/generated/
+__pycache__/
+.venv/
+public/clips_1080/
+public/clips_final/

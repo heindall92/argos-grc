@@ -1,0 +1,39 @@
+name: Algo no funciona
+description: Un fallo de la aplicación (botón que no responde, pantalla rota, progreso perdido…).
+title: "Error: "
+labels: ["error"]
+body:
+  - type: textarea
+    id: que
+    attributes:
+      label: Qué pasó
+      description: Qué esperabas y qué ocurrió en realidad.
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducirlo
+      placeholder: |
+        1. Abrir…
+        2. Pulsar…
+        3. Ver…
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versión de ARGOS
+      placeholder: "1.4.0"
+    validations:
+      required: true
+  - type: input
+    id: navegador
+    attributes:
+      label: Navegador y dispositivo
+      placeholder: "Firefox 133 en Windows 11, Safari en iPhone…"
+  - type: textarea
+    id: captura
+    attributes:
+      label: Captura (opcional)
+      description: Revisa que no muestre datos personales.

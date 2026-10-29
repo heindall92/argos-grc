@@ -12,9 +12,7 @@ Implementación en ramas encadenadas; `main` permanece intacta. Cada rama parte 
 
 ## Revisión y publicación
 
-Las cinco fases tienen implementación en la candidata 1.4.0-rc.1. Los resultados y límites de las comprobaciones se recogen en [VALIDACION.md](VALIDACION.md). La subida al repositorio se entrega al propietario; no se ha fusionado ni publicado la candidata.
-
-Revisar en orden y fusionar hacia la rama precedente o retargetear tras cada integración. Nunca publicar automáticamente. El último hito contiene el conjunto completo para la revisión funcional.
+Las cinco fases se integraron en `main` el 28 de octubre de 2026 como candidata 1.4.0-rc.1 y se publicaron como **1.4.0** tras la revisión del 29 de octubre: navegación «Aprender», demostración con progreso de ejemplo, tarjeta de Hoy en móvil, selector de archivo propio y enlace público del taller. Los resultados y límites de las comprobaciones se recogen en [VALIDACION.md](VALIDACION.md); el plan de la presentación, en [ROADMAP_SHOWCASE.md](ROADMAP_SHOWCASE.md).
 
 ## Compatibilidad de progreso
 

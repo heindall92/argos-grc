@@ -1,0 +1,56 @@
+{
+ "clip": "logros",
+ "duracion": 20.909,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.203,
+   "tipo": "clic",
+   "caja": [
+    992,
+    12,
+    100,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 3.696,
+   "tipo": "foco",
+   "caja": [
+    420,
+    243,
+    168,
+    255
+   ],
+   "texto": "7 de 20 logros",
+   "zoom": null
+  },
+  {
+   "t": 6.25,
+   "tipo": "foco",
+   "caja": [
+    967,
+    243,
+    168,
+    255
+   ],
+   "texto": "Bloqueado",
+   "zoom": null
+  },
+  {
+   "t": 13.884,
+   "tipo": "foco",
+   "caja": [
+    459,
+    919,
+    539,
+    19
+   ],
+   "texto": "Panoptes: el 85 % de los puntos",
+   "zoom": null
+  }
+ ]
+}

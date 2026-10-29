@@ -1,0 +1,80 @@
+{
+ "clip": "recuperacion",
+ "duracion": 20.681,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 0.459,
+   "tipo": "foco",
+   "caja": [
+    1811,
+    15,
+    93,
+    34
+   ],
+   "texto": "El reloj sigue corriendo",
+   "zoom": null
+  },
+  {
+   "t": 3.307,
+   "tipo": "foco",
+   "caja": [
+    746,
+    938,
+    428,
+    46
+   ],
+   "texto": "Sesión recuperada",
+   "zoom": null
+  },
+  {
+   "t": 5.755,
+   "tipo": "foco",
+   "caja": [
+    1811,
+    15,
+    93,
+    34
+   ],
+   "texto": "Mismo plazo absoluto",
+   "zoom": null
+  },
+  {
+   "t": 8.317,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1028,
+    720,
+    36
+   ],
+   "texto": "Entregar",
+   "zoom": null
+  },
+  {
+   "t": 10.465,
+   "tipo": "clic",
+   "caja": [
+    1041,
+    573,
+    113,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 12.823,
+   "tipo": "foco",
+   "caja": [
+    640,
+    64,
+    640,
+    1383
+   ],
+   "texto": "Resultado y salas que reforzar",
+   "zoom": null
+  }
+ ]
+}

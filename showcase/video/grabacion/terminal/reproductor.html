@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Terminal</title>
+<style>/*XTERM_CSS*/</style>
+<script>/*XTERM_JS*/</script>
+<style>
+  html, body { margin: 0; height: 100%; background: radial-gradient(1200px 700px at 30% 20%, #0e1a2e 0%, #05070d 70%); overflow: hidden; }
+  .win { position: absolute; left: 90px; top: 70px; right: 90px; bottom: 70px; border-radius: 14px; overflow: hidden;
+         background: #0b1220; border: 1px solid rgba(63,208,214,.30); box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.4); }
+  .bar { height: 44px; display: flex; align-items: center; gap: 9px; padding: 0 18px; background: #0e1422; border-bottom: 1px solid rgba(63,208,214,.18); }
+  .dot { width: 13px; height: 13px; border-radius: 50%; }
+  .tit { flex: 1; text-align: center; color: #a1a1a8; font: 600 15px ui-monospace, 'DejaVu Sans Mono', monospace; letter-spacing: .5px; margin-right: 60px; }
+  #t { position: absolute; top: 60px; left: 22px; right: 22px; bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="win">
+  <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span>
+    <span class="dot" style="background:#28c840"></span><span class="tit" id="tit"></span></div>
+  <div id="t"></div>
+</div>
+<script>
+  // DATOS = {titulo, pasos: [[segundos_de_espera, "base64"], ...]}  (lo inyecta grabar_terminal.py)
+  const term = new Terminal({
+    fontFamily: "'DejaVu Sans Mono', 'Cascadia Mono', Consolas, monospace", fontSize: 21, lineHeight: 1.15,
+    cols: 118, rows: 32, cursorBlink: false, allowProposedApi: true,
+    theme: { background: '#0b1220', foreground: '#e6edf5', cursor: '#3fd0d6', green: '#5fdc8c', brightGreen: '#7fe3a6',
+             blue: '#5b9dff', brightBlue: '#7fb2ff', red: '#ff5a6a', yellow: '#ffb454', cyan: '#3fd0d6', brightBlack: '#6b7686' }
+  });
+  term.open(document.getElementById('t'));
+  document.getElementById('tit').textContent = DATOS.titulo;
+  const dec = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  window.__fin = false;
+  (async () => {
+    await new Promise(r => setTimeout(r, 800));
+    for (const [espera, b64] of DATOS.pasos) {
+      if (espera > 0) await new Promise(r => setTimeout(r, espera * 1000));
+      term.write(dec(b64));
+    }
+    window.__fin = true;
+  })();
+</script>
+</body>
+</html>

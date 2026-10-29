@@ -1,0 +1,56 @@
+{
+ "clip": "movil",
+ "duracion": 18.425,
+ "ancho": 390,
+ "alto": 844,
+ "marcas": [
+  {
+   "t": 3.92,
+   "tipo": "clic",
+   "caja": [
+    134,
+    775,
+    61,
+    50
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 8.127,
+   "tipo": "clic",
+   "caja": [
+    257,
+    775,
+    61,
+    50
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 10.796,
+   "tipo": "clic",
+   "caja": [
+    267,
+    147,
+    107,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 15.338,
+   "tipo": "clic",
+   "caja": [
+    319,
+    775,
+    61,
+    50
+   ],
+   "texto": null,
+   "zoom": null
+  }
+ ]
+}

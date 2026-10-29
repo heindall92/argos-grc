@@ -1,0 +1,68 @@
+{
+ "clip": "autores",
+ "duracion": 19.518,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 0.472,
+   "tipo": "foco",
+   "caja": [
+    443,
+    386,
+    1034,
+    346
+   ],
+   "texto": "Plantilla argos-pack/v1",
+   "zoom": null
+  },
+  {
+   "t": 3.901,
+   "tipo": "clic",
+   "caja": [
+    443,
+    838,
+    227,
+    44
+   ],
+   "texto": "Validar y previsualizar",
+   "zoom": null
+  },
+  {
+   "t": 8.696,
+   "tipo": "clic",
+   "caja": [
+    443,
+    518,
+    134,
+    44
+   ],
+   "texto": "Practicar sin sumar puntos",
+   "zoom": null
+  },
+  {
+   "t": 11.728,
+   "tipo": "clic",
+   "caja": [
+    443,
+    685,
+    260,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 16.112,
+   "tipo": "foco",
+   "caja": [
+    443,
+    785,
+    1034,
+    37
+   ],
+   "texto": "Revisión antes de entrar en el banco",
+   "zoom": null
+  }
+ ]
+}

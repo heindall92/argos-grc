@@ -1,0 +1,68 @@
+{
+ "clip": "ransom_briefing",
+ "duracion": 22.378,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 0.486,
+   "tipo": "foco",
+   "caja": [
+    420,
+    272,
+    1080,
+    136
+   ],
+   "texto": "Briefing",
+   "zoom": null
+  },
+  {
+   "t": 4.327,
+   "tipo": "clic",
+   "caja": [
+    420,
+    479,
+    110,
+    36
+   ],
+   "texto": "Cronología",
+   "zoom": null
+  },
+  {
+   "t": 8.264,
+   "tipo": "foco",
+   "caja": [
+    420,
+    525,
+    1080,
+    212
+   ],
+   "texto": "23:25 · apagan dos servidores sin registro",
+   "zoom": null
+  },
+  {
+   "t": 12.82,
+   "tipo": "clic",
+   "caja": [
+    536,
+    479,
+    261,
+    36
+   ],
+   "texto": "BIA de la plataforma",
+   "zoom": null
+  },
+  {
+   "t": 17.309,
+   "tipo": "clic",
+   "caja": [
+    803,
+    479,
+    255,
+    36
+   ],
+   "texto": "Plan de continuidad",
+   "zoom": null
+  }
+ ]
+}

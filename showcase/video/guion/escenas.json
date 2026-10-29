@@ -1,0 +1,789 @@
+{
+ "titulo": "ARGOS · Practicar GRC como se practica el hacking",
+ "bloques": {
+  "presentacion": "Presentación",
+  "problema": "El problema",
+  "recorrido": "Recorrido",
+  "aprender": "Aprender",
+  "comunidad": "Comunidad",
+  "calidad": "Calidad",
+  "cierre": "Cierre"
+ },
+ "escenas": [
+  {
+   "id": "s01_portada",
+   "bloque": "presentacion",
+   "titulo": "ARGOS",
+   "visual": {
+    "tipo": "portada"
+   },
+   "frases": [
+    "Hola. Soy Yoandy Ramírez Delgado y hoy os presento ARGOS, un laboratorio de práctica de gobierno, riesgo y cumplimiento.",
+    "Es gratuito, de código abierto, está en español y funciona entero en tu navegador.",
+    "La idea cabe en una frase: practicar GRC como se practica el hacking, con casos, evidencias y decisiones que tienes que justificar."
+   ]
+  },
+  {
+   "id": "s02_quien",
+   "bloque": "presentacion",
+   "titulo": "Quién soy",
+   "visual": {
+    "tipo": "tarjetas",
+    "kicker": "Quién soy",
+    "titular": "Entre la parte ofensiva y la de cumplimiento",
+    "tarjetas": [
+     {
+      "icono": "terminal",
+      "titulo": "Ofensiva",
+      "texto": "Pentester junior con la eJPTv2, sysadmin y laboratorios de Active Directory.",
+      "en": 0
+     },
+     {
+      "icono": "scale",
+      "titulo": "GRC",
+      "texto": "ENS, ISO/IEC 27001, continuidad y gobierno de la IA.",
+      "en": 1
+     },
+     {
+      "icono": "lock",
+      "titulo": "Local-first",
+      "texto": "Herramientas sin cuentas, sin servidor y sin analítica.",
+      "en": 2
+     }
+    ]
+   },
+   "frases": [
+    "Vengo del lado técnico: soy pentester junior con la certificación eJPTv2, trabajo como administrador de sistemas y paso muchas horas en laboratorios de Active Directory.",
+    "Al mismo tiempo me estoy formando en gobierno, riesgo y cumplimiento: el Esquema Nacional de Seguridad, la ISO/IEC 27001, la continuidad de negocio y el gobierno de la inteligencia artificial.",
+    "Y desde hace meses publico herramientas abiertas para esa formación, todas con la misma regla: sin cuentas, sin servidor y sin analítica. Lo que haces se queda en tu equipo."
+   ]
+  },
+  {
+   "id": "s03_problema",
+   "bloque": "problema",
+   "titulo": "El problema",
+   "visual": {
+    "tipo": "comparacion",
+    "kicker": "El problema",
+    "titular": "Leer la norma no es lo mismo que decidir con evidencias",
+    "izquierda": {
+     "titulo": "Lo que se estudia",
+     "items": [
+      "Artículos, cláusulas y controles",
+      "Definiciones de RTO, RPO y BIA",
+      "Preguntas tipo test"
+     ],
+     "en": 0
+    },
+    "derecha": {
+     "titulo": "Lo que se evalúa en el trabajo",
+     "items": [
+      "Un incidente con prisa y ruido",
+      "Evidencias incompletas o contradictorias",
+      "Una decisión que tienes que defender"
+     ],
+     "en": 2
+    }
+   },
+   "frases": [
+    "Cuando alguien empieza en GRC, casi todo el material consiste en leer: artículos, cláusulas, controles y definiciones.",
+    "Y se evalúa con preguntas tipo test que premian la memoria.",
+    "Pero en el trabajo real nadie te pregunta la definición de RPO. Te ponen delante un incidente, un acta de recuperación que dice «copia correcta» y una política interna, y te piden que decidas si hay una no conformidad.",
+    "Las evidencias llegan incompletas, a veces se contradicen, y la decisión la tienes que defender delante de un auditor o de un comité de crisis.",
+    "Esa distancia entre saber la norma y aplicarla es la que quería cubrir."
+   ]
+  },
+  {
+   "id": "s04_huecos",
+   "bloque": "problema",
+   "titulo": "Tres huecos",
+   "visual": {
+    "tipo": "tarjetas",
+    "kicker": "Lo que falta",
+    "titular": "Tres huecos para quien empieza",
+    "tarjetas": [
+     {
+      "icono": "flask",
+      "titulo": "Práctica realista",
+      "texto": "Casos con evidencias, donde equivocarse no cuesta nada.",
+      "en": 0
+     },
+     {
+      "icono": "globe",
+      "titulo": "En español",
+      "texto": "Con el marco que se audita en España y útil en Latinoamérica.",
+      "en": 1
+     },
+     {
+      "icono": "lightbulb",
+      "titulo": "Corrección explicada",
+      "texto": "Por qué, con qué referencia y qué mirar la próxima vez.",
+      "en": 2
+     }
+    ]
+   },
+   "frases": [
+    "Vi tres huecos. El primero: hay poca práctica realista, con casos y evidencias, en un sitio donde equivocarse no tenga consecuencias.",
+    "El segundo: casi todo lo bueno está en inglés, y lo que hay en español rara vez trabaja con el marco que de verdad se audita en España, el Esquema Nacional de Seguridad, ni pone ejemplos que sirvan en Latinoamérica.",
+    "Y el tercero: cuando fallas, la mayoría de las plataformas te dicen «incorrecto» y siguen. No te explican por qué, ni de dónde sale la respuesta, ni qué tendrías que haber mirado."
+   ]
+  },
+  {
+   "id": "s05_idea",
+   "bloque": "problema",
+   "titulo": "La idea",
+   "visual": {
+    "tipo": "mapa",
+    "kicker": "La idea",
+    "titular": "Una máquina de hacking, pero de gobierno y cumplimiento",
+    "filas": [
+     {
+      "de": "Máquina",
+      "a": "Caso de una organización ficticia",
+      "en": 1
+     },
+     {
+      "de": "Enumeración",
+      "a": "Evidencias: cronología, BIA, plan, actas",
+      "en": 1.6
+     },
+     {
+      "de": "Flag de user",
+      "a": "Identificar qué está pasando",
+      "en": 2
+     },
+     {
+      "de": "Flag de root",
+      "a": "Decidir y justificarlo como el comité",
+      "en": 2.5
+     },
+     {
+      "de": "Write-up",
+      "a": "Explicación con su referencia",
+      "en": 3
+     }
+    ]
+   },
+   "frases": [
+    "Como vengo de Hack The Box y de los CTF, la idea salió sola: ¿por qué no practicar GRC con el mismo formato que una máquina de hacking?",
+    "En ARGOS, una máquina es un caso de una organización ficticia, y en lugar de enumerar puertos lees evidencias: una cronología, un análisis de impacto, un plan de continuidad, un acta.",
+    "La flag de user es identificar qué está pasando. La flag de root es decidir qué haría el comité y por qué.",
+    "Y el write-up no llega al final del todo: cada respuesta trae su explicación y la referencia de donde sale, sea un artículo del BOE, una cláusula de la norma o una guía pública."
+   ]
+  },
+  {
+   "id": "s06_cifras",
+   "bloque": "problema",
+   "titulo": "Lo que hay dentro",
+   "visual": {
+    "tipo": "cifras",
+    "kicker": "ARGOS 1.4.0",
+    "titular": "Lo que hay dentro",
+    "cifras": [
+     {
+      "valor": 190,
+      "etiqueta": "preguntas",
+      "detalle": "en 19 salas y 3 rutas",
+      "en": 0
+     },
+     {
+      "valor": 15,
+      "etiqueta": "máquinas",
+      "detalle": "con 75 flags",
+      "en": 1
+     },
+     {
+      "valor": 13,
+      "etiqueta": "simulacros",
+      "detalle": "con reloj",
+      "en": 2
+     },
+     {
+      "valor": 0,
+      "etiqueta": "cuentas",
+      "detalle": "ni servidores ni rastreadores",
+      "en": 3
+     }
+    ]
+   },
+   "frases": [
+    "Hoy ARGOS tiene ciento noventa preguntas repartidas en diecinueve salas y tres rutas: el Esquema Nacional de Seguridad, la ISO/IEC 27001 y la continuidad de negocio.",
+    "Quince máquinas, cinco fáciles, cinco medias y cinco difíciles, con setenta y cinco flags en total.",
+    "Trece simulacros con reloj, desde sprints de diez minutos hasta un maratón de noventa preguntas.",
+    "Y cero cuentas, cero servidores y cero rastreadores. Todo vive en un único archivo HTML."
+   ]
+  },
+  {
+   "id": "s07_agenda",
+   "bloque": "problema",
+   "titulo": "Qué vamos a ver",
+   "visual": {
+    "tipo": "agenda",
+    "kicker": "En este vídeo",
+    "titular": "Qué vamos a ver",
+    "items": [
+     {
+      "texto": "Recorrido: salas, máquinas y simulacros",
+      "en": 0
+     },
+     {
+      "texto": "Aprender: competencias, laboratorio y taller",
+      "en": 1
+     },
+     {
+      "texto": "Comunidad: paquetes de casos propios",
+      "en": 1.6
+     },
+     {
+      "texto": "Calidad: arquitectura, pruebas y límites",
+      "en": 2
+     }
+    ]
+   },
+   "frases": [
+    "En los próximos minutos vamos a recorrer la aplicación de verdad, grabada tal cual funciona: salas, máquinas y simulacros.",
+    "Después, la parte nueva de la versión uno punto cuatro: competencias, un laboratorio con entregable y un modo taller para clases y comunidades, además de cómo puedes crear tus propios casos.",
+    "Y al final, cómo está hecho por dentro, cómo se prueba y qué límites tiene, que también es importante contarlo."
+   ]
+  },
+  {
+   "id": "s08_hoy",
+   "bloque": "recorrido",
+   "titulo": "Hoy",
+   "visual": {
+    "tipo": "toma",
+    "clip": "hoy",
+    "rotulo": "Hoy: tu punto de partida"
+   },
+   "frases": [
+    "Esta es la pantalla de Hoy, con un perfil de demostración que lleva unos días practicando.",
+    "Arriba, la racha de días seguidos y los puntos de experiencia.",
+    "Debajo, la meta del día: puntos, preguntas respondidas y repasos pendientes.",
+    "A la derecha, el rango. En ARGOS empiezas con un solo ojo abierto, y cada sala, cada flag y cada simulacro abren otro, hasta llegar a Panoptes, el que lo ve todo.",
+    "Y más abajo, lo que te toca: nueve preguntas que vuelven hoy para repasar y la siguiente sala recomendada."
+   ]
+  },
+  {
+   "id": "s09_rutas",
+   "bloque": "recorrido",
+   "titulo": "Rutas",
+   "visual": {
+    "tipo": "toma",
+    "clip": "rutas",
+    "rotulo": "Tres rutas, diecinueve salas"
+   },
+   "frases": [
+    "Las rutas ordenan el contenido. La del Esquema Nacional de Seguridad tiene siete salas: desde el ámbito y los principios básicos hasta el análisis de riesgos con MAGERIT y el puente con la ISO 27001.",
+    "La de ISO/IEC 27001 tiene ocho, con el anexo A y la certificación, y la de continuidad, cuatro: del análisis de impacto a las pruebas del plan.",
+    "Cada sala muestra tu mejor nota y los intentos, y las rutas son abiertas: puedes empezar por la que te haga falta."
+   ]
+  },
+  {
+   "id": "s10_sala",
+   "bloque": "recorrido",
+   "titulo": "Una sala",
+   "visual": {
+    "tipo": "toma",
+    "clip": "sala",
+    "rotulo": "Corrección explicada"
+   },
+   "frases": [
+    "Entramos en una sala del ENS: la categorización del sistema.",
+    "Las preguntas mezclan formatos: opción única, varias respuestas y verdadero o falso.",
+    "Respondo y compruebo. Al acertar o al fallar aparece lo mismo: la explicación de por qué, la referencia exacta y, en el caso del ENS, el texto literal del Real Decreto tal como está en el BOE.",
+    "Si fallo, veo lo mismo: cuál era la respuesta y por qué. Lo importante no es la nota, sino entender de dónde sale.",
+    "Y cada pregunta tiene un enlace para proponer una corrección, con la versión y el identificador ya rellenos."
+   ]
+  },
+  {
+   "id": "s11_fuentes",
+   "bloque": "recorrido",
+   "titulo": "Fuentes y propiedad intelectual",
+   "visual": {
+    "tipo": "comparacion",
+    "kicker": "Fuentes",
+    "titular": "Citar sin copiar lo que no se puede copiar",
+    "izquierda": {
+     "titulo": "ENS · BOE",
+     "items": [
+      "Texto literal del Real Decreto 311/2022",
+      "23 citas comprobadas contra el BOE en cada prueba",
+      "Guías públicas del CCN y MAGERIT"
+     ],
+     "en": 0,
+     "bien": true,
+     "color": "ens"
+    },
+    "derecha": {
+     "titulo": "ISO/IEC 27001",
+     "items": [
+      "Solo el número de cláusula o control",
+      "Redacción propia, nunca el texto de la norma",
+      "Las pruebas fallan si una referencia no cita cláusula o control"
+     ],
+     "en": 2,
+     "bien": true,
+     "color": "iso"
+    }
+   },
+   "frases": [
+    "Un detalle que cuido mucho son las fuentes.",
+    "El ENS es un Real Decreto publicado en el BOE, así que se puede citar literalmente. ARGOS lo hace, y las pruebas automáticas comprueban veintitrés citas contra el texto oficial para que ninguna se desvíe ni una coma.",
+    "Las normas ISO, en cambio, tienen derechos de autor. Por eso ARGOS solo menciona el número de cláusula o de control, y todo lo demás es redacción propia.",
+    "Las pruebas también comprueban que cada referencia ISO cite una cláusula o un control, y buscan expresiones típicas del texto de las normas: si aparece alguna, fallan. Es la forma de respetar la propiedad intelectual sin renunciar a ser preciso."
+   ]
+  },
+  {
+   "id": "s12_repaso",
+   "bloque": "recorrido",
+   "titulo": "Repaso espaciado",
+   "visual": {
+    "tipo": "toma",
+    "clip": "repaso",
+    "rotulo": "Repaso espaciado"
+   },
+   "frases": [
+    "Volvemos a Hoy y abrimos el repaso.",
+    "ARGOS usa repaso espaciado: cada pregunta acertada vuelve al cabo de uno, tres, siete, catorce y treinta días; si fallas, vuelve mañana.",
+    "Repasar antes de tiempo no cuenta como retención, y reforzar un fallo el mismo día tampoco te sube de nivel. Así la cifra de «retenidas» significa lo que dice.",
+    "Es la parte menos vistosa, pero es la que hace que llegues al examen o a la auditoría sin tener que releerlo todo."
+   ]
+  },
+  {
+   "id": "s13_maquinas",
+   "bloque": "recorrido",
+   "titulo": "Máquinas",
+   "visual": {
+    "tipo": "toma",
+    "clip": "maquinas",
+    "rotulo": "Quince máquinas"
+   },
+   "frases": [
+    "Ahora las máquinas. Están ordenadas por dificultad, cinco en cada nivel, y transcurren en tres organizaciones ficticias: Hespéride Servicios Digitales, el Consorcio Digital de Arcadia y el Instituto Pegaso de Formación.",
+    "Hay casos de copias de seguridad, phishing, contratos de nube, una declaración de aplicabilidad sospechosa, un despliegue de viernes, riesgo cuantitativo en euros o una certificación ENS completa.",
+    "La de hoy es de dificultad media: Noche de ransomware."
+   ]
+  },
+  {
+   "id": "s14_ransom_brief",
+   "bloque": "recorrido",
+   "titulo": "Noche de ransomware · evidencias",
+   "visual": {
+    "tipo": "toma",
+    "clip": "ransom_briefing",
+    "rotulo": "Noche de ransomware"
+   },
+   "frases": [
+    "Viernes, once y diez de la noche. El centro de operaciones de Arcadia detecta un cifrado masivo en los servidores de la plataforma de ayudas, y nosotros formamos parte del comité de crisis.",
+    "Primero, las evidencias. La cronología: a las once y veinticinco, un técnico de guardia apaga dos servidores sin dejar registro; de madrugada se confirma el ransomware y caen también las copias en línea; el comité no se reúne hasta las nueve de la mañana.",
+    "El análisis de impacto dice que la plataforma tiene un tiempo de recuperación objetivo de veinticuatro horas y una pérdida de datos tolerable de otras veinticuatro.",
+    "Y el plan de continuidad fija el criterio de activación: en cuanto sea previsible superar la mitad del tiempo de recuperación."
+   ]
+  },
+  {
+   "id": "s15_ransom_flags",
+   "bloque": "recorrido",
+   "titulo": "Noche de ransomware · flags",
+   "visual": {
+    "tipo": "toma",
+    "clip": "ransom_flags",
+    "rotulo": "Flags de user"
+   },
+   "frases": [
+    "Primera flag: ¿cuándo debió activarse el plan? Si el criterio es la mitad del RTO, eran doce horas, y eso se sabía en la madrugada, al confirmarse el ransomware. Esperar a las nueve fue un fallo del proceso.",
+    "Segunda flag: si se restaura la copia offline del miércoles, ¿se cumple el RPO? Aquí me equivoco a propósito y digo que sí.",
+    "ARGOS no me regala la respuesta: me devuelve a las evidencias y me ofrece una pista, que deja la flag en la mitad de los puntos, como en una máquina de verdad.",
+    "Vuelvo a mirar: de miércoles a viernes son más de cuarenta y ocho horas de datos, el doble de lo tolerable. Al acertar llega la explicación con su referencia.",
+    "Tercera flag: apagar servidores sin registrarlo destruye evidencias volátiles y rompe la cadena de custodia."
+   ]
+  },
+  {
+   "id": "s16_ransom_root",
+   "bloque": "recorrido",
+   "titulo": "Noche de ransomware · root",
+   "visual": {
+    "tipo": "toma",
+    "clip": "ransom_root",
+    "rotulo": "Flags de root"
+   },
+   "frases": [
+    "Las flags de root son decisiones de gestión.",
+    "Sistemas quiere volver a producción cuanto antes. Lo imprescindible antes es comprobar la integridad, cerrar el vector de entrada y, en el sector público, seguir las indicaciones del CCN-CERT sobre el riesgo de reconectar.",
+    "Y una periodista pregunta en redes por la caída. Responde el portavoz designado, con un mensaje aprobado por el comité y sin especular sobre causas no confirmadas.",
+    "Con las cinco flags, la máquina queda resuelta. Ninguna pregunta de esta máquina se responde de memoria: todas salen de cruzar las evidencias con el plan."
+   ]
+  },
+  {
+   "id": "s17_simulacros",
+   "bloque": "recorrido",
+   "titulo": "Simulacros",
+   "visual": {
+    "tipo": "toma",
+    "clip": "simulacros",
+    "rotulo": "Trece simulacros"
+   },
+   "frases": [
+    "Los simulacros sirven para medirte con reloj.",
+    "Hay sprints de diez minutos por cada ruta, bloques temáticos, simulacros completos y dos retos: las dieciocho preguntas más difíciles y un maratón GRC de noventa preguntas en dos horas y cuarto.",
+    "Empiezo un sprint de continuidad. Mientras respondes no ves si aciertas, como en un examen, y abajo tienes un navegador de preguntas para saltar y marcar las que quieres revisar."
+   ]
+  },
+  {
+   "id": "s18_recuperacion",
+   "bloque": "recorrido",
+   "titulo": "Recuperar una sesión",
+   "visual": {
+    "tipo": "toma",
+    "clip": "recuperacion",
+    "rotulo": "Recargar no rompe nada"
+   },
+   "frases": [
+    "¿Y si se cierra el navegador a mitad del examen? Lo pruebo recargando la página.",
+    "La sesión se recupera donde estaba, con las respuestas, las marcas y el mismo reloj: el plazo es absoluto, así que recargar no te regala tiempo.",
+    "Entrego. La corrección se hace una sola vez, aunque recargues después, y el resultado te dice qué salas debes reforzar.",
+    "Esto parece un detalle, pero en la versión uno punto cuatro rehíce el progreso para que fuera fiable: los puntos no se duplican al recargar y se migran sin perder nada desde la versión anterior."
+   ]
+  },
+  {
+   "id": "s19_logros",
+   "bloque": "recorrido",
+   "titulo": "Logros y rangos",
+   "visual": {
+    "tipo": "toma",
+    "clip": "logros",
+    "rotulo": "De Primer ojo a Panoptes"
+   },
+   "frases": [
+    "Los logros. Hay veinte, desde la primera sala hasta resolver las cinco máquinas difíciles o aprobar todos los simulacros.",
+    "Y siete rangos, de Primer ojo a Panoptes. Panoptes pide el ochenta y cinco por ciento de los once mil puntos posibles, y las pruebas impiden que un contenido nuevo lo abarate sin recalibrar.",
+    "Abajo se explica cómo se gana cada punto. Me interesaba que la parte de juego empujara a practicar, no que se pudiera inflar."
+   ]
+  },
+  {
+   "id": "s20_aprender",
+   "bloque": "aprender",
+   "titulo": "Aprender",
+   "visual": {
+    "tipo": "toma",
+    "clip": "aprender",
+    "rotulo": "Aprender: lo nuevo de la 1.4"
+   },
+   "frases": [
+    "Pasamos a Aprender, la sección nueva de la versión uno punto cuatro.",
+    "Empieza aquí propone un primer recorrido de diez a quince minutos para quien llega por primera vez: eliges tu punto de partida y te lleva paso a paso hasta Noche de ransomware, con lo que tienes que mirar en cada fase.",
+    "Debajo está el acceso a la demostración, la que estáis viendo, que usa datos separados y se puede restablecer sin tocar tu perfil."
+   ]
+  },
+  {
+   "id": "s21_competencias",
+   "bloque": "aprender",
+   "titulo": "Competencias",
+   "visual": {
+    "tipo": "toma",
+    "clip": "competencias",
+    "rotulo": "Siete competencias"
+   },
+   "frases": [
+    "Competencias agrupa todo el banco en siete áreas: gobernanza, categorización, controles, riesgos, auditoría, operación y cambio, y continuidad.",
+    "Distingue entre una pregunta acertada y una retenida. Retenida significa al menos tres aciertos, una caja alta de repaso y el repaso todavía vigente.",
+    "Arriba aparece tu siguiente práctica con el motivo explicado. Hoy dice que primero repase las nueve preguntas vencidas, y tiene sentido."
+   ]
+  },
+  {
+   "id": "s22_laboratorio",
+   "bloque": "aprender",
+   "titulo": "Un hallazgo defendible",
+   "visual": {
+    "tipo": "toma",
+    "clip": "laboratorio",
+    "rotulo": "Laboratorio con entregable"
+   },
+   "frases": [
+    "El laboratorio es mi parte favorita: Un hallazgo defendible.",
+    "Cada caso sale de una semilla, en este caso NICAHACK, y con la misma semilla todo el mundo ve exactamente las mismas evidencias. Eso permite trabajar el mismo caso en una clase o en un evento.",
+    "Hay una política interna, una cronología, un acta de recuperación y un registro de datos. El servicio volvió en el minuto ciento cinco, dentro de los ciento veinte de objetivo. Pero el acta solo dice «copia correcta», sin la hora del último dato recuperable.",
+    "Así que marco las evidencias que sostienen mi conclusión, elijo el criterio y clasifico: no se puede concluir, falta evidencia.",
+    "Y redacto el hallazgo, la justificación y cómo comprobaría que la acción ha funcionado."
+   ]
+  },
+  {
+   "id": "s23_rubrica",
+   "bloque": "aprender",
+   "titulo": "Rúbrica e informe",
+   "visual": {
+    "tipo": "toma",
+    "clip": "rubrica",
+    "rotulo": "Rúbrica transparente"
+   },
+   "frases": [
+    "Al contrastar con la rúbrica, ARGOS revisa cuatro cosas: que el problema esté bien identificado, que las evidencias y el criterio sean suficientes, que la clasificación sea prudente y que la acción apunte al problema.",
+    "Lo que no hace es puntuar la calidad de lo que he escrito. Eso lo dice la propia pantalla: los textos abiertos necesitan revisión humana.",
+    "Y todo se descarga como informe en Markdown, listo para entregar o para revisarlo con un compañero. Un auditor no escribe no conformidad sin evidencia: escribe que la evidencia no basta y pide el registro."
+   ]
+  },
+  {
+   "id": "s24_taller",
+   "bloque": "aprender",
+   "titulo": "Taller en comunidad",
+   "visual": {
+    "tipo": "toma",
+    "clip": "taller",
+    "rotulo": "Modo taller"
+   },
+   "frases": [
+    "Para clases y comunidades está el modo taller. El facilitador elige un código y comparte un enlace; quien lo abre entra directamente al caso, sin registrarse.",
+    "Cada participante decide qué compartir. El nombre y los textos completos están desmarcados por defecto, ve una vista previa de los datos y descarga un archivo que entrega si quiere.",
+    "El facilitador importa hasta veinte resúmenes y ve resultados agregados, sin nombres ni textos. No hay sala virtual ni servidor: todo sigue en el navegador de cada uno."
+   ]
+  },
+  {
+   "id": "s25_autores",
+   "bloque": "comunidad",
+   "titulo": "Crear contenido",
+   "visual": {
+    "tipo": "toma",
+    "clip": "autores",
+    "rotulo": "Crea tus propios casos"
+   },
+   "frases": [
+    "Y si tienes un caso que merece practicarse, puedes crearlo.",
+    "Crear contenido trae una plantilla en formato argos-pack versión uno: evidencias, entre seis y veinte preguntas por caso, la fuente con su edición y una licencia libre.",
+    "Validas el paquete y lo practicas en vista previa sin sumar puntos a tu perfil. Si quieres proponerlo, pasa por revisión antes de entrar en el banco oficial.",
+    "El editor nunca ejecuta código aportado. Solo lee datos declarativos y los valida, también desde la terminal con un validador propio."
+   ]
+  },
+  {
+   "id": "s26_perfil",
+   "bloque": "comunidad",
+   "titulo": "Perfil y datos",
+   "visual": {
+    "tipo": "toma",
+    "clip": "perfil",
+    "rotulo": "Tus datos son tuyos"
+   },
+   "frases": [
+    "En el perfil están tus datos, y son tuyos.",
+    "Puedes exportar todo el progreso como un archivo JSON e importarlo en otro equipo. Al importar, todo se valida campo a campo y se descarta lo que no encaja, por ejemplo un logro que el progreso no justifica.",
+    "Y el tema claro u oscuro, la meta diaria y tu tarjeta para compartir el rango."
+   ]
+  },
+  {
+   "id": "s27_movil",
+   "bloque": "comunidad",
+   "titulo": "En el móvil",
+   "visual": {
+    "tipo": "toma",
+    "clip": "movil",
+    "rotulo": "También en el móvil",
+    "puntos": [
+     {
+      "texto": "Barra de pestañas abajo",
+      "en": 0
+     },
+     {
+      "texto": "Sin desplazamiento horizontal desde 320 px",
+      "en": 1
+     },
+     {
+      "texto": "Los nombres de las pestañas caben",
+      "en": 1.5
+     }
+    ]
+   },
+   "frases": [
+    "Todo funciona igual en el móvil, con una barra de pestañas abajo.",
+    "Las pruebas comprueban que no hay desplazamiento horizontal desde trescientos veinte píxeles de ancho, y que los nombres de las pestañas caben."
+   ]
+  },
+  {
+   "id": "s28_arquitectura",
+   "bloque": "calidad",
+   "titulo": "Cómo está hecho",
+   "visual": {
+    "tipo": "tarjetas",
+    "kicker": "Por dentro",
+    "titular": "Un único archivo, sin red y con la política de seguridad cerrada",
+    "tarjetas": [
+     {
+      "icono": "file",
+      "titulo": "Un HTML de 400 KB",
+      "texto": "Se abre con doble clic y funciona sin conexión.",
+      "en": 0
+     },
+     {
+      "icono": "shield",
+      "titulo": "CSP por hashes",
+      "texto": "Solo se ejecuta el código del build. Ninguna conexión saliente.",
+      "en": 1
+     },
+     {
+      "icono": "database",
+      "titulo": "Datos validados",
+      "texto": "Todo lo que entra se sanea campo a campo.",
+      "en": 2.5
+     }
+    ]
+   },
+   "frases": [
+    "Por dentro, ARGOS es un único archivo HTML de unos cuatrocientos kilobytes. Se publica en GitHub Pages, pero también puedes descargarlo y abrirlo con doble clic, sin conexión.",
+    "Tiene una política de seguridad de contenidos con hashes: solo se ejecuta el código de esa versión, no se cargan recursos externos y la aplicación no puede hacer ninguna conexión saliente.",
+    "No hay cookies ni analítica. El progreso se guarda en el almacenamiento local del navegador, y si el navegador no lo permite, se avisa para que exportes.",
+    "Y todo lo que entra, sea del almacenamiento, de una importación o de un paquete, pasa por un saneado que reconstruye los datos campo a campo con límites."
+   ]
+  },
+  {
+   "id": "s29_pruebas",
+   "bloque": "calidad",
+   "titulo": "Pruebas",
+   "visual": {
+    "tipo": "toma",
+    "clip": "term_pruebas",
+    "rotulo": "Las pruebas, en directo",
+    "origen": "terminal"
+   },
+   "frases": [
+    "Esto es la batería de pruebas, ejecutada de verdad.",
+    "Primero se construye la aplicación, que valida el banco de preguntas: si una pregunta está mal formada, no hay versión.",
+    "Después, las pruebas del motor y del banco; los recorridos completos en un navegador real; la accesibilidad, y las regresiones de la hoja de ruta, que en la integración continua se ejecutan en Chromium, Firefox y WebKit.",
+    "Si cualquier paso falla, no se publica."
+   ]
+  },
+  {
+   "id": "s30_calidad",
+   "bloque": "calidad",
+   "titulo": "Calidad en cifras",
+   "visual": {
+    "tipo": "cifras",
+    "kicker": "Calidad",
+    "titular": "Lo que se comprueba en cada cambio",
+    "cifras": [
+     {
+      "valor": 44,
+      "etiqueta": "pruebas de motor",
+      "detalle": "progreso, banco, laboratorio y paquetes",
+      "en": 0
+     },
+     {
+      "valor": 98,
+      "etiqueta": "comprobaciones",
+      "detalle": "de la app en el navegador",
+      "en": 1
+     },
+     {
+      "valor": 232,
+      "etiqueta": "estados con axe",
+      "detalle": "WCAG 2.2 AA, claro y oscuro",
+      "en": 2
+     },
+     {
+      "valor": 0,
+      "etiqueta": "infracciones",
+      "detalle": "de accesibilidad",
+      "en": 2.6
+     }
+    ]
+   },
+   "frases": [
+    "En cifras: cuarenta y cuatro pruebas del motor, que cubren el progreso, el banco, el laboratorio y los paquetes.",
+    "Noventa y ocho comprobaciones de la aplicación en el navegador.",
+    "Y doscientos treinta y dos estados auditados con axe frente a las pautas de accesibilidad WCAG 2.2 nivel AA, en tema claro y oscuro, en escritorio y en móvil, con cero infracciones."
+   ]
+  },
+  {
+   "id": "s31_limites",
+   "bloque": "calidad",
+   "titulo": "Límites",
+   "visual": {
+    "tipo": "lista",
+    "kicker": "Con honestidad",
+    "titular": "Lo que ARGOS no es",
+    "items": [
+     {
+      "texto": "No es una certificación: sus logros no acreditan nada",
+      "en": 0
+     },
+     {
+      "texto": "Falta la revisión experta externa del contenido",
+      "en": 1
+     },
+     {
+      "texto": "Falta la prueba con cinco usuarios nuevos",
+      "en": 2
+     },
+     {
+      "texto": "Las pruebas automáticas no sustituyen a una persona",
+      "en": 3
+     }
+    ]
+   },
+   "frases": [
+    "Y ahora, con honestidad, lo que ARGOS no es. No es una certificación ni la sustituye: sus logros no acreditan nada, y la propia aplicación lo dice.",
+    "Falta la revisión experta externa del contenido normativo. Todo está referenciado, pero un experto independiente todavía no lo ha revisado, y así consta en la documentación.",
+    "Falta también la prueba con cinco usuarios nuevos, que tengo preparada con su protocolo.",
+    "Y que pasen todas las pruebas automáticas no significa que el contenido sea correcto. Por eso cada pregunta tiene su enlace para proponer correcciones."
+   ]
+  },
+  {
+   "id": "s32_ecosistema",
+   "bloque": "cierre",
+   "titulo": "Ecosistema",
+   "visual": {
+    "tipo": "ecosistema",
+    "kicker": "Ecosistema",
+    "titular": "ARGOS no está solo",
+    "herramientas": [
+     {
+      "nombre": "ARGOS",
+      "texto": "Practicar las decisiones",
+      "yo": true,
+      "en": 0
+     },
+     {
+      "nombre": "CTEM-Nexus",
+      "texto": "Hallazgos priorizados con SLA y su máquina de ARGOS",
+      "en": 1
+     },
+     {
+      "nombre": "Rosetta Multinorma",
+      "texto": "Controles cruzados entre 15 normas y leyes",
+      "en": 2
+     },
+     {
+      "nombre": "KAIROS",
+      "texto": "BIA y continuidad, del análisis al plan",
+      "en": 3
+     },
+     {
+      "nombre": "ENS AD Auditor",
+      "texto": "Active Directory frente al ENS",
+      "en": 3.3
+     },
+     {
+      "nombre": "Compliance Studio",
+      "texto": "Preparación de la conformidad ENS",
+      "en": 3.6
+     }
+    ]
+   },
+   "frases": [
+    "ARGOS es una pieza de un ecosistema de herramientas abiertas que comparten formato de intercambio.",
+    "CTEM-Nexus prioriza los hallazgos de un pentest con plazos de corrección, y cada hallazgo enlaza con la máquina de ARGOS que entrena su corrección.",
+    "Rosetta Multinorma cruza los controles de quince normas y leyes de Europa, Estados Unidos y Latinoamérica.",
+    "Y KAIROS, ENS AD Auditor y Compliance Studio cubren la continuidad, el directorio activo y la preparación de la conformidad. Todas, como ARGOS, sin cuentas y sin servidor."
+   ]
+  },
+  {
+   "id": "s33_cierre",
+   "bloque": "cierre",
+   "titulo": "Gracias",
+   "visual": {
+    "tipo": "cierre"
+   },
+   "frases": [
+    "ARGOS es gratis, de código abierto y está en español. Lo tienes en heindall92 punto github punto io barra argos guion grc.",
+    "Pruébalo, rómpelo y cuéntame qué falla. Una estrella en GitHub o un issue con lo que no funciona ayudan más que cualquier otra cosa.",
+    "Gracias por vuestro tiempo, y gracias a NicaSecurity por el espacio en NicaHackFest. Nos vemos en el siguiente caso."
+   ]
+  }
+ ]
+}

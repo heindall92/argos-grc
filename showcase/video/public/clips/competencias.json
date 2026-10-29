@@ -1,0 +1,56 @@
+{
+ "clip": "competencias",
+ "duracion": 17.787,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.309,
+   "tipo": "clic",
+   "caja": [
+    556,
+    155,
+    126,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 3.455,
+   "tipo": "foco",
+   "caja": [
+    420,
+    334,
+    1080,
+    172
+   ],
+   "texto": "Tu siguiente práctica, con el motivo",
+   "zoom": null
+  },
+  {
+   "t": 8.828,
+   "tipo": "foco",
+   "caja": [
+    420,
+    120,
+    351,
+    221
+   ],
+   "texto": "Gobernanza: 19 de 40 retenidas",
+   "zoom": null
+  },
+  {
+   "t": 11.754,
+   "tipo": "foco",
+   "caja": [
+    420,
+    627,
+    351,
+    221
+   ],
+   "texto": "Continuidad: 8 de 40",
+   "zoom": null
+  }
+ ]
+}

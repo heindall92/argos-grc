@@ -329,7 +329,7 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
   .top-end .chip.eyes { display: none; }
   .main { padding: 20px 16px 120px; }
   .lt { font-size: 1.85rem; }
-  .tabbar { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 40; height: 64px; padding: 6px; border-radius: 22px; background: var(--card); border: .5px solid var(--sep); box-shadow: var(--shadow-lg); }
+  .tabbar { display: grid; grid-template-columns: repeat(6, 1fr); position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 40; height: 64px; padding: 6px; border-radius: 22px; background: var(--card); border: .5px solid var(--sep); box-shadow: var(--shadow-lg); }
   .tabbar button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: 0; border-radius: 16px; background: none; color: var(--muted); font-size: .68rem; font-weight: 600; min-width: 0; }
   .tabbar button[aria-current="page"] { color: var(--accent-2); background: var(--accent-soft); }
   .today, .g3, .g4 { grid-template-columns: minmax(0, 1fr); }
@@ -343,9 +343,39 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
   .room .btn { grid-column: 1 / -1; }
 }
 @media (min-width: 900px) and (max-width: 1100px) { .nav button { padding: 0 11px; } .nav button span { font-size: .86rem; } }
+/* Con seis secciones, entre 900 y 1200 px los iconos de la barra superior sobran: se quedan solo los nombres */
+@media (min-width: 900px) and (max-width: 1200px) { .nav button svg { display: none; } .nav button { padding: 0 12px; } }
+@media (min-width: 900px) and (max-width: 1000px) { .nav button { padding: 0 9px; } .nav { margin: 0 8px; } .brand span { display: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 @media (prefers-reduced-transparency: reduce) { .top, .tabbar { background: var(--card); backdrop-filter: none; -webkit-backdrop-filter: none; } }
-.academy-links { flex-wrap: wrap; margin: 0 0 24px; gap: 8px; }
+/* ---------- Aprender: subnavegación y franja de demostración ---------- */
+.subnav { margin: 0 0 var(--sp-5); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav .seg { display: inline-flex; flex-wrap: nowrap; gap: 2px; padding: 3px; background: var(--sunken); border-radius: 999px; white-space: nowrap; }
+.subnav button { height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font: inherit; font-size: .88rem; font-weight: 500; transition: background .2s var(--ease), color .2s var(--ease), transform .16s var(--ease); }
+.subnav button:hover { color: var(--ink); }
+.subnav button:active { transform: scale(.97); }
+.subnav button[aria-current="page"] { background: var(--card); color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px rgba(0, 0, 0, .12); }
+.demo-strip { display: flex; align-items: center; gap: var(--sp-2); margin: 0 0 var(--sp-4); padding: 6px 6px 6px 12px; border-radius: 12px; background: var(--accent-soft); color: var(--ink); font-size: .86rem; }
+.demo-strip svg { flex: none; color: var(--accent-2); }
+.demo-strip > span { flex: 1; min-width: 0; }
+.demo-strip .btn { flex: none; background: var(--card); color: var(--ink); }
+@media (max-width: 520px) { .demo-strip .demo-extra { display: none; } }
+/* Seis pestañas en móvil: texto más compacto y, por debajo de 350 px, solo iconos (el nombre sigue en aria-label) */
+@media (max-width: 899px) { .tabbar { left: 8px; right: 8px; padding: 6px 3px; gap: 1px; } .tabbar button { font-size: .62rem; letter-spacing: -.01em; padding: 0 1px; } }
+@media (max-width: 399px) { .tabbar { left: 6px; right: 6px; } .tabbar button { font-size: .59rem; letter-spacing: -.02em; } .tabbar button span { max-width: 100%; overflow: hidden; text-overflow: clip; white-space: nowrap; } }
+@media (max-width: 379px) { .tabbar button { font-size: .56rem; letter-spacing: -.025em; } }
+@media (max-width: 349px) { .tabbar button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
+.file-pick { display: grid; gap: 6px; }
+.file-pick .file-label { font-weight: 600; }
+.file-pick .row { align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.file-pick input[type="file"] { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.file-pick input[type="file"]:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+.file-pick label.btn { display: inline-flex; font-weight: 600; cursor: pointer; }
+@media (max-width: 640px) {
+  .continue { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: start; gap: 14px 16px; }
+  .continue > .btn { grid-column: 1 / -1; width: 100%; justify-content: center; }
+}
 .guide-steps { padding-left: 24px; line-height: 1.7; }
 .guide-steps li { margin: 12px 0; }
 .academy-form { display: grid; gap: 16px; }
@@ -366,7 +396,6 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
 :where(.card.pad, .sec) > :where(h2, h3, h4) + .row { margin-top: var(--sp-3); }
 :where(.card.pad, .sec) > .row + p { margin-top: var(--sp-3); }
 :where(#view) > :where(section, article, .card, .grid, .hd + *) + :where(section.card:not(.sec), article.card:not(.sec)) { margin-top: var(--sp-5); }
-.academy-links + .legal { align-items: center; flex-wrap: wrap; margin-bottom: var(--sp-5); }
 .academy-form { gap: var(--sp-4); }
 .academy-form > .row { gap: var(--sp-2); }
 .academy-form > .row .btn { margin: 0; }
@@ -387,4 +416,4 @@ button.chip { cursor: pointer; } button.chip:hover { background: var(--card-2); 
   .player-foot .row.spread [data-act="p-marcar"] { padding: 0 var(--sp-3); }
   .player-foot .row.spread [data-act="p-marcar"] span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
-@media print { .top, .tabbar, .player-foot, .academy-links { display: none; } }
+@media print { .top, .tabbar, .player-foot, .subnav, .demo-strip { display: none; } }

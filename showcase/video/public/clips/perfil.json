@@ -1,0 +1,80 @@
+{
+ "clip": "perfil",
+ "duracion": 21.342,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.367,
+   "tipo": "clic",
+   "caja": [
+    1864,
+    12,
+    36,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 4.569,
+   "tipo": "foco",
+   "caja": [
+    1362,
+    1011,
+    117,
+    36
+   ],
+   "texto": "Exportar el progreso (JSON)",
+   "zoom": null
+  },
+  {
+   "t": 6.984,
+   "tipo": "foco",
+   "caja": [
+    1360,
+    746,
+    119,
+    36
+   ],
+   "texto": "Importar: se valida campo a campo",
+   "zoom": null
+  },
+  {
+   "t": 11.334,
+   "tipo": "clic",
+   "caja": [
+    1242,
+    455,
+    90,
+    36
+   ],
+   "texto": "Tema claro, oscuro o del sistema",
+   "zoom": null
+  },
+  {
+   "t": 13.951,
+   "tipo": "clic",
+   "caja": [
+    1400,
+    455,
+    76,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 17.938,
+   "tipo": "foco",
+   "caja": [
+    990,
+    33,
+    487,
+    256
+   ],
+   "texto": "Tarjeta para compartir el rango",
+   "zoom": null
+  }
+ ]
+}

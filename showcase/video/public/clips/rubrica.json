@@ -1,0 +1,56 @@
+{
+ "clip": "rubrica",
+ "duracion": 14.433,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.252,
+   "tipo": "clic",
+   "caja": [
+    443,
+    826,
+    249,
+    44
+   ],
+   "texto": "Contrastar con la rúbrica",
+   "zoom": null
+  },
+  {
+   "t": 3.172,
+   "tipo": "foco",
+   "caja": [
+    443,
+    886,
+    1034,
+    154
+   ],
+   "texto": "4 de 4 comprobaciones estructuradas",
+   "zoom": null
+  },
+  {
+   "t": 7.477,
+   "tipo": "foco",
+   "caja": [
+    443,
+    1015,
+    1034,
+    25
+   ],
+   "texto": "Los textos necesitan revisión humana",
+   "zoom": null
+  },
+  {
+   "t": 10.756,
+   "tipo": "clic",
+   "caja": [
+    700,
+    826,
+    288,
+    44
+   ],
+   "texto": "Informe en Markdown",
+   "zoom": null
+  }
+ ]
+}

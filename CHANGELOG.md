@@ -1,8 +1,34 @@
 # Cambios
 
-## 1.4.0-rc.1 · candidata · octubre de 2026
+## 1.4.0 · octubre de 2026
 
-Implementación en cinco ramas encadenadas para revisión antes de integrar en `main`.
+Cierra la candidata 1.4.0-rc.1, integrada en `main` el 28 de octubre, con lo que hacía falta para presentarla en NicaHackFest 2026.
+
+### Para presentarlo
+
+- **Navegación «Aprender».** Empieza aquí, Competencias, Laboratorio, Taller y Crear contenido eran una fila de botones encima de todas las vistas; en móvil, junto al aviso de demostración, ocupaban unos 200 px antes del contenido. Ahora «Aprender» es una sección más de la barra superior y de las pestañas del móvil, y la subnavegación solo aparece en sus cinco vistas, en una fila que se desliza.
+- **Demostración con progreso de ejemplo (`?demo=showcase`).** 910 XP, racha de cuatro días, siete logros, dos competencias con retención, nueve repasos pendientes y la meta del día a medias. Se calcula respecto a la fecha de hoy, tiene su propia clave y «Restablecer» vuelve siempre a ese punto. Deja sin resolver «Noche de ransomware» y el laboratorio, que se hacen en directo.
+- **Franja de demostración** fina en lugar del aviso grande.
+- **Tarjeta «Empieza por aquí» / «Continúa» en móvil:** el texto quedaba en una columna de unos 80 px, una palabra por línea. Ahora el botón ocupa su propia fila.
+- **Selector de archivo propio** en Crear contenido y Taller. El control nativo mostraba «Choose File / No file chosen» según el idioma del navegador; ahora dice «Elegir archivo JSON» y muestra el nombre elegido.
+- **Enlace del taller:** abierta como archivo descargado, la app compartía una ruta `file:///` del equipo del facilitador. Ahora el enlace apunta a la versión publicada, conserva el modo de demostración y lleva directamente al Laboratorio.
+- **Participar en un taller con un solo clic.** Antes, quien abría el enlace veía el caso por defecto y tenía que ir a Taller, pulsar «Preparar mi caso» y confirmar. Ahora, si su borrador está vacío, el caso del taller se prepara solo. Si ya ha escrito algo, no se toca nada: el Laboratorio avisa de que el borrador es de otro caso y ofrece cambiar, con confirmación.
+- **Seis secciones en la barra:** entre 900 y 1200 px la barra superior se queda sin iconos y, por debajo de 1000 px, sin el nombre junto al logo, para que no haya desplazamiento horizontal ni con 11.035 XP. En móvil los nombres de las pestañas caben desde 350 px; por debajo solo se muestran los iconos.
+- **Abrir la app directamente en `#taller` dejaba la página en blanco.** El enlace público del taller se calculaba en una constante del módulo, que aún no existía cuando la primera vista era Taller. Ahora se calcula al pedirlo, y una prueba nueva abre cada vista directamente, con y sin demostración y con `?taller=`, sin errores de JavaScript.
+- **Pruebas:** la demostración en el motor (XP coherentes con lo ganado, sin logros pendientes, determinista y desplazada con la fecha) y en el navegador (aislamiento, restablecer, navegación, selector, enlace y anchos de 320 a 1440 px). axe audita también la demostración.
+
+### Materiales de la charla
+
+Todo está en [docs/showcase](docs/showcase/README.md):
+- **Guion cronometrado de 40 minutos.** Indica qué se dice, qué se pulsa y qué ve el público, y trae un plan B para cada fallo.
+- **Diapositivas.** Diez, en un único HTML de 1920×1080 con copia en PDF. Usan la identidad de ARGOS, iconos Lucide, las cifras reales del banco y CSP por hashes. Las genera `tools/diapositivas.py`, y `run_tests.sh` comprueba que estén al día.
+- **Códigos QR** del taller `NICAHACK` y de ARGOS, generados en local.
+- **Vídeo de respaldo.** `tools/grabar-demo.py` recorre el guion con un cursor visible y deja capítulos y fotogramas clave.
+- **Tráiler.** Dura 66 s, en horizontal y vertical, y está hecho con Remotion (`showcase/trailer/`) a partir de esa grabación.
+- **Plantillas de issue** para opinión, errores y propuestas de casos: el canal de opinión sin analítica.
+- **Vídeo de presentación de 17:46** ([showcase/video](showcase/video/README.md)). 33 escenas en siete bloques, voz en off con Kokoro en local, música generada por código, 19 grabaciones reales de la app y la batería de pruebas ejecutada de verdad en la terminal. Lo compone Remotion y deja subtítulos `.srt` y capítulos para YouTube.
+
+### Integrado de la candidata 1.4.0-rc.1
 
 ### Aprendizaje y comunidad
 

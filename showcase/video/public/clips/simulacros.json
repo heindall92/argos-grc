@@ -1,0 +1,128 @@
+{
+ "clip": "simulacros",
+ "duracion": 31.783,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.259,
+   "tipo": "clic",
+   "caja": [
+    738,
+    12,
+    131,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 3.018,
+   "tipo": "foco",
+   "caja": [
+    420,
+    280,
+    82,
+    25
+   ],
+   "texto": "Sprints de 10 minutos",
+   "zoom": null
+  },
+  {
+   "t": 6.827,
+   "tipo": "foco",
+   "caja": [
+    420,
+    157,
+    135,
+    25
+   ],
+   "texto": "Por bloques",
+   "zoom": null
+  },
+  {
+   "t": 10.795,
+   "tipo": "foco",
+   "caja": [
+    808,
+    1012,
+    305,
+    22
+   ],
+   "texto": "Maratón: 90 preguntas",
+   "zoom": null
+  },
+  {
+   "t": 14.997,
+   "tipo": "clic",
+   "caja": [
+    1172,
+    618,
+    305,
+    44
+   ],
+   "texto": "Sprint de continuidad",
+   "zoom": null
+  },
+  {
+   "t": 17.617,
+   "tipo": "clic",
+   "caja": [
+    600,
+    351,
+    720,
+    95
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 20.23,
+   "tipo": "clic",
+   "caja": [
+    600,
+    351,
+    720,
+    60
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 22.371,
+   "tipo": "clic",
+   "caja": [
+    893,
+    972,
+    123,
+    44
+   ],
+   "texto": "Marcar para revisar",
+   "zoom": null
+  },
+  {
+   "t": 25.221,
+   "tipo": "clic",
+   "caja": [
+    600,
+    421,
+    720,
+    60
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 28.113,
+   "tipo": "clic",
+   "caja": [
+    623,
+    598,
+    674,
+    19
+   ],
+   "texto": "Navegador de preguntas",
+   "zoom": null
+  }
+ ]
+}

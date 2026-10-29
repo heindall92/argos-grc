@@ -1,0 +1,104 @@
+{
+ "clip": "rutas",
+ "duracion": 21.897,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.332,
+   "tipo": "clic",
+   "caja": [
+    519,
+    12,
+    93,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 3.914,
+   "tipo": "foco",
+   "caja": [
+    420,
+    268,
+    351,
+    291
+   ],
+   "texto": "ENS · 7 salas",
+   "zoom": null
+  },
+  {
+   "t": 5.96,
+   "tipo": "foco",
+   "caja": [
+    785,
+    268,
+    351,
+    291
+   ],
+   "texto": "ISO/IEC 27001 · 8 salas",
+   "zoom": null
+  },
+  {
+   "t": 8.13,
+   "tipo": "foco",
+   "caja": [
+    1149,
+    268,
+    351,
+    291
+   ],
+   "texto": "Continuidad · 4 salas",
+   "zoom": null
+  },
+  {
+   "t": 10.369,
+   "tipo": "clic",
+   "caja": [
+    420,
+    268,
+    351,
+    291
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 12.576,
+   "tipo": "foco",
+   "caja": [
+    460,
+    468,
+    1040,
+    103
+   ],
+   "texto": "Superada: mejor nota e intentos",
+   "zoom": null
+  },
+  {
+   "t": 17.171,
+   "tipo": "foco",
+   "caja": [
+    460,
+    744,
+    1040,
+    103
+   ],
+   "texto": "MAGERIT",
+   "zoom": null
+  },
+  {
+   "t": 19.092,
+   "tipo": "foco",
+   "caja": [
+    460,
+    857,
+    1040,
+    103
+   ],
+   "texto": "Puente ENS ↔ ISO/IEC 27001",
+   "zoom": null
+  }
+ ]
+}

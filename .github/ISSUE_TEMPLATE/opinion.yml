@@ -1,0 +1,46 @@
+name: Opinión de uso
+description: Cuéntanos cómo te fue con ARGOS (por ejemplo, después de una charla o un taller).
+title: "Opinión: "
+labels: ["opinión"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por dedicar un minuto. No incluyas datos personales ni información real de tu organización.
+  - type: dropdown
+    id: donde
+    attributes:
+      label: ¿Dónde lo probaste?
+      options:
+        - Por mi cuenta
+        - En una charla (por ejemplo, NicaHackFest 2026)
+        - En un taller o en clase
+        - Otro
+    validations:
+      required: true
+  - type: dropdown
+    id: perfil
+    attributes:
+      label: ¿Cómo te describirías?
+      options:
+        - Estudiante o empezando en ciberseguridad
+        - Perfil técnico (pentesting, SOC, sistemas)
+        - Perfil GRC (auditoría, cumplimiento, riesgos)
+        - Docente o formador
+        - Prefiero no decirlo
+  - type: textarea
+    id: util
+    attributes:
+      label: ¿Qué te resultó útil?
+    validations:
+      required: true
+  - type: textarea
+    id: mejorar
+    attributes:
+      label: ¿Qué cambiarías o qué echaste en falta?
+  - type: input
+    id: version
+    attributes:
+      label: Versión de ARGOS
+      description: Aparece al final de la pantalla Hoy.
+      placeholder: "1.4.0"

@@ -1,0 +1,164 @@
+{
+ "clip": "laboratorio",
+ "duracion": 41.212,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 0.999,
+   "tipo": "foco",
+   "caja": [
+    443,
+    404,
+    1034,
+    51
+   ],
+   "texto": "Semilla: NICAHACK",
+   "zoom": null
+  },
+  {
+   "t": 4.6,
+   "tipo": "foco",
+   "caja": [
+    420,
+    305,
+    533,
+    225
+   ],
+   "texto": "Política: RTO 120 min · RPO 30 min",
+   "zoom": null
+  },
+  {
+   "t": 7.286,
+   "tipo": "foco",
+   "caja": [
+    420,
+    544,
+    533,
+    175
+   ],
+   "texto": "Recuperado en el minuto 105",
+   "zoom": null
+  },
+  {
+   "t": 9.741,
+   "tipo": "foco",
+   "caja": [
+    967,
+    544,
+    533,
+    175
+   ],
+   "texto": "«Copia OK», sin hora del último dato",
+   "zoom": null
+  },
+  {
+   "t": 14.997,
+   "tipo": "clic",
+   "caja": [
+    460,
+    338,
+    24,
+    24
+   ],
+   "texto": "Evidencias que sostienen la conclusión",
+   "zoom": null
+  },
+  {
+   "t": 16.392,
+   "tipo": "clic",
+   "caja": [
+    460,
+    482,
+    24,
+    24
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 18.18,
+   "tipo": "foco",
+   "caja": [
+    443,
+    582,
+    1034,
+    48
+   ],
+   "texto": "Evidencia insuficiente",
+   "zoom": null
+  },
+  {
+   "t": 19.932,
+   "tipo": "foco",
+   "caja": [
+    443,
+    677,
+    1034,
+    48
+   ],
+   "texto": "Criterio: RPO",
+   "zoom": null
+  },
+  {
+   "t": 21.64,
+   "tipo": "foco",
+   "caja": [
+    443,
+    772,
+    1034,
+    48
+   ],
+   "texto": "No se puede concluir",
+   "zoom": null
+  },
+  {
+   "t": 23.354,
+   "tipo": "clic",
+   "caja": [
+    443,
+    867,
+    1034,
+    96
+   ],
+   "texto": "Hallazgo: evidencia, criterio y diferencia",
+   "zoom": null
+  },
+  {
+   "t": 28.91,
+   "tipo": "clic",
+   "caja": [
+    443,
+    985,
+    1034,
+    96
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 33.232,
+   "tipo": "foco",
+   "caja": [
+    443,
+    583,
+    1034,
+    48
+   ],
+   "texto": "Repetir la prueba y registrar",
+   "zoom": null
+  },
+  {
+   "t": 34.192,
+   "tipo": "clic",
+   "caja": [
+    443,
+    678,
+    1034,
+    96
+   ],
+   "texto": null,
+   "zoom": null
+  }
+ ]
+}

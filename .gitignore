@@ -11,3 +11,7 @@ tests/artifacts/
 Thumbs.db
 # Ficheros temporales de Office
 ~$*
+# Material de la charla que se regenera (vídeos y dependencias del tráiler)
+showcase/grabaciones/
+showcase/trailer/node_modules/
+showcase/trailer/out/

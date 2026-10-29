@@ -6,6 +6,7 @@ function selectLab(campo, titulo, opciones, v) {
 function vLaboratorio() {
   const b=borradorLab(); const c=A.caso(b.seed); const v=b.valores;
   return `<div class="hd"><div><p class="eyebrow">Laboratorio con entregable · 20–30 min</p><h1 class="lt">Un hallazgo defendible</h1><p class="lt-sub">Compara la recuperación de Pegaso con su política interna. Identifica qué puedes concluir y qué información falta.</p></div></div>
+  ${TALLER_URL && b.seed !== TALLER_URL ? `<div class="legal" role="note">${icon('info', 18)}<span>Este enlace es del taller <b>${esc(TALLER_URL)}</b>, pero tu borrador es del caso <b>${esc(b.seed)}</b>. <button type="button" class="btn sm" data-act="lab-taller">Cambiar al caso ${esc(TALLER_URL)}</button></span></div>` : ''}
   <section class="card pad academy-form"><label>Semilla del caso<input id="lab-seed" maxlength="40" value="${esc(b.seed)}"></label><button class="btn" data-act="lab-generar">Generar variante</button><p class="small muted">Misma semilla y versión, mismas evidencias. Generar otra variante sustituye el borrador tras confirmarlo.</p></section>
   <section class="sec grid g2">${c.evidencias.map(e=>`<article class="card pad"><h2>${e.id} · ${esc(e.titulo)}</h2><p>${esc(e.texto)}</p></article>`).join('')}</section>
   <section class="card pad academy-form"><h2>Documenta tu decisión</h2><fieldset><legend>Evidencias que sostienen tu conclusión</legend>${c.evidencias.map(e=>`<label class="row"><input type="checkbox" data-lab-evidencia="${e.id}"${v.evidencias.includes(e.id)?' checked':''}>${e.id} · ${esc(e.titulo)}</label>`).join('')}</fieldset>
@@ -33,6 +34,7 @@ function guardarLab(ev) {
 document.addEventListener('input',guardarLab);
 Object.assign(ACCIONES, {
   'lab-generar':()=>{const seed=$('#lab-seed').value.trim()||'ARGOS'; confirmar('¿Generar otra variante?','Se sustituirá el borrador actual. Descarga el informe antes si quieres conservarlo.',()=>{P.laboratorio=A.limpiarBorrador({seed,valores:{}});guardar();render();},'Generar');},
+  'lab-taller':()=>{if(!TALLER_URL)return;confirmar('¿Cambiar al caso del taller?',`Se sustituirá tu borrador del caso ${borradorLab().seed}. Descarga antes el informe si quieres conservarlo.`,()=>{P.laboratorio=A.limpiarBorrador({seed:TALLER_URL,valores:{}});guardar();render();},'Cambiar');},
   'lab-evaluar':()=>{const b=borradorLab();const r=A.rubrica(A.caso(b.seed),b.valores);$('#lab-feedback').innerHTML=`<h3>${r.puntos}/${r.max} comprobaciones estructuradas</h3><ul>${r.criterios.map(x=>`<li><b>${x.ok?'Coincide':'Revisar'} · ${x.nombre}:</b> ${esc(x.ayuda)}</li>`).join('')}</ul><p>${r.textosCompletos?'Los tres textos están completados.':'Completa hallazgo, justificación y verificación con al menos 30 caracteres cada uno.'} Su calidad y la gravedad del hallazgo requieren revisión humana.</p>`;},
   'lab-exportar':()=>{const b=borradorLab();descargar(new Blob([A.informe(A.caso(b.seed),b.valores,VERSION)],{type:'text/markdown;charset=utf-8'}),'argos-informe-practica.md');}
 });

@@ -72,6 +72,12 @@ def states(page):
     J(f"{A}.go('perfil')"); page.click('[data-act="reset"]'); yield "dialogo/borrar"
     page.keyboard.press("Escape")
     J(f"{A}.go('hoy')"); yield "hoy/con-progreso"
+    # 1.4.0: demostración con progreso de ejemplo (franja de demo, subnavegación «Aprender» y selector de archivo)
+    page.goto(APP + "&demo=showcase#hoy"); page.wait_for_selector("#view h1"); page.add_script_tag(path=str(AXE))
+    for v in ["hoy", "inicio", "competencias", "logros"]:
+        J(f"{A}.go('{v}')"); yield f"demo/{v}"
+    J(f"{A}.go('autores')")
+    page.set_input_files("#pack-archivo", files=[{"name": "paquete.json", "mimeType": "application/json", "buffer": b"{}"}]); yield "demo/autores-archivo"
 
 
 def main():

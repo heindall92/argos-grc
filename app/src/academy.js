@@ -129,6 +129,50 @@
     if(new Set(ids).size!==ids.length)errores.push('Ids repetidos entre casos o preguntas.');
     return errores;
   }
-  const API = { COMPETENCIAS, estado, competencias, recomendar, evolucion, caso, limpiarBorrador, rubrica, informe, resumenTaller, agregarResumenes, plantillaPack, validarPack, normalizarSemilla };
+
+  /* Estado de la demostración para presentaciones (?demo=showcase): progreso realista y coherente,
+   * calculado respecto al día de hoy para que la racha y los repasos sean siempre actuales.
+   * No incluye la máquina «Noche de ransomware» ni el laboratorio, que se resuelven en directo. */
+  function demoShowcase(banco, engine, hoy) {
+    const dia = (n) => engine.sumarDias(hoy, n);
+    const sala = (id) => banco.rutas.flatMap((r) => r.salas).find((s) => s.id === id);
+    const p = { v: 2, perfil: { nombre: 'Demostración', color: 'teal' }, ajustes: { tema: 'sistema', meta: 100 }, xp: 0, respuestas: {}, salas: {}, maquinas: {}, simulacros: {}, dias: {}, logros: {}, repasosOk: 0, creado: dia(-6), sesion: null };
+    // Salas trabajadas: [id, aciertos sobre 10, retenida (repasada a tiempo)]
+    const plan = [['ens-1', 10, true], ['ens-2', 9, true], ['cont-1', 8, true], ['iso-1', 4, false]];
+    for (const [id, ok, retenida] of plan) {
+      const s = sala(id); if (!s) continue;
+      s.preguntas.forEach((q, i) => {
+        const acierto = i < ok;
+        const historial = acierto
+          ? (retenida ? [{ fecha: dia(-5), acierto: i % 3 !== 0, modo: 'sala' }, { fecha: dia(-4), acierto: true, modo: 'sala' }, { fecha: dia(-1), acierto: true, modo: 'repaso' }] : [{ fecha: dia(-2), acierto: true, modo: 'sala' }])
+          : [{ fecha: dia(-1), acierto: false, modo: 'sala' }];
+        p.respuestas[q.id] = acierto
+          ? { caja: retenida ? 3 : 1, aciertos: retenida ? 3 : 1, fallos: retenida && i % 3 === 0 ? 1 : 0, due: retenida ? dia(5) : dia(1), ultima: retenida ? dia(-1) : dia(-2), xpConcedida: true, historial }
+          : { caja: 1, aciertos: 0, fallos: 1, due: hoy, ultima: dia(-1), xpConcedida: false, historial };
+        if (acierto) p.xp += engine.xpPregunta(q);
+      });
+      const nota = ok / s.preguntas.length;
+      p.salas[id] = { mejor: nota, intentos: retenida ? 2 : 1, ultima: retenida ? dia(-4) : dia(-2) };
+      if (nota >= 0.8) p.xp += engine.XP.sala + (nota === 1 ? engine.XP.salaPerfecta : 0);
+    }
+    // Una máquina fácil resuelta y otra empezada
+    const maq = (id, n) => {
+      const m = banco.maquinas.find((x) => x.id === id); if (!m) return;
+      const flags = m.flags.slice(0, n).map((f) => f.id);
+      p.maquinas[id] = { flags, pistas: [], intentos: n + 1, completada: flags.length === m.flags.length, fecha: dia(-3) };
+      for (const f of m.flags.slice(0, n)) p.xp += engine.xpFlag(f, m.dificultad, false);
+    };
+    maq('m-copias', 5); maq('m-phishing', 2);
+    // Un sprint aprobado
+    const sim = banco.simulacros.find((x) => x.id === 'sprint-ens');
+    if (sim) { p.simulacros[sim.id] = { mejor: 0.8, aprobado: true, intentos: 1, historial: [{ fecha: dia(-2), nota: 0.8, ok: 8, total: 10, seg: 412 }] }; p.xp += engine.xpSimulacro(sim); }
+    // Racha de cuatro días, con actividad hoy
+    // Hoy, 40 de 100 XP: la meta diaria se ve a medias y se completa en directo con el caso.
+    for (const [n, xp, preguntas] of [[-3, 180, 14], [-2, 260, 18], [-1, 120, 12], [0, 40, 4]]) p.dias[dia(n)] = { xp, preguntas, repasos: n === -1 ? 6 : 0 };
+    p.repasosOk = 20;
+    for (const id of engine.logrosCumplidos(p, banco, hoy)) p.logros[id] = dia(-1);
+    return p;
+  }
+  const API = { COMPETENCIAS, estado, competencias, recomendar, evolucion, caso, limpiarBorrador, rubrica, informe, resumenTaller, agregarResumenes, plantillaPack, validarPack, normalizarSemilla, demoShowcase };
   if (typeof module !== 'undefined' && module.exports) module.exports = API; else root.ArgosAcademy = Object.freeze(API);
 })(typeof window !== 'undefined' ? window : this);

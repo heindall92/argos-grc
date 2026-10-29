@@ -1,0 +1,92 @@
+{
+ "clip": "hoy",
+ "duracion": 22.399,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.291,
+   "tipo": "foco",
+   "caja": [
+    1638,
+    12,
+    57,
+    34
+   ],
+   "texto": "Racha: 4 días seguidos",
+   "zoom": null
+  },
+  {
+   "t": 3.364,
+   "tipo": "foco",
+   "caja": [
+    1703,
+    12,
+    101,
+    34
+   ],
+   "texto": "Puntos de experiencia",
+   "zoom": null
+  },
+  {
+   "t": 5.017,
+   "tipo": "foco",
+   "caja": [
+    420,
+    261,
+    592,
+    220
+   ],
+   "texto": "Meta del día",
+   "zoom": null
+  },
+  {
+   "t": 7.475,
+   "tipo": "foco",
+   "caja": [
+    1026,
+    261,
+    474,
+    220
+   ],
+   "texto": "Rango: «10 ojos»",
+   "zoom": null
+  },
+  {
+   "t": 12.685,
+   "tipo": "foco",
+   "caja": [
+    420,
+    135,
+    1080,
+    102
+   ],
+   "texto": "9 preguntas vuelven hoy",
+   "zoom": null
+  },
+  {
+   "t": 15.45,
+   "tipo": "foco",
+   "caja": [
+    420,
+    271,
+    1080,
+    102
+   ],
+   "texto": "Siguiente sala recomendada",
+   "zoom": null
+  },
+  {
+   "t": 19.793,
+   "tipo": "foco",
+   "caja": [
+    420,
+    383,
+    351,
+    291
+   ],
+   "texto": "Rutas",
+   "zoom": null
+  }
+ ]
+}

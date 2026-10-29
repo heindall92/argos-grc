@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-ydISSz3QOTUtkemIQVgx1LYbmlWYNgYlBjwKQ1LA8mw='; style-src-attr 'unsafe-inline'; script-src 'sha256-7Pgkm2VIiIjWhNEYiLkgahKB2N+9M5f1ivQEqVKyzJM='; img-src data:; font-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>ARGOS · NicaHackFest 2026</title>
+<!-- Generado por tools/diapositivas.py a partir de plantilla.html. No editar index.html a mano. -->
+<style>
+:root {
+  --f: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --f-m: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --bg: #05070d; --card: #0e1422; --card-2: #131b2c; --line: rgba(255, 255, 255, .09);
+  --ink: #f5f5f7; --ink-2: #d1d1d6; --muted: #a1a1a8;
+  --accent: #3fd0d6; --accent-soft: rgba(63, 208, 214, .14);
+  --ens: #ff7a85; --iso: #a3a0ff; --cont: #5fdc8c; --warn: #ffb347;
+  --iri: linear-gradient(90deg, #0fb5ba 0%, #2f6bff 45%, #8b5cf6 75%, #14b8a6 100%);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: #000; color: var(--ink); font-family: var(--f); -webkit-font-smoothing: antialiased; }
+body { overflow: hidden; }
+.stage { position: fixed; inset: 0; display: grid; place-items: center; }
+.deck { position: relative; width: 1920px; height: 1080px; transform-origin: center; }
+.slide { position: absolute; inset: 0; padding: 112px 144px 96px; background: var(--bg); display: flex; flex-direction: column; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .32s var(--ease), transform .32s var(--ease), visibility 0s linear .32s; }
+.slide.on { opacity: 1; visibility: visible; transform: none; transition: opacity .32s var(--ease), transform .32s var(--ease), visibility 0s; }
+@media (prefers-reduced-motion: reduce) { .slide, .slide.on { transform: none; } }
+.slide::after { content: ""; position: absolute; left: 144px; right: 144px; bottom: 64px; height: 1px; background: var(--line); }
+.pie { position: absolute; left: 144px; right: 144px; bottom: 28px; display: flex; align-items: center; gap: 14px; font-size: 22px; color: var(--muted); }
+.pie svg { width: 30px; height: 30px; }
+.pie b { color: var(--ink); font-weight: 600; letter-spacing: .14em; font-size: 20px; }
+.pie .n { margin-left: auto; font-family: var(--f-m); font-size: 20px; }
+.k { font-family: var(--f-m); font-size: 24px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 104px; line-height: 1.02; letter-spacing: -.025em; font-weight: 750; margin-top: 24px; }
+h2 { font-size: 76px; line-height: 1.06; letter-spacing: -.02em; font-weight: 720; margin-top: 22px; max-width: 1500px; }
+h3 { font-size: 40px; line-height: 1.15; font-weight: 680; letter-spacing: -.01em; }
+p.l { font-size: 36px; line-height: 1.45; color: var(--ink-2); margin-top: 30px; max-width: 1440px; }
+.muted { color: var(--muted); }
+.rule { width: 160px; height: 6px; border-radius: 3px; background: var(--iri); margin-top: 40px; }
+.grow { flex: 1; }
+.cards { display: grid; gap: 28px; margin-top: 56px; }
+.c2 { grid-template-columns: 1fr 1fr; } .c3 { grid-template-columns: repeat(3, 1fr); } .c4 { grid-template-columns: repeat(4, 1fr); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 32px; padding: 44px 44px 48px; }
+.card p { font-size: 30px; line-height: 1.45; color: var(--ink-2); margin-top: 16px; }
+.card .ic { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 22px; background: var(--accent-soft); color: var(--accent); margin-bottom: 26px; }
+.card .ic svg { width: 40px; height: 40px; }
+.card.mal { border-color: rgba(255, 122, 133, .35); }
+.card.bien { border-color: rgba(63, 208, 214, .45); background: var(--card-2); }
+ul.l { list-style: none; margin-top: 18px; display: grid; gap: 14px; }
+ul.l li { font-size: 30px; line-height: 1.4; color: var(--ink-2); padding-left: 34px; position: relative; }
+ul.l li::before { content: ""; position: absolute; left: 0; top: .55em; width: 14px; height: 14px; border-radius: 4px; background: var(--accent); }
+.mal ul.l li::before { background: var(--ens); }
+.portada { justify-content: center; }
+.portada .logo svg { width: 176px; height: 176px; }
+.portada h1 { font-size: 168px; letter-spacing: .02em; }
+.portada p.l { font-size: 44px; }
+.autor { margin-top: 64px; font-size: 32px; color: var(--muted); }
+.autor b { color: var(--ink); font-weight: 650; }
+.agenda { counter-reset: a; margin-top: 64px; display: grid; gap: 30px; }
+.agenda li { list-style: none; counter-increment: a; display: flex; align-items: baseline; gap: 36px; font-size: 52px; font-weight: 650; letter-spacing: -.01em; }
+.agenda li::before { content: "0" counter(a); font-family: var(--f-m); font-size: 30px; color: var(--accent); font-weight: 600; }
+.agenda li span { font-size: 32px; color: var(--muted); font-weight: 450; margin-left: auto; font-family: var(--f-m); }
+table.map { margin-top: 52px; border-collapse: separate; border-spacing: 0 14px; width: 100%; }
+table.map td { font-size: 32px; padding: 22px 32px; background: var(--card); }
+table.map td:first-child { border-radius: 22px 0 0 22px; font-family: var(--f-m); font-size: 28px; color: var(--muted); width: 32%; }
+table.map td.f { width: 72px; padding: 0; text-align: center; color: var(--accent); background: var(--card); }
+table.map td.f svg { width: 32px; height: 32px; vertical-align: middle; }
+table.map td:last-child { border-radius: 0 22px 22px 0; font-weight: 600; }
+.cifras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 64px; }
+.cifra { background: var(--card); border: 1px solid var(--line); border-radius: 32px; padding: 40px; }
+.cifra b { display: block; font-size: 112px; line-height: 1; font-weight: 750; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.cifra span { display: block; margin-top: 16px; font-size: 28px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 44px; }
+.chip { font-size: 28px; font-weight: 600; padding: 14px 28px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.chip.ens { color: var(--ens); } .chip.iso { color: var(--iso); } .chip.cont { color: var(--cont); }
+.qrrow { display: grid; grid-template-columns: 1fr 440px; gap: 80px; align-items: center; margin-top: 48px; }
+.qr { background: #fff; border-radius: 32px; padding: 28px; }
+.qr svg { width: 100%; height: auto; display: block; shape-rendering: crispEdges; }
+.qr + .cap { text-align: center; font-family: var(--f-m); font-size: 24px; color: var(--muted); margin-top: 16px; }
+.url { font-family: var(--f-m); font-size: 34px; color: var(--accent); margin-top: 26px; word-break: break-all; }
+.votos { display: grid; gap: 18px; margin-top: 30px; }
+.voto { display: flex; align-items: center; gap: 26px; font-size: 36px; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px 30px; }
+.voto b { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 18px; background: var(--accent-soft); color: var(--accent); font-family: var(--f-m); font-size: 34px; }
+.eco { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+.eco .card { padding: 40px; }
+.eco .card h3 { font-size: 36px; }
+.eco .card.yo { border-color: rgba(63, 208, 214, .55); background: var(--card-2); }
+.flujo { margin-top: 44px; font-size: 32px; color: var(--ink-2); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.flujo b { color: var(--ink); }
+.flujo svg { width: 30px; height: 30px; color: var(--accent); }
+.contacto { display: grid; gap: 22px; margin-top: 44px; }
+.contacto div { display: flex; align-items: center; gap: 22px; font-size: 34px; }
+.contacto svg { width: 40px; height: 40px; color: var(--accent); }
+.ayuda { position: fixed; right: 16px; bottom: 12px; font: 13px var(--f-m); color: #555; }
+@media print {
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { overflow: visible; height: auto; background: var(--bg); }
+  .stage { position: static; display: block; }
+  .deck { transform: none !important; width: auto; height: auto; }
+  .slide { position: relative; opacity: 1; visibility: visible; transform: none; width: 1920px; height: 1080px; break-after: page; transition: none; }
+  .ayuda { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="stage"><main class="deck" id="deck" aria-live="polite">
+
+<section class="slide portada" aria-label="Portada">
+  <div class="logo"><svg class="logo-g" width="176" height="176" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0FB5BA"/><stop offset=".55" stop-color="#2F6BFF"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="#0B1220"/><rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="url(#lg1b)" stroke-opacity=".7" stroke-width="2"/><g transform="translate(32 33) scale(1.12) translate(-32 -32)"><defs>
+    <radialGradient id="lg1s" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".65" stop-color="#EEF2F7"/><stop offset="1" stop-color="#B9C4D2"/></radialGradient>
+    <radialGradient id="lg1i" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#C7FFF6"/><stop offset=".3" stop-color="#2CC6C9"/><stop offset=".62" stop-color="#1E7BD8"/><stop offset=".86" stop-color="#3A2C9E"/><stop offset="1" stop-color="#14123D"/></radialGradient>
+    <linearGradient id="lg1l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050A16" stop-opacity=".55"/><stop offset=".42" stop-color="#050A16" stop-opacity="0"/></linearGradient>
+    <clipPath id="lg1c"><path d="M8 32C16 19.5 24 15 32 15S48 19.5 56 32C48 44.5 40 49 32 49S16 44.5 8 32Z"/></clipPath></defs>
+  <path d="M8 32C16 19.5 24 15 32 15S48 19.5 56 32C48 44.5 40 49 32 49S16 44.5 8 32Z" fill="url(#lg1s)"/>
+  <g clip-path="url(#lg1c)">
+    <circle cx="32" cy="32" r="11.4" fill="url(#lg1i)"/>
+    <g stroke="#E8FFFB" stroke-opacity=".22" stroke-width=".55" stroke-linecap="round"><path d="M37.20 32.00L42.60 32.00"/><path d="M37.07 33.16L41.46 34.16"/><path d="M36.69 34.26L39.93 35.82"/><path d="M36.07 35.24L40.29 38.61"/><path d="M35.24 36.07L38.05 39.58"/><path d="M34.26 36.69L35.82 39.93"/><path d="M33.16 37.07L34.36 42.33"/><path d="M32.00 37.20L32.00 41.70"/><path d="M30.84 37.07L30.04 40.58"/><path d="M29.74 36.69L27.40 41.55"/><path d="M28.76 36.07L25.95 39.58"/><path d="M27.93 35.24L25.12 37.49"/><path d="M27.31 34.26L22.45 36.60"/><path d="M26.93 33.16L22.54 34.16"/><path d="M26.80 32.00L23.20 32.00"/><path d="M26.93 30.84L21.67 29.64"/><path d="M27.31 29.74L23.26 27.79"/><path d="M27.93 28.76L25.12 26.51"/><path d="M28.76 27.93L25.39 23.71"/><path d="M29.74 27.31L27.79 23.26"/><path d="M30.84 26.93L30.04 23.42"/><path d="M32.00 26.80L32.00 21.40"/><path d="M33.16 26.93L34.16 22.54"/><path d="M34.26 27.31L35.82 24.07"/><path d="M35.24 27.93L38.61 23.71"/><path d="M36.07 28.76L39.58 25.95"/><path d="M36.69 29.74L39.93 28.18"/><path d="M37.07 30.84L42.33 29.64"/></g>
+    <circle cx="32" cy="32" r="11.4" fill="none" stroke="#0B1430" stroke-width="1.3" stroke-opacity=".85"/>
+    <circle cx="32" cy="32" r="4.7" fill="#04060C"/>
+    <rect x="0" y="0" width="64" height="64" fill="url(#lg1l)"/>
+    <circle cx="35.6" cy="28.4" r="2.1" fill="#FFFFFF" fill-opacity=".92"/><circle cx="28.4" cy="35.2" r=".95" fill="#FFFFFF" fill-opacity=".55"/>
+  </g>
+  <path d="M8 32C16 19.5 24 15 32 15S48 19.5 56 32" fill="none" style="stroke:#8FA0B6" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M8.6 32.6C16.4 44 24.4 48.4 32 48.4S47.6 44 55.4 32.6" fill="none" style="stroke:#8FA0B6" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"/>
+  <g fill="none" style="stroke:#8FA0B6" stroke-width="1.15" stroke-linecap="round"></g></g></svg></div>
+  <div class="k" style="margin-top:56px">NicaHackFest 2026 · NicaBuilds</div>
+  <h1>ARGOS</h1>
+  <p class="l">Practicar GRC como se practica el hacking: casos, evidencias y decisiones que se justifican.</p>
+  <div class="rule"></div>
+  <p class="autor"><b>Yoandy Ramírez Delgado</b> · pentester junior y estudiante de GRC</p>
+</section>
+
+<section class="slide" aria-label="Quién soy">
+  <div class="k">Quién soy</div>
+  <h2>Herramientas abiertas, en español y que funcionan en tu navegador</h2>
+  <div class="cards c3">
+    <div class="card"><span class="ic"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg></span><h3>Ofensiva</h3><p>Pentester junior (eJPTv2) y sysadmin. Active Directory, laboratorios y CTF.</p></div>
+    <div class="card"><span class="ic"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M7 21h10"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/></svg></span><h3>GRC</h3><p>ENS, ISO/IEC 27001, continuidad y gobierno de la IA. Lo que se audita y por qué.</p></div>
+    <div class="card"><span class="ic"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><h3>Local-first</h3><p>Sin cuentas, sin servidor y sin analítica. Tus datos se quedan en tu equipo.</p></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Agenda">
+  <div class="k">40 minutos</div>
+  <h2>Hoy</h2>
+  <ol class="agenda">
+    <li>El problema <span>5 min</span></li>
+    <li>Demo: Noche de ransomware <span>14 min</span></li>
+    <li>Taller en directo: decides tú <span>8 min</span></li>
+    <li>Comunidad, ecosistema y preguntas <span>10 min</span></li>
+  </ol>
+</section>
+
+<section class="slide" aria-label="El problema">
+  <div class="k">El problema</div>
+  <h2>Leer la norma no es lo mismo que decidir con evidencias</h2>
+  <div class="cards c2">
+    <div class="card mal"><h3>Lo que se estudia</h3><ul class="l"><li>Artículos, cláusulas y controles</li><li>Definiciones de RTO, RPO y BIA</li><li>Preguntas tipo test</li></ul></div>
+    <div class="card bien"><h3>Lo que se evalúa en el trabajo</h3><ul class="l"><li>Un incidente con prisa y ruido</li><li>Evidencias incompletas o contradictorias</li><li>Una decisión que tienes que justificar</li></ul></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Tres huecos">
+  <div class="k">Lo que falta</div>
+  <h2>Tres huecos para quien empieza en GRC</h2>
+  <div class="cards c3">
+    <div class="card"><span class="ic"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg></span><h3>Práctica realista</h3><p>Casos con evidencias, no solo teoría. Equivocarse donde no cuesta nada.</p></div>
+    <div class="card"><span class="ic"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3>En español</h3><p>Con el marco que se audita en España y referencias que sirven en Latinoamérica.</p></div>
+    <div class="card"><span class="ic"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><h3>Corrección explicada</h3><p>No basta con «incorrecto»: por qué, con qué referencia y qué mirar la próxima vez.</p></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="De HTB a GRC">
+  <div class="k">La idea</div>
+  <h2>Una máquina de hacking, pero de gobierno y cumplimiento</h2>
+  <table class="map" role="presentation">
+    <tr><td>Máquina</td><td class="f"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></td><td>Caso de una organización ficticia</td></tr>
+    <tr><td>Enumeración</td><td class="f"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></td><td>Evidencias: cronología, BIA, plan, actas</td></tr>
+    <tr><td>Flag de user</td><td class="f"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></td><td>Identificar qué está pasando</td></tr>
+    <tr><td>Flag de root</td><td class="f"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></td><td>Decidir y justificarlo como el comité</td></tr>
+    <tr><td>Write-up</td><td class="f"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></td><td>Explicación con su referencia (BOE, cláusula, guía)</td></tr>
+  </table>
+</section>
+
+<section class="slide" aria-label="ARGOS en cifras">
+  <div class="k">ARGOS 1.4.0</div>
+  <h2>Lo que hay dentro</h2>
+  <div class="cifras">
+    <div class="cifra"><b>190</b><span>preguntas en 19 salas</span></div>
+    <div class="cifra"><b>15</b><span>máquinas con 75 flags</span></div>
+    <div class="cifra"><b>13</b><span>simulacros con reloj</span></div>
+    <div class="cifra"><b>0</b><span>cuentas, servidores y rastreadores</span></div>
+  </div>
+  <div class="chips"><span class="chip ens">Esquema Nacional de Seguridad</span><span class="chip iso">ISO/IEC 27001:2022</span><span class="chip cont">Continuidad de negocio</span><span class="chip">GPL-2.0</span></div>
+</section>
+
+<section class="slide" aria-label="Taller en directo">
+  <div class="k">Tu turno · 4 minutos</div>
+  <h2>Mismo caso para todos: NICAHACK</h2>
+  <div class="qrrow">
+    <div>
+      <p class="l" style="margin-top:0">Abre el enlace, lee las cuatro evidencias y escribe en el chat tu conclusión:</p>
+      <div class="votos">
+        <div class="voto"><b>A</b>El servicio se recuperó fuera del RTO</div>
+        <div class="voto"><b>B</b>Se perdieron más datos de los que admite el RPO</div>
+        <div class="voto"><b>C</b>No hay evidencia suficiente para concluir</div>
+      </div>
+      <p class="url">heindall92.github.io/argos-grc/?taller=NICAHACK</p>
+    </div>
+    <div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" role="img" aria-label="Código QR" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#0b1220" d="M2 2.5h7m1 0h1m1 0h1m3 0h3m2 0h2m3 0h1m1 0h3m1 0h7m-37 1h1m5 0h1m3 0h1m1 0h3m2 0h3m1 0h1m3 0h1m2 0h1m1 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m4 0h2m1 0h2m1 0h2m2 0h2m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m3 0h2m2 0h1m3 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m2 0h4m1 0h3m4 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m1 0h4m2 0h1m2 0h1m1 0h1m6 0h1m3 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h1m3 0h1m1 0h1m2 0h6m2 0h1m-28 1h1m3 0h1m1 0h7m2 0h2m3 0h1m3 0h1m2 0h1m1 0h5m2 0h1m-37 1h2m3 0h1m2 0h1m2 0h2m4 0h3m1 0h1m1 0h1m2 0h3m1 0h1m1 0h2m1 0h1m-34 1h3m1 0h5m2 0h3m1 0h3m3 0h2m2 0h5m2 0h1m-33 1h3m3 0h1m1 0h1m1 0h1m1 0h10m2 0h2m1 0h1m4 0h2m-36 1h3m3 0h1m1 0h1m1 0h3m4 0h1m2 0h4m2 0h2m1 0h3m1 0h4m-34 1h2m2 0h10m1 0h1m2 0h1m1 0h1m3 0h2m3 0h2m-33 1h2m3 0h4m1 0h1m2 0h4m2 0h1m2 0h1m1 0h3m1 0h6m-33 1h4m3 0h1m1 0h2m1 0h2m1 0h4m1 0h2m2 0h4m1 0h2m1 0h2m-35 1h1m3 0h2m4 0h1m6 0h2m2 0h3m4 0h7m-36 1h1m2 0h2m5 0h1m3 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m-35 1h2m1 0h1m1 0h2m1 0h3m4 0h1m1 0h1m1 0h4m1 0h1m1 0h1m3 0h3m-34 1h1m2 0h2m2 0h1m1 0h2m1 0h3m2 0h2m2 0h1m6 0h1m4 0h3m-36 1h1m2 0h1m2 0h2m1 0h2m1 0h2m1 0h3m1 0h4m1 0h1m1 0h1m2 0h3m1 0h2m-33 1h1m1 0h2m2 0h4m2 0h4m5 0h1m1 0h4m2 0h2m-31 1h1m2 0h2m2 0h1m4 0h2m2 0h1m2 0h3m1 0h1m1 0h3m1 0h4m-35 1h1m2 0h1m4 0h2m2 0h1m1 0h1m4 0h1m1 0h1m1 0h2m2 0h1m3 0h2m1 0h2m-36 1h2m2 0h1m1 0h1m2 0h1m3 0h1m1 0h2m2 0h2m8 0h7m-36 1h1m1 0h1m1 0h1m3 0h1m4 0h2m3 0h2m1 0h3m2 0h2m2 0h1m1 0h3m-33 1h1m2 0h3m3 0h1m3 0h1m3 0h1m3 0h5m1 0h3m2 0h1m-33 1h2m3 0h1m1 0h2m4 0h3m1 0h3m2 0h1m3 0h1m3 0h1m1 0h1m1 0h1m-37 1h4m1 0h3m2 0h3m1 0h1m1 0h2m3 0h1m1 0h1m3 0h6m3 0h1m-29 1h1m2 0h1m2 0h2m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1m3 0h1m-33 1h7m1 0h3m1 0h2m1 0h1m1 0h1m2 0h1m2 0h2m3 0h1m1 0h1m1 0h1m-33 1h1m5 0h1m5 0h1m1 0h1m2 0h2m3 0h2m2 0h1m1 0h1m3 0h3m-35 1h1m1 0h3m1 0h1m1 0h1m3 0h1m2 0h1m2 0h2m2 0h3m3 0h7m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m2 0h1m1 0h1m2 0h3m1 0h1m1 0h1m2 0h4m1 0h2m1 0h1m-37 1h1m1 0h3m1 0h1m2 0h2m1 0h1m3 0h1m3 0h1m2 0h1m1 0h2m2 0h2m2 0h1m-34 1h1m5 0h1m2 0h1m1 0h1m1 0h1m3 0h2m2 0h1m1 0h2m1 0h4m2 0h1m1 0h2m-36 1h7m1 0h3m1 0h2m1 0h1m1 0h6m1 0h1m2 0h1m1 0h1m1 0h1m3 0h2"/></svg>
+</div><p class="cap">Sin registro · en tu navegador</p></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Ecosistema">
+  <div class="k">Ecosistema</div>
+  <h2>ARGOS no está solo</h2>
+  <div class="eco">
+    <div class="card yo"><h3>ARGOS</h3><p>Practicar las decisiones: casos, máquinas y simulacros.</p></div>
+    <div class="card"><h3>CTEM-Nexus</h3><p>Hallazgos de pentesting priorizados, con SLA y su máquina de ARGOS para entrenar la corrección.</p></div>
+    <div class="card"><h3>Rosetta Multinorma</h3><p>Controles cruzados entre 15 normas y leyes de la UE, EE. UU. y Latinoamérica.</p></div>
+    <div class="card"><h3>KAIROS</h3><p>BIA y continuidad de negocio, del análisis al plan.</p></div>
+    <div class="card"><h3>ENS AD Auditor</h3><p>Active Directory frente a las medidas del ENS.</p></div>
+    <div class="card"><h3>Compliance Studio</h3><p>Preparación de la conformidad con el ENS.</p></div>
+  </div>
+  <p class="flujo"><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m2 12.5 9.17 4.17a2 2 0 0 0 1.66 0L22 12.5"/><path d="m2 17.5 9.17 4.17a2 2 0 0 0 1.66 0L22 17.5"/></svg><span>Comparten un formato de intercambio JSON. Sin cuentas y sin servidor.</span></p>
+</section>
+
+<section class="slide" aria-label="Gracias">
+  <div class="k">Gracias, NicaSecurity</div>
+  <h2>Pruébalo, rómpelo y cuéntame qué falla</h2>
+  <div class="qrrow">
+    <div class="contacto">
+      <div><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span>heindall92.github.io/argos-grc</span></div>
+      <div><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span>github.com/heindall92/argos-grc</span></div>
+      <div><svg class="ic " width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg><span>linkedin.com/in/yoandyrd92</span></div>
+      <p class="l" style="margin-top:20px">Una estrella en GitHub o un issue con lo que no funciona ayudan más que cualquier otra cosa.</p>
+    </div>
+    <div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" role="img" aria-label="Código QR" class="segno"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#0b1220" d="M2 2.5h7m4 0h2m2 0h1m1 0h3m2 0h7m-29 1h1m5 0h1m1 0h2m1 0h2m2 0h3m1 0h1m2 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h2m2 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h2m3 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h1m3 0h6m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-19 1h10m-20 1h1m1 0h1m1 0h1m1 0h1m6 0h5m1 0h2m3 0h1m2 0h1m-27 1h1m1 0h2m4 0h1m7 0h1m2 0h3m2 0h1m2 0h1m-29 1h2m4 0h1m4 0h1m1 0h1m3 0h2m2 0h2m3 0h3m-26 1h1m1 0h1m1 0h2m4 0h2m2 0h1m2 0h2m2 0h1m2 0h1m-27 1h3m2 0h1m1 0h1m2 0h1m2 0h1m2 0h2m1 0h3m2 0h1m1 0h2m-29 1h2m1 0h2m8 0h1m2 0h1m3 0h3m2 0h1m2 0h1m-27 1h1m3 0h3m1 0h3m1 0h1m2 0h1m2 0h1m1 0h4m1 0h2m-26 1h1m3 0h1m2 0h1m2 0h1m2 0h2m2 0h1m2 0h3m1 0h1m-27 1h3m2 0h2m1 0h1m4 0h4m1 0h4m2 0h1m1 0h2m-28 1h4m2 0h2m2 0h2m3 0h1m4 0h2m2 0h2m1 0h1m-29 1h1m2 0h1m1 0h2m4 0h3m4 0h1m1 0h2m1 0h2m2 0h2m-28 1h1m1 0h2m11 0h3m2 0h1m3 0h1m1 0h1m-28 1h1m2 0h4m2 0h2m1 0h1m3 0h2m2 0h5m-17 1h2m1 0h3m2 0h1m3 0h1m3 0h1m1 0h3m-29 1h7m3 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h2m1 0h2m-29 1h1m5 0h1m3 0h2m1 0h2m2 0h4m3 0h2m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h3m3 0h1m2 0h2m1 0h5m2 0h2m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h1m6 0h2m1 0h3m-29 1h1m1 0h3m1 0h1m1 0h2m2 0h2m3 0h1m5 0h3m2 0h1m-29 1h1m5 0h1m3 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h2m3 0h1m-28 1h7m1 0h1m1 0h2m1 0h2m1 0h2m2 0h1m1 0h1m4 0h2"/></svg>
+</div><p class="cap">Abrir ARGOS</p></div>
+  </div>
+</section>
+
+</main></div>
+<p class="ayuda">← → para avanzar · F pantalla completa</p>
+<script>
+(() => {
+  const deck = document.getElementById('deck');
+  const slides = [...deck.querySelectorAll('.slide')];
+  const total = slides.length;
+  const logo = "<svg class=\"logo-p\" width=\"30\" height=\"30\" viewBox=\"0 0 64 64\" aria-hidden=\"true\"><defs><linearGradient id=\"lg2b\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#0FB5BA\"/><stop offset=\".55\" stop-color=\"#2F6BFF\"/><stop offset=\"1\" stop-color=\"#8B5CF6\"/></linearGradient></defs><rect width=\"64\" height=\"64\" rx=\"16\" fill=\"#0B1220\"/><rect x=\"1\" y=\"1\" width=\"62\" height=\"62\" rx=\"15\" fill=\"none\" stroke=\"url(#lg2b)\" stroke-opacity=\".7\" stroke-width=\"2\"/><g transform=\"translate(32 33) scale(1.12) translate(-32 -32)\"><defs>\n    <radialGradient id=\"lg2s\" cx=\"50%\" cy=\"45%\" r=\"60%\"><stop offset=\"0\" stop-color=\"#FFFFFF\"/><stop offset=\".65\" stop-color=\"#EEF2F7\"/><stop offset=\"1\" stop-color=\"#B9C4D2\"/></radialGradient>\n    <radialGradient id=\"lg2i\" cx=\"50%\" cy=\"50%\" r=\"50%\"><stop offset=\"0\" stop-color=\"#C7FFF6\"/><stop offset=\".3\" stop-color=\"#2CC6C9\"/><stop offset=\".62\" stop-color=\"#1E7BD8\"/><stop offset=\".86\" stop-color=\"#3A2C9E\"/><stop offset=\"1\" stop-color=\"#14123D\"/></radialGradient>\n    <linearGradient id=\"lg2l\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#050A16\" stop-opacity=\".55\"/><stop offset=\".42\" stop-color=\"#050A16\" stop-opacity=\"0\"/></linearGradient>\n    <clipPath id=\"lg2c\"><path d=\"M8 32C16 19.5 24 15 32 15S48 19.5 56 32C48 44.5 40 49 32 49S16 44.5 8 32Z\"/></clipPath></defs>\n  <path d=\"M8 32C16 19.5 24 15 32 15S48 19.5 56 32C48 44.5 40 49 32 49S16 44.5 8 32Z\" fill=\"url(#lg2s)\"/>\n  <g clip-path=\"url(#lg2c)\">\n    <circle cx=\"32\" cy=\"32\" r=\"11.4\" fill=\"url(#lg2i)\"/>\n    <g stroke=\"#E8FFFB\" stroke-opacity=\".22\" stroke-width=\".55\" stroke-linecap=\"round\"><path d=\"M37.20 32.00L42.60 32.00\"/><path d=\"M37.07 33.16L41.46 34.16\"/><path d=\"M36.69 34.26L39.93 35.82\"/><path d=\"M36.07 35.24L40.29 38.61\"/><path d=\"M35.24 36.07L38.05 39.58\"/><path d=\"M34.26 36.69L35.82 39.93\"/><path d=\"M33.16 37.07L34.36 42.33\"/><path d=\"M32.00 37.20L32.00 41.70\"/><path d=\"M30.84 37.07L30.04 40.58\"/><path d=\"M29.74 36.69L27.40 41.55\"/><path d=\"M28.76 36.07L25.95 39.58\"/><path d=\"M27.93 35.24L25.12 37.49\"/><path d=\"M27.31 34.26L22.45 36.60\"/><path d=\"M26.93 33.16L22.54 34.16\"/><path d=\"M26.80 32.00L23.20 32.00\"/><path d=\"M26.93 30.84L21.67 29.64\"/><path d=\"M27.31 29.74L23.26 27.79\"/><path d=\"M27.93 28.76L25.12 26.51\"/><path d=\"M28.76 27.93L25.39 23.71\"/><path d=\"M29.74 27.31L27.79 23.26\"/><path d=\"M30.84 26.93L30.04 23.42\"/><path d=\"M32.00 26.80L32.00 21.40\"/><path d=\"M33.16 26.93L34.16 22.54\"/><path d=\"M34.26 27.31L35.82 24.07\"/><path d=\"M35.24 27.93L38.61 23.71\"/><path d=\"M36.07 28.76L39.58 25.95\"/><path d=\"M36.69 29.74L39.93 28.18\"/><path d=\"M37.07 30.84L42.33 29.64\"/></g>\n    <circle cx=\"32\" cy=\"32\" r=\"11.4\" fill=\"none\" stroke=\"#0B1430\" stroke-width=\"1.3\" stroke-opacity=\".85\"/>\n    <circle cx=\"32\" cy=\"32\" r=\"4.7\" fill=\"#04060C\"/>\n    <rect x=\"0\" y=\"0\" width=\"64\" height=\"64\" fill=\"url(#lg2l)\"/>\n    <circle cx=\"35.6\" cy=\"28.4\" r=\"2.1\" fill=\"#FFFFFF\" fill-opacity=\".92\"/><circle cx=\"28.4\" cy=\"35.2\" r=\".95\" fill=\"#FFFFFF\" fill-opacity=\".55\"/>\n  </g>\n  <path d=\"M8 32C16 19.5 24 15 32 15S48 19.5 56 32\" fill=\"none\" style=\"stroke:#8FA0B6\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>\n  <path d=\"M8.6 32.6C16.4 44 24.4 48.4 32 48.4S47.6 44 55.4 32.6\" fill=\"none\" style=\"stroke:#8FA0B6\" stroke-opacity=\".55\" stroke-width=\"1.1\" stroke-linecap=\"round\"/>\n  <g fill=\"none\" style=\"stroke:#8FA0B6\" stroke-width=\"1.15\" stroke-linecap=\"round\"></g></g></svg>";
+  slides.forEach((s, i) => {
+    const pie = document.createElement('div'); pie.className = 'pie'; pie.setAttribute('aria-hidden', 'true');
+    pie.innerHTML = logo + '<b>ARGOS</b><span>NicaHackFest 2026</span><span class="n">' + String(i + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</span>';
+    if (i > 0) s.appendChild(pie);
+  });
+  let cur = Math.min(total, Math.max(1, parseInt(location.hash.slice(1), 10) || 1)) - 1;
+  const show = (i) => {
+    cur = Math.min(total - 1, Math.max(0, i));
+    slides.forEach((s, j) => { s.classList.toggle('on', j === cur); s.setAttribute('aria-hidden', j === cur ? 'false' : 'true'); });
+    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) { /* file:// sin historial */ }
+  };
+  const fit = () => { const k = Math.min(innerWidth / 1920, innerHeight / 1080); deck.style.transform = 'scale(' + k + ')'; };
+  addEventListener('resize', fit); fit(); show(cur);
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(cur + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(cur - 1); }
+    else if (e.key === 'Home') show(0); else if (e.key === 'End') show(total - 1);
+    else if (e.key === 'f' || e.key === 'F') { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.(); }
+  });
+  addEventListener('click', (e) => { if (e.target.closest('a')) return; show(cur + (e.clientX > innerWidth / 3 ? 1 : -1)); });
+  window.__DECK__ = { show, total };
+})();
+</script>
+</body>
+</html>
