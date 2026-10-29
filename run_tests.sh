@@ -3,6 +3,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 echo "== Construcción de la app (valida el banco de preguntas)"; node app/build.js
+echo "== Diapositivas de la charla al día"; python3 tools/diapositivas.py --check
 echo "== Motor y banco · node --test"; node --test tests/*.test.js
 echo "== App en navegador · Playwright"; python3 tests/e2e_app.py
 echo "== Accesibilidad · axe-core (WCAG 2.2 AA)"; python3 tests/a11y_app.py

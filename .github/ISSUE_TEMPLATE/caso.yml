@@ -1,0 +1,50 @@
+name: Proponer un caso o una máquina
+description: Una situación de GRC que te gustaría practicar o un paquete argos-pack/v1 que hayas preparado.
+title: "Caso: "
+labels: ["contenido"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de proponerlo, lee [Talleres y autores](https://github.com/heindall92/argos-grc/blob/main/docs/TALLERES_Y_AUTORES.md).
+        Usa organizaciones ficticias, no copies preguntas de exámenes y no reproduzcas texto de normas ISO (cita solo la cláusula o el control).
+  - type: dropdown
+    id: marco
+    attributes:
+      label: Marco
+      options:
+        - ENS
+        - ISO/IEC 27001
+        - Continuidad de negocio
+        - Otro (indícalo abajo)
+    validations:
+      required: true
+  - type: textarea
+    id: situacion
+    attributes:
+      label: La situación
+      description: Qué pasa, qué evidencias habría y qué decisión se espera.
+    validations:
+      required: true
+  - type: textarea
+    id: fuentes
+    attributes:
+      label: Fuentes públicas
+      description: Enlaces al BOE, guías CCN-STIC, número de cláusula o control…
+    validations:
+      required: true
+  - type: textarea
+    id: paquete
+    attributes:
+      label: Paquete argos-pack/v1 (opcional)
+      description: Pega el JSON validado con «Crear contenido» o con node tools/validar-pack.js.
+      render: json
+  - type: checkboxes
+    id: compromiso
+    attributes:
+      label: Confirmaciones
+      options:
+        - label: La organización es ficticia y no hay datos personales reales.
+          required: true
+        - label: No reproduce texto protegido de normas ni preguntas de exámenes.
+          required: true

@@ -79,9 +79,9 @@ Este documento parte de la revisión del 29 de octubre de 2026 sobre `main` (`c2
   - no hay columnas estrechas a 320 px;
   - axe da 0 infracciones.
 
-### Fase B · Guion y materiales (5 – 11 nov)
+### Fase B · Guion y materiales (5 – 11 nov) · materiales hechos el 29 de octubre; falta el post
 
-- [ ] **Guion cronometrado de 40 minutos** (`docs/showcase/guion.md`), con lo que se dice, lo que se pulsa y la URL exacta de cada paso:
+- [x] **Guion cronometrado de 40 minutos** (`docs/showcase/guion.md`), con lo que se dice, lo que se pulsa y la URL exacta de cada paso:
 
   | Min. | Bloque | Contenido |
   |---|---|---|
@@ -92,21 +92,21 @@ Este documento parte de la revisión del 29 de octubre de 2026 sobre `main` (`c2
   | 30–34 | Comunidad y ecosistema | Crear contenido con `argos-pack/v1` y cómo proponer un caso. ARGOS ↔ CTEM-Nexus ↔ Rosetta (una diapositiva). |
   | 34–40 | Preguntas | Enlaces, código QR y formulario de opinión. |
 
-- [ ] **Diapositivas** (`docs/showcase/diapositivas/`): un HTML de una sola página, 1920×1080, 10 diapositivas como máximo.
+- [x] **Diapositivas** (`docs/showcase/diapositivas/`): un HTML de una sola página, 1920×1080, 10 diapositivas como máximo.
   - Identidad de ARGOS: azul petróleo, fondo oscuro e iconos Lucide, sin anillos.
   - Navegación con teclado.
   - Exportación a PDF como copia de seguridad.
   - Las diapositivas solo enmarcan; la demostración es la protagonista.
-- [ ] **Código QR** a `heindall92.github.io/argos-grc/?demo=showcase`, generado sin servicios externos.
-- [ ] **Formulario de opinión** con plantillas de issue en GitHub (opinión, error y caso propuesto), sin analítica.
+- [x] **Códigos QR** al taller `NICAHACK` (`?taller=NICAHACK#laboratorio`) y a la web de ARGOS, generados en local sin servicios externos.
+- [x] **Formulario de opinión** con plantillas de issue en GitHub (opinión, error y caso propuesto), sin analítica.
 - [ ] **Post de anuncio en LinkedIn** («El 22 presento ARGOS en NicaHackFest»), al menos 3 o 4 días después del último lanzamiento.
 
-### Fase C · Vídeo y copia de seguridad (12 – 18 nov)
+### Fase C · Vídeo y copia de seguridad (12 – 18 nov) · vídeo y tráiler hechos el 29 de octubre; faltan el ensayo y la observación
 
-- [ ] **Grabación automática de la demo con Playwright** (`tools/grabar-demo.py`). Recorre el guion con `recordVideo` a 1920×1080 y produce un `.webm` reproducible. Sirve dos veces:
+- [x] **Grabación automática de la demo con Playwright** (`tools/grabar-demo.py`). Recorre el guion con `recordVideo` a 1920×1080 y produce un `.webm` reproducible. Sirve dos veces:
   - como **plan B** si falla la red o el navegador en directo;
   - como material del tráiler.
-- [ ] **Tráiler con Remotion** (`showcase/trailer/`, fuera de `app/`):
+- [x] **Tráiler con Remotion** (`showcase/trailer/`, fuera de `app/`):
   - de 60 a 75 segundos, a 1920×1080 y 30 fps;
   - montado con las grabaciones de Playwright, títulos animados, la paleta de ARGOS y subtítulos incrustados;
   - sin música con derechos.
@@ -114,6 +114,7 @@ Este documento parte de la revisión del 29 de octubre de 2026 sobre `main` (`c2
   Se usa como apertura de la sesión y como teaser en LinkedIn (también en vertical, 1080×1350).
 - [ ] **Ensayo 1** cronometrado con grabación propia, para ajustar los tiempos del guion.
 - [ ] **Observación con cinco personas** siguiendo GUIA_SHOWCASE.md. Se puede proponer a NicaSecurity hacerla con su comunidad.
+- **Resultado (29 de octubre):** vídeo de respaldo de 1:35 que cubre la demo entera y tráiler de 66 s en 1920×1080 y 1080×1350. Cómo regenerarlos: [showcase/README.md](showcase/README.md).
 - **Hecho cuando:**
   - el vídeo de respaldo cubre la demo entera;
   - el tráiler está exportado en horizontal y vertical;

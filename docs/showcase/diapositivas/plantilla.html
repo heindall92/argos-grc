@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>ARGOS · NicaHackFest 2026</title>
+<!-- Generado por tools/diapositivas.py a partir de plantilla.html. No editar index.html a mano. -->
+<style>
+:root {
+  --f: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --f-m: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --bg: #05070d; --card: #0e1422; --card-2: #131b2c; --line: rgba(255, 255, 255, .09);
+  --ink: #f5f5f7; --ink-2: #d1d1d6; --muted: #a1a1a8;
+  --accent: #3fd0d6; --accent-soft: rgba(63, 208, 214, .14);
+  --ens: #ff7a85; --iso: #a3a0ff; --cont: #5fdc8c; --warn: #ffb347;
+  --iri: linear-gradient(90deg, #0fb5ba 0%, #2f6bff 45%, #8b5cf6 75%, #14b8a6 100%);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: #000; color: var(--ink); font-family: var(--f); -webkit-font-smoothing: antialiased; }
+body { overflow: hidden; }
+.stage { position: fixed; inset: 0; display: grid; place-items: center; }
+.deck { position: relative; width: 1920px; height: 1080px; transform-origin: center; }
+.slide { position: absolute; inset: 0; padding: 112px 144px 96px; background: var(--bg); display: flex; flex-direction: column; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .32s var(--ease), transform .32s var(--ease), visibility 0s linear .32s; }
+.slide.on { opacity: 1; visibility: visible; transform: none; transition: opacity .32s var(--ease), transform .32s var(--ease), visibility 0s; }
+@media (prefers-reduced-motion: reduce) { .slide, .slide.on { transform: none; } }
+.slide::after { content: ""; position: absolute; left: 144px; right: 144px; bottom: 64px; height: 1px; background: var(--line); }
+.pie { position: absolute; left: 144px; right: 144px; bottom: 28px; display: flex; align-items: center; gap: 14px; font-size: 22px; color: var(--muted); }
+.pie svg { width: 30px; height: 30px; }
+.pie b { color: var(--ink); font-weight: 600; letter-spacing: .14em; font-size: 20px; }
+.pie .n { margin-left: auto; font-family: var(--f-m); font-size: 20px; }
+.k { font-family: var(--f-m); font-size: 24px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: 104px; line-height: 1.02; letter-spacing: -.025em; font-weight: 750; margin-top: 24px; }
+h2 { font-size: 76px; line-height: 1.06; letter-spacing: -.02em; font-weight: 720; margin-top: 22px; max-width: 1500px; }
+h3 { font-size: 40px; line-height: 1.15; font-weight: 680; letter-spacing: -.01em; }
+p.l { font-size: 36px; line-height: 1.45; color: var(--ink-2); margin-top: 30px; max-width: 1440px; }
+.muted { color: var(--muted); }
+.rule { width: 160px; height: 6px; border-radius: 3px; background: var(--iri); margin-top: 40px; }
+.grow { flex: 1; }
+.cards { display: grid; gap: 28px; margin-top: 56px; }
+.c2 { grid-template-columns: 1fr 1fr; } .c3 { grid-template-columns: repeat(3, 1fr); } .c4 { grid-template-columns: repeat(4, 1fr); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 32px; padding: 44px 44px 48px; }
+.card p { font-size: 30px; line-height: 1.45; color: var(--ink-2); margin-top: 16px; }
+.card .ic { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 22px; background: var(--accent-soft); color: var(--accent); margin-bottom: 26px; }
+.card .ic svg { width: 40px; height: 40px; }
+.card.mal { border-color: rgba(255, 122, 133, .35); }
+.card.bien { border-color: rgba(63, 208, 214, .45); background: var(--card-2); }
+ul.l { list-style: none; margin-top: 18px; display: grid; gap: 14px; }
+ul.l li { font-size: 30px; line-height: 1.4; color: var(--ink-2); padding-left: 34px; position: relative; }
+ul.l li::before { content: ""; position: absolute; left: 0; top: .55em; width: 14px; height: 14px; border-radius: 4px; background: var(--accent); }
+.mal ul.l li::before { background: var(--ens); }
+.portada { justify-content: center; }
+.portada .logo svg { width: 176px; height: 176px; }
+.portada h1 { font-size: 168px; letter-spacing: .02em; }
+.portada p.l { font-size: 44px; }
+.autor { margin-top: 64px; font-size: 32px; color: var(--muted); }
+.autor b { color: var(--ink); font-weight: 650; }
+.agenda { counter-reset: a; margin-top: 64px; display: grid; gap: 30px; }
+.agenda li { list-style: none; counter-increment: a; display: flex; align-items: baseline; gap: 36px; font-size: 52px; font-weight: 650; letter-spacing: -.01em; }
+.agenda li::before { content: "0" counter(a); font-family: var(--f-m); font-size: 30px; color: var(--accent); font-weight: 600; }
+.agenda li span { font-size: 32px; color: var(--muted); font-weight: 450; margin-left: auto; font-family: var(--f-m); }
+table.map { margin-top: 52px; border-collapse: separate; border-spacing: 0 14px; width: 100%; }
+table.map td { font-size: 32px; padding: 22px 32px; background: var(--card); }
+table.map td:first-child { border-radius: 22px 0 0 22px; font-family: var(--f-m); font-size: 28px; color: var(--muted); width: 32%; }
+table.map td.f { width: 72px; padding: 0; text-align: center; color: var(--accent); background: var(--card); }
+table.map td.f svg { width: 32px; height: 32px; vertical-align: middle; }
+table.map td:last-child { border-radius: 0 22px 22px 0; font-weight: 600; }
+.cifras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 64px; }
+.cifra { background: var(--card); border: 1px solid var(--line); border-radius: 32px; padding: 40px; }
+.cifra b { display: block; font-size: 112px; line-height: 1; font-weight: 750; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.cifra span { display: block; margin-top: 16px; font-size: 28px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 44px; }
+.chip { font-size: 28px; font-weight: 600; padding: 14px 28px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.chip.ens { color: var(--ens); } .chip.iso { color: var(--iso); } .chip.cont { color: var(--cont); }
+.qrrow { display: grid; grid-template-columns: 1fr 440px; gap: 80px; align-items: center; margin-top: 48px; }
+.qr { background: #fff; border-radius: 32px; padding: 28px; }
+.qr svg { width: 100%; height: auto; display: block; shape-rendering: crispEdges; }
+.qr + .cap { text-align: center; font-family: var(--f-m); font-size: 24px; color: var(--muted); margin-top: 16px; }
+.url { font-family: var(--f-m); font-size: 34px; color: var(--accent); margin-top: 26px; word-break: break-all; }
+.votos { display: grid; gap: 18px; margin-top: 30px; }
+.voto { display: flex; align-items: center; gap: 26px; font-size: 36px; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 22px 30px; }
+.voto b { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 18px; background: var(--accent-soft); color: var(--accent); font-family: var(--f-m); font-size: 34px; }
+.eco { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+.eco .card { padding: 40px; }
+.eco .card h3 { font-size: 36px; }
+.eco .card.yo { border-color: rgba(63, 208, 214, .55); background: var(--card-2); }
+.flujo { margin-top: 44px; font-size: 32px; color: var(--ink-2); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.flujo b { color: var(--ink); }
+.flujo svg { width: 30px; height: 30px; color: var(--accent); }
+.contacto { display: grid; gap: 22px; margin-top: 44px; }
+.contacto div { display: flex; align-items: center; gap: 22px; font-size: 34px; }
+.contacto svg { width: 40px; height: 40px; color: var(--accent); }
+.ayuda { position: fixed; right: 16px; bottom: 12px; font: 13px var(--f-m); color: #555; }
+@media print {
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { overflow: visible; height: auto; background: var(--bg); }
+  .stage { position: static; display: block; }
+  .deck { transform: none !important; width: auto; height: auto; }
+  .slide { position: relative; opacity: 1; visibility: visible; transform: none; width: 1920px; height: 1080px; break-after: page; transition: none; }
+  .ayuda { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="stage"><main class="deck" id="deck" aria-live="polite">
+
+<section class="slide portada" aria-label="Portada">
+  <div class="logo">{{logo}}</div>
+  <div class="k" style="margin-top:56px">NicaHackFest 2026 · NicaBuilds</div>
+  <h1>ARGOS</h1>
+  <p class="l">Practicar GRC como se practica el hacking: casos, evidencias y decisiones que se justifican.</p>
+  <div class="rule"></div>
+  <p class="autor"><b>Yoandy Ramírez Delgado</b> · pentester junior y estudiante de GRC</p>
+</section>
+
+<section class="slide" aria-label="Quién soy">
+  <div class="k">Quién soy</div>
+  <h2>Herramientas abiertas, en español y que funcionan en tu navegador</h2>
+  <div class="cards c3">
+    <div class="card"><span class="ic">{{icon:terminal}}</span><h3>Ofensiva</h3><p>Pentester junior (eJPTv2) y sysadmin. Active Directory, laboratorios y CTF.</p></div>
+    <div class="card"><span class="ic">{{icon:scale}}</span><h3>GRC</h3><p>ENS, ISO/IEC 27001, continuidad y gobierno de la IA. Lo que se audita y por qué.</p></div>
+    <div class="card"><span class="ic">{{icon:lock}}</span><h3>Local-first</h3><p>Sin cuentas, sin servidor y sin analítica. Tus datos se quedan en tu equipo.</p></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Agenda">
+  <div class="k">40 minutos</div>
+  <h2>Hoy</h2>
+  <ol class="agenda">
+    <li>El problema <span>5 min</span></li>
+    <li>Demo: Noche de ransomware <span>14 min</span></li>
+    <li>Taller en directo: decides tú <span>8 min</span></li>
+    <li>Comunidad, ecosistema y preguntas <span>10 min</span></li>
+  </ol>
+</section>
+
+<section class="slide" aria-label="El problema">
+  <div class="k">El problema</div>
+  <h2>Leer la norma no es lo mismo que decidir con evidencias</h2>
+  <div class="cards c2">
+    <div class="card mal"><h3>Lo que se estudia</h3><ul class="l"><li>Artículos, cláusulas y controles</li><li>Definiciones de RTO, RPO y BIA</li><li>Preguntas tipo test</li></ul></div>
+    <div class="card bien"><h3>Lo que se evalúa en el trabajo</h3><ul class="l"><li>Un incidente con prisa y ruido</li><li>Evidencias incompletas o contradictorias</li><li>Una decisión que tienes que justificar</li></ul></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Tres huecos">
+  <div class="k">Lo que falta</div>
+  <h2>Tres huecos para quien empieza en GRC</h2>
+  <div class="cards c3">
+    <div class="card"><span class="ic">{{icon:flask}}</span><h3>Práctica realista</h3><p>Casos con evidencias, no solo teoría. Equivocarse donde no cuesta nada.</p></div>
+    <div class="card"><span class="ic">{{icon:users}}</span><h3>En español</h3><p>Con el marco que se audita en España y referencias que sirven en Latinoamérica.</p></div>
+    <div class="card"><span class="ic">{{icon:lightbulb}}</span><h3>Corrección explicada</h3><p>No basta con «incorrecto»: por qué, con qué referencia y qué mirar la próxima vez.</p></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="De HTB a GRC">
+  <div class="k">La idea</div>
+  <h2>Una máquina de hacking, pero de gobierno y cumplimiento</h2>
+  <table class="map" role="presentation">
+    <tr><td>Máquina</td><td class="f">{{icon:arrowRight}}</td><td>Caso de una organización ficticia</td></tr>
+    <tr><td>Enumeración</td><td class="f">{{icon:arrowRight}}</td><td>Evidencias: cronología, BIA, plan, actas</td></tr>
+    <tr><td>Flag de user</td><td class="f">{{icon:arrowRight}}</td><td>Identificar qué está pasando</td></tr>
+    <tr><td>Flag de root</td><td class="f">{{icon:arrowRight}}</td><td>Decidir y justificarlo como el comité</td></tr>
+    <tr><td>Write-up</td><td class="f">{{icon:arrowRight}}</td><td>Explicación con su referencia (BOE, cláusula, guía)</td></tr>
+  </table>
+</section>
+
+<section class="slide" aria-label="ARGOS en cifras">
+  <div class="k">ARGOS {{version}}</div>
+  <h2>Lo que hay dentro</h2>
+  <div class="cifras">
+    <div class="cifra"><b>{{preguntas}}</b><span>preguntas en {{salas}} salas</span></div>
+    <div class="cifra"><b>{{maquinas}}</b><span>máquinas con {{flags}} flags</span></div>
+    <div class="cifra"><b>{{simulacros}}</b><span>simulacros con reloj</span></div>
+    <div class="cifra"><b>0</b><span>cuentas, servidores y rastreadores</span></div>
+  </div>
+  <div class="chips"><span class="chip ens">Esquema Nacional de Seguridad</span><span class="chip iso">ISO/IEC 27001:2022</span><span class="chip cont">Continuidad de negocio</span><span class="chip">GPL-2.0</span></div>
+</section>
+
+<section class="slide" aria-label="Taller en directo">
+  <div class="k">Tu turno · 4 minutos</div>
+  <h2>Mismo caso para todos: NICAHACK</h2>
+  <div class="qrrow">
+    <div>
+      <p class="l" style="margin-top:0">Abre el enlace, lee las cuatro evidencias y escribe en el chat tu conclusión:</p>
+      <div class="votos">
+        <div class="voto"><b>A</b>El servicio se recuperó fuera del RTO</div>
+        <div class="voto"><b>B</b>Se perdieron más datos de los que admite el RPO</div>
+        <div class="voto"><b>C</b>No hay evidencia suficiente para concluir</div>
+      </div>
+      <p class="url">heindall92.github.io/argos-grc/?taller=NICAHACK</p>
+    </div>
+    <div><div class="qr">{{qr:taller}}</div><p class="cap">Sin registro · en tu navegador</p></div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Ecosistema">
+  <div class="k">Ecosistema</div>
+  <h2>ARGOS no está solo</h2>
+  <div class="eco">
+    <div class="card yo"><h3>ARGOS</h3><p>Practicar las decisiones: casos, máquinas y simulacros.</p></div>
+    <div class="card"><h3>CTEM-Nexus</h3><p>Hallazgos de pentesting priorizados, con SLA y su máquina de ARGOS para entrenar la corrección.</p></div>
+    <div class="card"><h3>Rosetta Multinorma</h3><p>Controles cruzados entre 15 normas y leyes de la UE, EE. UU. y Latinoamérica.</p></div>
+    <div class="card"><h3>KAIROS</h3><p>BIA y continuidad de negocio, del análisis al plan.</p></div>
+    <div class="card"><h3>ENS AD Auditor</h3><p>Active Directory frente a las medidas del ENS.</p></div>
+    <div class="card"><h3>Compliance Studio</h3><p>Preparación de la conformidad con el ENS.</p></div>
+  </div>
+  <p class="flujo">{{icon:layers}}<span>Comparten un formato de intercambio JSON. Sin cuentas y sin servidor.</span></p>
+</section>
+
+<section class="slide" aria-label="Gracias">
+  <div class="k">Gracias, NicaSecurity</div>
+  <h2>Pruébalo, rómpelo y cuéntame qué falla</h2>
+  <div class="qrrow">
+    <div class="contacto">
+      <div>{{icon:globe}}<span>heindall92.github.io/argos-grc</span></div>
+      <div>{{icon:github}}<span>github.com/heindall92/argos-grc</span></div>
+      <div>{{icon:linkedin}}<span>linkedin.com/in/yoandyrd92</span></div>
+      <p class="l" style="margin-top:20px">Una estrella en GitHub o un issue con lo que no funciona ayudan más que cualquier otra cosa.</p>
+    </div>
+    <div><div class="qr">{{qr:argos}}</div><p class="cap">Abrir ARGOS</p></div>
+  </div>
+</section>
+
+</main></div>
+<p class="ayuda">← → para avanzar · F pantalla completa</p>
+<script>
+(() => {
+  const deck = document.getElementById('deck');
+  const slides = [...deck.querySelectorAll('.slide')];
+  const total = slides.length;
+  const logo = {{logo-json}};
+  slides.forEach((s, i) => {
+    const pie = document.createElement('div'); pie.className = 'pie'; pie.setAttribute('aria-hidden', 'true');
+    pie.innerHTML = logo + '<b>ARGOS</b><span>NicaHackFest 2026</span><span class="n">' + String(i + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</span>';
+    if (i > 0) s.appendChild(pie);
+  });
+  let cur = Math.min(total, Math.max(1, parseInt(location.hash.slice(1), 10) || 1)) - 1;
+  const show = (i) => {
+    cur = Math.min(total - 1, Math.max(0, i));
+    slides.forEach((s, j) => { s.classList.toggle('on', j === cur); s.setAttribute('aria-hidden', j === cur ? 'false' : 'true'); });
+    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) { /* file:// sin historial */ }
+  };
+  const fit = () => { const k = Math.min(innerWidth / 1920, innerHeight / 1080); deck.style.transform = 'scale(' + k + ')'; };
+  addEventListener('resize', fit); fit(); show(cur);
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(cur + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(cur - 1); }
+    else if (e.key === 'Home') show(0); else if (e.key === 'End') show(total - 1);
+    else if (e.key === 'f' || e.key === 'F') { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.(); }
+  });
+  addEventListener('click', (e) => { if (e.target.closest('a')) return; show(cur + (e.clientX > innerWidth / 3 ? 1 : -1)); });
+  window.__DECK__ = { show, total };
+})();
+</script>
+</body>
+</html>

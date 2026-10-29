@@ -16,6 +16,16 @@ Cierra la candidata 1.4.0-rc.1, integrada en `main` el 28 de octubre, con lo que
 - **Seis secciones en la barra:** entre 900 y 1200 px la barra superior se queda sin iconos y, por debajo de 1000 px, sin el nombre junto al logo, para que no haya desplazamiento horizontal ni con 11.035 XP. En móvil los nombres de las pestañas caben desde 350 px; por debajo solo se muestran los iconos.
 - **Pruebas:** la demostración en el motor (XP coherentes con lo ganado, sin logros pendientes, determinista y desplazada con la fecha) y en el navegador (aislamiento, restablecer, navegación, selector, enlace y anchos de 320 a 1440 px). axe audita también la demostración.
 
+### Materiales de la charla
+
+Todo está en [docs/showcase](docs/showcase/README.md):
+- **Guion cronometrado de 40 minutos.** Indica qué se dice, qué se pulsa y qué ve el público, y trae un plan B para cada fallo.
+- **Diapositivas.** Diez, en un único HTML de 1920×1080 con copia en PDF. Usan la identidad de ARGOS, iconos Lucide, las cifras reales del banco y CSP por hashes. Las genera `tools/diapositivas.py`, y `run_tests.sh` comprueba que estén al día.
+- **Códigos QR** del taller `NICAHACK` y de ARGOS, generados en local.
+- **Vídeo de respaldo.** `tools/grabar-demo.py` recorre el guion con un cursor visible y deja capítulos y fotogramas clave.
+- **Tráiler.** Dura 66 s, en horizontal y vertical, y está hecho con Remotion (`showcase/trailer/`) a partir de esa grabación.
+- **Plantillas de issue** para opinión, errores y propuestas de casos: el canal de opinión sin analítica.
+
 ### Integrado de la candidata 1.4.0-rc.1
 
 ### Aprendizaje y comunidad

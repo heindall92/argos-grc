@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Proponer una corrección de una pregunta concreta
+    url: https://heindall92.github.io/argos-grc/
+    about: Cada pregunta de ARGOS tiene su enlace «Proponer corrección», que rellena el identificador y la versión por ti.

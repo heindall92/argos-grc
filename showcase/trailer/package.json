@@ -1,0 +1,22 @@
+{
+  "name": "argos-trailer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tráiler de ARGOS para NicaHackFest 2026 (Remotion). Los vídeos salen de tools/grabar-demo.py.",
+  "license": "GPL-2.0-only",
+  "scripts": {
+    "preparar": "node preparar.js",
+    "studio": "npm run preparar && remotion studio src/index.js",
+    "horizontal": "npm run preparar && remotion render src/index.js Trailer out/argos-trailer-1920x1080.mp4",
+    "vertical": "npm run preparar && remotion render src/index.js TrailerVertical out/argos-trailer-1080x1350.mp4",
+    "todo": "npm run horizontal && npm run vertical"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
+    "@remotion/cli": "4.0.535",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.535"
+  }
+}
