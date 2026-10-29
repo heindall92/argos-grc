@@ -9,3 +9,4 @@ src/generated/
 __pycache__/
 .venv/
 public/clips_1080/
+public/clips_final/
