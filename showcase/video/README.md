@@ -53,14 +53,15 @@ python pipeline/montar.py --voz kokoro
 # 4. Revisión: un fotograma por escena y una hoja con todos (build/hoja_escenas.png)
 python pipeline/fotos.py
 
-# 5. Render (copias de las tomas con un fotograma clave cada 10 para que Remotion salte rápido)
-mkdir -p public/clips_final
-for f in public/clips/*.mp4; do ffmpeg -y -i "$f" -c:v libx264 -preset fast -crf 16 -g 10 -pix_fmt yuv420p "public/clips_final/$(basename "$f")"; done
-npx remotion render src/index.ts ARGOS out/argos_nicahackfest.mp4 --props='{"dir":"clips_final"}'
+# 5. Render por tramos (se puede cortar y relanzar: los tramos hechos no se repiten)
+#    Antes, copias de las tomas a 1080p con un fotograma clave cada 10, para que Remotion salte rápido
+mkdir -p public/clips_1080
+for f in public/clips/*.mp4; do ffmpeg -y -i "$f" -vf scale=1920:-2:flags=lanczos -c:v libx264 -preset fast -crf 14 -g 10 -pix_fmt yuv420p "public/clips_1080/$(basename "$f")"; done
+pipeline/render.sh                    # → out/argos_nicahackfest.mp4 (unos 90 min con 4 núcleos)
 ```
 
-- Sin subtítulos quemados (para subir el `.srt` aparte): `--props='{"dir":"clips_final","subtitulos":false}'`.
-- Si Remotion no puede descargar su Chrome, usa uno local: `REMOTION_CHROME=/ruta/chrome-headless-shell npx remotion render …`.
+- Sin subtítulos quemados (para subir el `.srt` aparte): `pipeline/render.sh --sin-subtitulos`.
+- Si Remotion no puede descargar su Chrome, usa uno local: `REMOTION_CHROME=/ruta/chrome-headless-shell pipeline/render.sh`.
 - `npm run studio` abre Remotion Studio con el vídeo completo y cada toma por separado.
 
 ## Cambiar algo
