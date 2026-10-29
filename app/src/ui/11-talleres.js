@@ -1,9 +1,10 @@
 /* ---------- Taller sin servidor y exportación explícita de resultados ---------- */
 /* Enlace del taller. Si la app se abre como archivo descargado, se comparte la dirección pública:
  * una ruta file:// no sirve a nadie más y muestra la estructura de carpetas del facilitador. */
-const URL_PUBLICA = 'https://heindall92.github.io/argos-grc/';
 function enlaceTaller(seed) {
-  const url = new URL(location.protocol === 'file:' ? URL_PUBLICA : location.href);
+  // Dentro de la función: este módulo se evalúa después del primer pintado y una constante de
+  // módulo aún no existiría si la app se abre directamente en #taller.
+  const url = new URL(location.protocol === 'file:' ? 'https://heindall92.github.io/argos-grc/' : location.href);
   url.search = ''; if (MODO_DEMO) url.searchParams.set('demo', DEMO_SHOWCASE ? 'showcase' : ''); url.searchParams.set('taller', seed); url.hash = 'laboratorio';
   return url;
 }

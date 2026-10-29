@@ -1,0 +1,28 @@
+{
+  "name": "argos-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Vídeo de ARGOS (≥ 15 min) generado con Remotion a partir de grabaciones reales y voz en off sintética o propia",
+  "license": "GPL-2.0-only",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts ARGOS out/argos_nicahackfest.mp4",
+    "still": "remotion still src/index.ts ARGOS",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
+    "@remotion/cli": "4.0.535",
+    "@xterm/xterm": "5.5.0",
+    "lucide-react": "0.544.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.535"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

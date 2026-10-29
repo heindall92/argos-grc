@@ -1,0 +1,272 @@
+{
+ "clip": "sala",
+ "duracion": 45.383,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.018,
+   "tipo": "clic",
+   "caja": [
+    1343,
+    755,
+    138,
+    44
+   ],
+   "texto": "Categorización del sistema",
+   "zoom": null
+  },
+  {
+   "t": 3.667,
+   "tipo": "clic",
+   "caja": [
+    600,
+    480,
+    720,
+    60
+   ],
+   "texto": "Opción única",
+   "zoom": null
+  },
+  {
+   "t": 5.226,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 6.77,
+   "tipo": "foco",
+   "caja": [
+    600,
+    873,
+    720,
+    127
+   ],
+   "texto": "Explicación y referencia",
+   "zoom": null
+  },
+  {
+   "t": 9.814,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 11.892,
+   "tipo": "clic",
+   "caja": [
+    600,
+    321,
+    720,
+    60
+   ],
+   "texto": "Fallo a propósito",
+   "zoom": null
+  },
+  {
+   "t": 13.496,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 15.019,
+   "tipo": "foco",
+   "caja": [
+    600,
+    873,
+    720,
+    127
+   ],
+   "texto": "La explicación aparece igual al fallar",
+   "zoom": null
+  },
+  {
+   "t": 18.057,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 19.913,
+   "tipo": "clic",
+   "caja": [
+    600,
+    403,
+    720,
+    73
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 21.444,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 23.35,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 25.279,
+   "tipo": "clic",
+   "caja": [
+    966,
+    281,
+    354,
+    64
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 26.902,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 28.795,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 30.612,
+   "tipo": "clic",
+   "caja": [
+    600,
+    450,
+    720,
+    60
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 32.124,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 34.019,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 35.827,
+   "tipo": "clic",
+   "caja": [
+    600,
+    491,
+    720,
+    60
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 37.291,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 38.81,
+   "tipo": "foco",
+   "caja": [
+    600,
+    861,
+    720,
+    84
+   ],
+   "texto": "Texto literal del BOE",
+   "zoom": null
+  },
+  {
+   "t": 42.376,
+   "tipo": "foco",
+   "caja": [
+    600,
+    980,
+    253,
+    19
+   ],
+   "texto": "Proponer una corrección",
+   "zoom": null
+  }
+ ]
+}

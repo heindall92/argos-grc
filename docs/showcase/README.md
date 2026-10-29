@@ -9,6 +9,7 @@ Todo lo necesario para presentar ARGOS el domingo 22 de noviembre de 2026 en Nic
 | Códigos QR del taller y de ARGOS | `diapositivas/qr-taller.svg`, `diapositivas/qr-argos.svg` | Con `segno`, solo si cambia la URL (abajo) |
 | Vídeo de respaldo de la demo (≈1:35) | `showcase/grabaciones/demo-completa.mp4` (fuera de git) | `python3 tools/grabar-demo.py` |
 | Tráiler de 66 s (horizontal y vertical) | `showcase/trailer/out/` (fuera de git) | `cd showcase/trailer && npm ci && npm run todo` |
+| Vídeo de presentación de 17:46, con subtítulos y capítulos | `showcase/video/out/` (fuera de git) | Pasos en [showcase/video/README.md](../../showcase/video/README.md) |
 | Canal de opinión sin analítica | [.github/ISSUE_TEMPLATE](../../.github/ISSUE_TEMPLATE) | Plantillas de GitHub |
 
 ## Diapositivas

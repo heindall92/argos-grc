@@ -1,0 +1,80 @@
+{
+ "clip": "maquinas",
+ "duracion": 19.986,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.281,
+   "tipo": "clic",
+   "caja": [
+    615,
+    12,
+    121,
+    36
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 3.033,
+   "tipo": "foco",
+   "caja": [
+    420,
+    280,
+    52,
+    25
+   ],
+   "texto": "5 fáciles",
+   "zoom": null
+  },
+  {
+   "t": 5.141,
+   "tipo": "foco",
+   "caja": [
+    420,
+    317,
+    351,
+    203
+   ],
+   "texto": "Hespéride Servicios Digitales (ficticia)",
+   "zoom": null
+  },
+  {
+   "t": 9.598,
+   "tipo": "foco",
+   "caja": [
+    1149,
+    253,
+    351,
+    183
+   ],
+   "texto": "5 medias",
+   "zoom": null
+  },
+  {
+   "t": 13.381,
+   "tipo": "foco",
+   "caja": [
+    785,
+    522,
+    351,
+    178
+   ],
+   "texto": "5 difíciles",
+   "zoom": null
+  },
+  {
+   "t": 16.88,
+   "tipo": "clic",
+   "caja": [
+    785,
+    773,
+    351,
+    183
+   ],
+   "texto": "Noche de ransomware",
+   "zoom": null
+  }
+ ]
+}

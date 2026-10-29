@@ -1,0 +1,68 @@
+{
+ "clip": "aprender",
+ "duracion": 18.408,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.21,
+   "tipo": "clic",
+   "caja": [
+    871,
+    12,
+    119,
+    36
+   ],
+   "texto": "Aprender",
+   "zoom": null
+  },
+  {
+   "t": 3.359,
+   "tipo": "foco",
+   "caja": [
+    420,
+    152,
+    1080,
+    42
+   ],
+   "texto": "Empieza aquí · Competencias · Laboratorio · Taller · Crear contenido",
+   "zoom": null
+  },
+  {
+   "t": 6.501,
+   "tipo": "foco",
+   "caja": [
+    876,
+    459,
+    213,
+    44
+   ],
+   "texto": "Elige tu punto de partida",
+   "zoom": null
+  },
+  {
+   "t": 10.028,
+   "tipo": "foco",
+   "caja": [
+    420,
+    513,
+    1080,
+    152
+   ],
+   "texto": "Recorrido guiado de 10 a 15 minutos",
+   "zoom": null
+  },
+  {
+   "t": 15.198,
+   "tipo": "foco",
+   "caja": [
+    443,
+    868,
+    201,
+    44
+   ],
+   "texto": "Demostración con datos separados",
+   "zoom": null
+  }
+ ]
+}

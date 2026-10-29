@@ -1,0 +1,104 @@
+{
+ "clip": "taller",
+ "duracion": 26.028,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.037,
+   "tipo": "foco",
+   "caja": [
+    443,
+    386,
+    1034,
+    51
+   ],
+   "texto": "Código del taller",
+   "zoom": null
+  },
+  {
+   "t": 3.008,
+   "tipo": "clic",
+   "caja": [
+    633,
+    453,
+    167,
+    44
+   ],
+   "texto": "Enlace: entra directo al caso",
+   "zoom": null
+  },
+  {
+   "t": 8.218,
+   "tipo": "foco",
+   "caja": [
+    443,
+    356,
+    1034,
+    44
+   ],
+   "texto": "Nombre: desmarcado",
+   "zoom": null
+  },
+  {
+   "t": 10.373,
+   "tipo": "foco",
+   "caja": [
+    443,
+    536,
+    1034,
+    44
+   ],
+   "texto": "Textos completos: desmarcados",
+   "zoom": null
+  },
+  {
+   "t": 12.662,
+   "tipo": "clic",
+   "caja": [
+    443,
+    596,
+    200,
+    44
+   ],
+   "texto": "Vista previa de lo que se comparte",
+   "zoom": null
+  },
+  {
+   "t": 16.023,
+   "tipo": "clic",
+   "caja": [
+    443,
+    642,
+    274,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 19.749,
+   "tipo": "foco",
+   "caja": [
+    443,
+    879,
+    234,
+    44
+   ],
+   "texto": "El facilitador importa hasta 20",
+   "zoom": null
+  },
+  {
+   "t": 22.021,
+   "tipo": "foco",
+   "caja": [
+    443,
+    860,
+    1034,
+    219
+   ],
+   "texto": "Agregados, sin nombres ni textos",
+   "zoom": null
+  }
+ ]
+}

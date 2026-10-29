@@ -1,0 +1,116 @@
+{
+ "clip": "ransom_flags",
+ "duracion": 27.712,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.006,
+   "tipo": "clic",
+   "caja": [
+    441,
+    507,
+    1038,
+    67
+   ],
+   "texto": "Activar al prever el 50 % del RTO",
+   "zoom": null
+  },
+  {
+   "t": 2.574,
+   "tipo": "clic",
+   "caja": [
+    441,
+    586,
+    155,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 6.994,
+   "tipo": "clic",
+   "caja": [
+    441,
+    877,
+    1038,
+    54
+   ],
+   "texto": "«Sí, de sobra» (fallo a propósito)",
+   "zoom": null
+  },
+  {
+   "t": 8.642,
+   "tipo": "clic",
+   "caja": [
+    441,
+    518,
+    155,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 12.315,
+   "tipo": "foco",
+   "caja": [
+    606,
+    551,
+    291,
+    44
+   ],
+   "texto": "Pista: la flag vale la mitad",
+   "zoom": null
+  },
+  {
+   "t": 15.585,
+   "tipo": "clic",
+   "caja": [
+    441,
+    324,
+    1038,
+    54
+   ],
+   "texto": "Más de 48 h de datos: el doble del RPO",
+   "zoom": null
+  },
+  {
+   "t": 17.163,
+   "tipo": "clic",
+   "caja": [
+    441,
+    518,
+    155,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 21.632,
+   "tipo": "clic",
+   "caja": [
+    441,
+    937,
+    1038,
+    67
+   ],
+   "texto": "Cadena de custodia",
+   "zoom": null
+  },
+  {
+   "t": 23.235,
+   "tipo": "clic",
+   "caja": [
+    441,
+    1036,
+    155,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  }
+ ]
+}

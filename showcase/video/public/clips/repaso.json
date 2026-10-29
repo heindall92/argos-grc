@@ -1,0 +1,140 @@
+{
+ "clip": "repaso",
+ "duracion": 25.91,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.008,
+   "tipo": "foco",
+   "caja": [
+    420,
+    515,
+    1080,
+    102
+   ],
+   "texto": "Repaso espaciado",
+   "zoom": null
+  },
+  {
+   "t": 3.087,
+   "tipo": "clic",
+   "caja": [
+    1361,
+    552,
+    108,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 5.676,
+   "tipo": "clic",
+   "caja": [
+    966,
+    281,
+    354,
+    64
+   ],
+   "texto": "Vuelve en 1, 3, 7, 14 y 30 días",
+   "zoom": null
+  },
+  {
+   "t": 7.286,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 10.407,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 12.329,
+   "tipo": "clic",
+   "caja": [
+    600,
+    421,
+    720,
+    95
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 13.858,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 16.992,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 19.004,
+   "tipo": "clic",
+   "caja": [
+    600,
+    310,
+    354,
+    64
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 20.62,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 23.733,
+   "tipo": "clic",
+   "caja": [
+    600,
+    1012,
+    720,
+    52
+   ],
+   "texto": null,
+   "zoom": null
+  }
+ ]
+}

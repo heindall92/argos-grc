@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Q+O0OACSEN/BfP7aNcbuOrB3PhuZJiUbLAXq7XtXnQM=' 'sha256-1b9xhOi247k7Dz/bJL+sV4pdDdqAm7tI+QAZayGF8BI=' 'sha256-aI4KGhpCviAfjyulnQUyQmTDFVchckdLnsTtU4F6CNc='; style-src 'sha256-fJ2tS3Q604fMhTnJflxphapQcVekbjkAoWWw7OpX11Y='; style-src-attr 'unsafe-inline'; font-src 'none'; img-src data: blob:; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Q+O0OACSEN/BfP7aNcbuOrB3PhuZJiUbLAXq7XtXnQM=' 'sha256-1b9xhOi247k7Dz/bJL+sV4pdDdqAm7tI+QAZayGF8BI=' 'sha256-Uc0s+3J3iKiNgGAotGls6SFG8Co+6BvOajHk3U626cc='; style-src 'sha256-fJ2tS3Q604fMhTnJflxphapQcVekbjkAoWWw7OpX11Y='; style-src-attr 'unsafe-inline'; font-src 'none'; img-src data: blob:; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -2116,9 +2116,10 @@ Object.assign(ACCIONES, {
 /* ---------- Taller sin servidor y exportación explícita de resultados ---------- */
 /* Enlace del taller. Si la app se abre como archivo descargado, se comparte la dirección pública:
  * una ruta file:// no sirve a nadie más y muestra la estructura de carpetas del facilitador. */
-const URL_PUBLICA = 'https://heindall92.github.io/argos-grc/';
 function enlaceTaller(seed) {
-  const url = new URL(location.protocol === 'file:' ? URL_PUBLICA : location.href);
+  // Dentro de la función: este módulo se evalúa después del primer pintado y una constante de
+  // módulo aún no existiría si la app se abre directamente en #taller.
+  const url = new URL(location.protocol === 'file:' ? 'https://heindall92.github.io/argos-grc/' : location.href);
   url.search = ''; if (MODO_DEMO) url.searchParams.set('demo', DEMO_SHOWCASE ? 'showcase' : ''); url.searchParams.set('taller', seed); url.hash = 'laboratorio';
   return url;
 }

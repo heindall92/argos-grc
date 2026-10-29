@@ -1,0 +1,68 @@
+{
+ "clip": "ransom_root",
+ "duracion": 18.643,
+ "ancho": 1920,
+ "alto": 1080,
+ "marcas": [
+  {
+   "t": 1.077,
+   "tipo": "clic",
+   "caja": [
+    441,
+    873,
+    1038,
+    67
+   ],
+   "texto": "Integridad, vector cerrado y CCN-CERT",
+   "zoom": null
+  },
+  {
+   "t": 2.666,
+   "tipo": "clic",
+   "caja": [
+    441,
+    1036,
+    155,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 7.315,
+   "tipo": "clic",
+   "caja": [
+    441,
+    755,
+    1038,
+    67
+   ],
+   "texto": "Portavoz designado",
+   "zoom": null
+  },
+  {
+   "t": 8.927,
+   "tipo": "clic",
+   "caja": [
+    441,
+    897,
+    155,
+    44
+   ],
+   "texto": null,
+   "zoom": null
+  },
+  {
+   "t": 15.238,
+   "tipo": "foco",
+   "caja": [
+    420,
+    12,
+    1080,
+    98
+   ],
+   "texto": "Máquina resuelta",
+   "zoom": null
+  }
+ ]
+}
