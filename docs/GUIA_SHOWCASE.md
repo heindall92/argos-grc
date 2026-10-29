@@ -1,5 +1,7 @@
 # Presentación y prueba de usabilidad
 
+Plan completo para la sesión de NicaHackFest 2026 (22 de noviembre): [ROADMAP_SHOWCASE.md](ROADMAP_SHOWCASE.md).
+
 ## Ensayo de 40 minutos
 
 1. 0–5 min: problema, público y límites del laboratorio.
