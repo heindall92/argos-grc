@@ -2,7 +2,7 @@
 
 ## Facilitar un taller
 
-Abrir Taller, elegir un código y generar el enlace. Asegurar que todos usan la misma versión. Para uso sin conexión, distribuir el HTML y el código; no compartir una ruta `file:` del equipo del facilitador. Preparar el caso requiere confirmación porque sustituye el borrador anterior.
+Abrir Taller, elegir un código y generar el enlace. El enlace lleva al Laboratorio con el caso ya preparado si el borrador del participante está vacío; si ya tiene texto, se le ofrece cambiar de caso con confirmación y nunca se sustituye solo. Asegurar que todos usan la misma versión. Para uso sin conexión, distribuir el HTML y el código; no compartir una ruta `file:` del equipo del facilitador. Preparar el caso requiere confirmación porque sustituye el borrador anterior.
 
 El guion de 35 minutos propone lectura individual, análisis, contraste por parejas y revisión. No hay sala virtual ni sincronización. El facilitador puede enseñar ejemplos resueltos después de la puesta en común. La gravedad de un hallazgo y la calidad del argumento necesitan valoración humana.
 

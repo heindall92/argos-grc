@@ -36,8 +36,17 @@ const store = {
   },
   del(k) { delete MEM[k]; try { localStorage.removeItem(k); } catch (e) { /* nada */ } }
 };
+/* Parámetro de la URL leído con una expresión regular: el núcleo también se carga en las pruebas de Node */
+function parametro(nombre) {
+  const m = String(location.search || '').match(new RegExp('[?&]' + nombre + '=([^&#]*)'));
+  if (!m) return null; try { return decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) { return null; }
+}
 const MODO_DEMO = /[?&]demo(?:[=&]|$)/.test(location.search);
-const KEY = MODO_DEMO ? 'argos/demo/progreso' : 'argos/v1/progreso';
+/* ?demo=showcase: demostración con progreso realista para presentaciones. Tiene su propia clave y se
+ * regenera cada día (la racha y los repasos dependen de la fecha), sin tocar el perfil habitual. */
+const DEMO_SHOWCASE = MODO_DEMO && parametro('demo') === 'showcase';
+const KEY = DEMO_SHOWCASE ? 'argos/demo/showcase' : MODO_DEMO ? 'argos/demo/progreso' : 'argos/v1/progreso';
+const KEY_DIA_DEMO = 'argos/demo/showcase-dia';
 const PROGRESO_VERSION = 2;
 
 /* ---------- Progreso: todo lo que entra (almacenamiento o importación) se valida ---------- */
@@ -105,7 +114,14 @@ function sanear(raw, recuperarSesion = true) {
   return p;
 }
 
-let P = sanear(store.get(KEY));
+function progresoDemo() { store.set(KEY_DIA_DEMO, hoy()); return sanear(A.demoShowcase(D, E, hoy()), false); }
+let P = DEMO_SHOWCASE && (store.get(KEY_DIA_DEMO) !== hoy() || !store.get(KEY)) ? progresoDemo() : sanear(store.get(KEY));
+if (DEMO_SHOWCASE) store.set(KEY, P);
+/* Enlace de taller (?taller=CÓDIGO): con el borrador vacío, el caso del taller se prepara solo.
+ * Un borrador con texto nunca se sustituye sin confirmación: el laboratorio ofrece cambiar de caso. */
+const TALLER_URL = (() => { const t = parametro('taller'); return t ? A.normalizarSemilla(str(t, 40)) : null; })();
+const borradorVacio = (b) => !b || Object.entries(b.valores || {}).every(([, x]) => (Array.isArray(x) ? !x.length : !x));
+if (TALLER_URL && P.laboratorio?.seed !== TALLER_URL && borradorVacio(P.laboratorio)) { P.laboratorio = A.limpiarBorrador({ seed: TALLER_URL, valores: {} }); store.set(KEY, P); }
 const guardar = () => { P.sesion = copiaSesion(ui.sesion); store.set(KEY, P); };
 
 /* ---------- Estado de la interfaz ---------- */

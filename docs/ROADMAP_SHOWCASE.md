@@ -38,38 +38,40 @@ Este documento parte de la revisión del 29 de octubre de 2026 sobre `main` (`c2
 
 | Id | Hallazgo | Por qué importa en directo | Prioridad |
 |---|---|---|---|
-| H1 | La web pública (`heindall92.github.io/argos-grc`) sirve la **1.4.0-rc.1**, y la portada de «Empieza aquí» dice «ARGOS 1.4.0-rc.1». | En pantalla parece un producto a medias. Hay que cerrar la 1.4.0. | P0 |
-| H2 | `CHANGELOG.md` y `docs/FASES.md` dicen que la candidata «no se ha fusionado ni publicado», pero ya está en `main` y en Pages. | Documentación desfasada justo cuando más gente va a leerla. | P0 |
-| H3 | Las cinco secciones nuevas (Empieza aquí, Competencias, Laboratorio, Taller y Crear contenido) son una fila de botones encima de **todas** las vistas, también en Hoy, Máquinas y Simulacros. No están en la barra de navegación. | En móvil, esa fila y el aviso del modo demo ocupan unos 200 px antes del contenido. En escritorio compite con la navegación principal y confunde al público. | P0 |
-| H4 | La tarjeta «Empieza por aquí» de Hoy, en móvil, deja el texto en una columna de unos 80 px: una palabra por línea. Ya pasaba antes de la 1.4. | Si alguien del público lo abre en el móvil durante la charla, es lo primero que ve. | P1 |
+| H1 ✔ | La web pública (`heindall92.github.io/argos-grc`) sirve la **1.4.0-rc.1**, y la portada de «Empieza aquí» dice «ARGOS 1.4.0-rc.1». | En pantalla parece un producto a medias. Hay que cerrar la 1.4.0. | P0 |
+| H2 ✔ | `CHANGELOG.md` y `docs/FASES.md` dicen que la candidata «no se ha fusionado ni publicado», pero ya está en `main` y en Pages. | Documentación desfasada justo cuando más gente va a leerla. | P0 |
+| H3 ✔ | Las cinco secciones nuevas (Empieza aquí, Competencias, Laboratorio, Taller y Crear contenido) son una fila de botones encima de **todas** las vistas, también en Hoy, Máquinas y Simulacros. No están en la barra de navegación. | En móvil, esa fila y el aviso del modo demo ocupan unos 200 px antes del contenido. En escritorio compite con la navegación principal y confunde al público. | P0 |
+| H4 ✔ | La tarjeta «Empieza por aquí» de Hoy, en móvil, deja el texto en una columna de unos 80 px: una palabra por línea. Ya pasaba antes de la 1.4. | Si alguien del público lo abre en el móvil durante la charla, es lo primero que ve. | P1 |
 | H5 | Hoy usa **anillos** concéntricos de progreso. Los anillos son la firma visual de Rosetta, y el ecosistema pide que cada herramienta tenga su propia visualización. | Presentarás el ecosistema: si dos herramientas comparten firma visual, el mensaje se debilita. | P1 |
-| H6 | El selector de archivo de Crear contenido y Taller es el nativo del navegador: «Choose File / No file chosen», en inglés con la interfaz en español. | Se nota en la demo de Crear contenido. | P2 |
-| H7 | En Taller, el «Enlace para compartir» muestra la ruta local (`file:///home/…`) cuando la app se abre como archivo descargado. | Si enseñas la versión descargada, se ve la ruta de tu equipo. En directo, usa siempre la URL pública. | P2 |
-| H8 | La demo empieza a 0 XP: Competencias muestra 0/40 en todo, Logros está vacío y Hoy no tiene progreso. | Una pantalla de ceros no transmite nada. Hace falta un estado de demostración con progreso realista. | P0 |
+| H6 ✔ | El selector de archivo de Crear contenido y Taller es el nativo del navegador: «Choose File / No file chosen», en inglés con la interfaz en español. | Se nota en la demo de Crear contenido. | P2 |
+| H7 ✔ | En Taller, el «Enlace para compartir» muestra la ruta local (`file:///home/…`) cuando la app se abre como archivo descargado. | Si enseñas la versión descargada, se ve la ruta de tu equipo. En directo, usa siempre la URL pública. | P2 |
+| H8 ✔ | La demo empieza a 0 XP: Competencias muestra 0/40 en todo, Logros está vacío y Hoy no tiene progreso. | Una pantalla de ceros no transmite nada. Hace falta un estado de demostración con progreso realista. | P0 |
+| H10 ✔ | Quien abría el enlace del taller veía el caso por defecto («ARGOS») y tenía que pasar por Taller, «Preparar mi caso» y una confirmación. | En directo, con el público siguiendo el enlace del chat, la mitad se queda en el caso equivocado. | P0 |
 | H9 | Los módulos nuevos (`10-laboratorio.js`, `11-talleres.js` y `12-autores.js`) están escritos en líneas muy largas y compactas. Varios commits van en inglés («feat: add…»). | No se ve en la sesión, pero sí cuando alguien abre el repositorio desde la charla. | P3 |
 
 ---
 
 ## 2. Fases
 
-### Fase A · Cerrar ARGOS 1.4.0 (29 oct – 4 nov)
+### Fase A · Cerrar ARGOS 1.4.0 (29 oct – 4 nov) · hecha el 29 de octubre
 
-- [ ] **H1 y H2:** versión `1.4.0` en `package.json`, la portada y `dist/`. El CHANGELOG pasa de «candidata» a publicada, y FASES.md y VALIDACION.md quedan al día. Pages sirve la 1.4.0.
-- [ ] **H3 · Navegación de «Aprender»:** Empieza aquí, Competencias, Laboratorio, Taller y Crear contenido pasan a formar parte de la navegación.
+- [x] **H1 y H2:** versión `1.4.0` en `package.json`, la portada y `dist/`. El CHANGELOG pasa de «candidata» a publicada, y FASES.md y VALIDACION.md quedan al día. Pages sirve la 1.4.0.
+- [x] **H3 · Navegación de «Aprender»:** Empieza aquí, Competencias, Laboratorio, Taller y Crear contenido pasan a formar parte de la navegación.
   - En escritorio, como entrada «Aprender» de la barra superior.
   - En móvil, como sexta pestaña o dentro de un «Más».
   - La fila de botones solo aparece en esas cinco vistas, como subnavegación con `aria-current`.
   - El aviso del modo demo pasa a una franja fina.
-- [ ] **H4:** la tarjeta «Empieza por aquí» en móvil se apila: icono y texto arriba y el botón «Entrar» a todo el ancho. Prueba e2e con el texto a 320, 360 y 390 px.
-- [ ] **H8 · Demo con progreso:** `?demo=showcase` carga un estado de ejemplo fijo y versionado (`app/data/demo-showcase.json`):
+- [x] **H4:** la tarjeta «Empieza por aquí» en móvil se apila: icono y texto arriba y el botón «Entrar» a todo el ancho. Prueba e2e con el texto a 320, 360 y 390 px.
+- [x] **H8 · Demo con progreso:** `?demo=showcase` carga un estado de ejemplo fijo y versionado (`app/data/demo-showcase.json`):
   - unas 400 XP;
   - dos salas superadas y una máquina resuelta;
   - competencias a medias;
   - un simulacro aprobado y una racha de 4 días.
 
   «Restablecer demo» vuelve a ese mismo estado. La e2e comprueba que no toca `argos/v1/progreso`.
-- [ ] **H6:** selector de archivo propio: botón «Elegir archivo JSON» con el nombre del archivo debajo, en ES/EN y accesible con teclado.
-- [ ] Pruebas completas (motor, e2e, roadmap en tres navegadores y axe) y capturas regeneradas.
+- [x] **H6:** selector de archivo propio: botón «Elegir archivo JSON» con el nombre del archivo debajo, en ES/EN y accesible con teclado.
+- [x] Pruebas completas (motor, e2e, roadmap en tres navegadores y axe) y capturas regeneradas.
+- **Resultado:** la tabla de abajo queda resuelta salvo H5 y H9, que pasan a la fase E. En la demo de presentación, el progreso de ejemplo se calcula respecto a la fecha de hoy y se regenera cada día, en vez de cargarse de un JSON fijo (`app/data/demo-showcase.json`): un JSON fijo dejaría la racha caducada el día de la charla.
 - **Hecho cuando:**
   - Pages sirve la 1.4.0;
   - `?demo=showcase` abre con progreso;

@@ -1,13 +1,13 @@
-# Validación de ARGOS 1.4.0-rc.1
+# Validación de ARGOS 1.4.0
 
-Fecha de comprobación: 28 de octubre de 2026. Implementación en cinco ramas encadenadas, con `main` conservada en `7021cbc61f410cc49b2ecf9dab4f168a8c88272d`.
+Fecha de comprobación: 29 de octubre de 2026, sobre la 1.4.0 (la candidata 1.4.0-rc.1 se comprobó el 28 de octubre en cinco ramas encadenadas).
 
 | Comprobación | Resultado |
 |---|---|
-| Motor, banco, progreso, competencias, casos, privacidad y paquetes (`node --test tests/*.test.js`) | 43/43 pruebas superadas |
+| Motor, banco, progreso, competencias, casos, privacidad y paquetes (`node --test tests/*.test.js`) | 44/44 pruebas superadas (incluida la demostración de presentación) |
 | Suite original de la aplicación en Chromium (`tests/e2e_app.py`) | 98/98 comprobaciones superadas |
-| Recorridos del roadmap (`tests/e2e_roadmap.py`) | Superados en Chromium, Firefox y WebKit (CI en Ubuntu). En Windows, Firefox no terminó la ejecución local en 45 segundos |
-| Accesibilidad automática (`tests/a11y_app.py`) | 212 estados auditados; 0 nodos con infracciones |
+| Recorridos del roadmap (`tests/e2e_roadmap.py`) | Superados en Chromium en local; Chromium, Firefox y WebKit en la CI de Ubuntu. Incluyen la demostración con progreso, la navegación «Aprender», el selector de archivo, el enlace del taller y anchos de 320 a 1440 px |
+| Accesibilidad automática (`tests/a11y_app.py`) | 232 estados auditados (20 nuevos de la demostración con progreso); 0 nodos con infracciones |
 | Construcción y validación del banco | Correctas: 190 preguntas, 19 salas, 15 máquinas y 13 simulacros |
 | Plantilla comunitaria (`node tools/validar-pack.js community/ejemplo.json`) | Formato válido |
 

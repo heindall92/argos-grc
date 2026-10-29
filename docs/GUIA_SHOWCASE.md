@@ -5,12 +5,12 @@ Plan completo para la sesión de NicaHackFest 2026 (22 de noviembre): [ROADMAP_S
 ## Ensayo de 40 minutos
 
 1. 0–5 min: problema, público y límites del laboratorio.
-2. 5–10 min: abrir `?demo#inicio`, elegir continuidad y explicar el objetivo.
+2. 5–10 min: abrir `?demo=showcase#inicio` (progreso de ejemplo), elegir continuidad y explicar el objetivo.
 3. 10–23 min: «Noche de ransomware», lectura de evidencias y decisiones. Reservar un fallo deliberado para mostrar la explicación.
 4. 23–30 min: repaso y progreso; mostrar exportación e importación. Recargar una sesión para enseñar la recuperación.
 5. 30–40 min: preguntas y recogida de comentarios.
 
-Abrir antes la versión descargada, anotar la versión y guardar un JSON de respaldo. Ensayar también sin red. La demostración usa otra clave de almacenamiento; restablecerla no borra el perfil habitual.
+Abrir antes la versión descargada, anotar la versión y guardar un JSON de respaldo. Ensayar también sin red. La demostración usa otra clave de almacenamiento; restablecerla no borra el perfil habitual. Con `?demo=showcase` el progreso de ejemplo se regenera cada día, para que la racha y los repasos estén al día el día de la charla: lo practicado en un ensayo no se arrastra al siguiente.
 
 ## Observación con cinco personas
 

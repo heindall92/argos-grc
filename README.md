@@ -70,6 +70,10 @@ En ARGOS empiezas con un solo ojo abierto. Cada sala que superas, cada flag que 
     <td><img src="docs/img/ruta-light.png" alt="Ruta ENS con sus siete salas, notas e intentos"></td>
     <td align="center"><img src="docs/img/movil-sala-dark.png" alt="Sala en el móvil, en modo oscuro, con la corrección de una pregunta múltiple" width="300"></td>
   </tr>
+  <tr>
+    <td><img src="docs/img/laboratorio-light.png" alt="Aprender, Laboratorio «Un hallazgo defendible»: semilla del caso y evidencias de la política, la cronología, el acta y el registro de datos"></td>
+    <td><img src="docs/img/competencias-dark.png" alt="Aprender, Competencias en modo oscuro: siguiente práctica recomendada y las siete competencias con sus preguntas retenidas"></td>
+  </tr>
 </table>
 
 ## El contenido
@@ -102,9 +106,12 @@ Las empresas son ficticias: Hespéride Servicios Digitales, el Consorcio Digital
 
 ## Uso
 
-### Versión candidata 1.4
+### Novedades de la 1.4
 
-- **Empieza aquí:** recorrido guiado y demostración con progreso independiente (`?demo#inicio`).
+Lo nuevo está en **Aprender**, una sección propia en la barra superior y en las pestañas del móvil.
+
+- **Empieza aquí:** recorrido guiado de 10 a 15 minutos hasta «Noche de ransomware».
+- **Demostración:** `?demo` abre ARGOS con un progreso vacío y separado del tuyo. `?demo=showcase` lo abre con progreso de ejemplo (racha, logros, competencias a medias y repasos pendientes) para presentarlo en una charla o en clase; «Restablecer» vuelve siempre a ese punto.
 - **Progreso fiable:** XP de sala independientes del simulacro, intervalos de repaso, copia previa local y recuperación de sesiones con plazo original.
 - **Competencias:** siete áreas, preguntas vistas/acertadas/retenidas y recomendaciones explicadas. La ficha editorial muestra las revisiones que una persona haya documentado.
 - **Laboratorio:** casos variables por semilla sobre RTO, RPO y evidencia insuficiente; hallazgo estructurado, rúbrica e informe Markdown. Las justificaciones abiertas necesitan revisión humana.
@@ -113,7 +120,7 @@ Las empresas son ficticias: Hespéride Servicios Digitales, el Consorcio Digital
 
 Guías: [fases y compatibilidad](docs/FASES.md), [presentación](docs/GUIA_SHOWCASE.md), [laboratorio](docs/LABORATORIO.md), [talleres y autores](docs/TALLERES_Y_AUTORES.md), [revisión editorial](docs/EDITORIAL.md).
 
-Las pruebas con cinco usuarios y la revisión experta externa siguen pendientes. Esta candidata se revisa por fases antes de integrarse.
+Las pruebas con cinco usuarios y la revisión experta externa siguen pendientes. La 1.4.0 se presenta en NicaHackFest 2026 (22 de noviembre): [plan de la sesión](docs/ROADMAP_SHOWCASE.md).
 
 **En línea:** [heindall92.github.io/argos-grc](https://heindall92.github.io/argos-grc/).
 

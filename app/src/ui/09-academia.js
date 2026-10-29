@@ -1,6 +1,21 @@
 /* ---------- Inicio guiado y demostración independiente ---------- */
 function enlacesAcademia() {
-  return `<nav class="academy-links row" aria-label="Aprendizaje práctico">${[['inicio','Empieza aquí'],['competencias','Competencias'],['laboratorio','Laboratorio'],['taller','Taller'],['autores','Crear contenido']].map(([id,n])=>`<button class="btn sm" data-act="go" data-view="${id}"${ui.view===id?' aria-current="page"':''}>${n}</button>`).join('')}</nav>${MODO_DEMO ? '<p class="legal small">Modo demostración: progreso separado de tu perfil habitual. <button class="btn sm" data-act="demo-reset">Restablecer demo</button></p>' : ''}`;
+  if (seccionDe(ui.view) !== 'inicio') return '';
+  return `<nav class="subnav" aria-label="Aprender"><div class="seg">${APRENDER.map(([id, n]) => `<button type="button" data-act="go" data-view="${id}"${ui.view === id ? ' aria-current="page"' : ''}>${n}</button>`).join('')}</div></nav>`;
+}
+/* Selector de archivo propio: el control nativo muestra textos del idioma del navegador («Choose File»). */
+function selectorArchivo(id, etiqueta, boton, multiple = false) {
+  return `<div class="file-pick"><span class="file-label" id="${id}-l">${etiqueta}</span><div class="row"><input id="${id}" type="file" accept=".json,application/json"${multiple ? ' multiple' : ''} aria-labelledby="${id}-l ${id}-b" aria-describedby="${id}-n"><label for="${id}" class="btn" id="${id}-b">${icon('upload', 18)}<span>${boton}</span></label><span class="small muted" id="${id}-n" aria-live="polite">${esc(ui.archivos?.[id] || 'Ningún archivo elegido')}</span></div></div>`;
+}
+function nombreArchivos(input) {
+  const n = input.files?.length || 0;
+  const texto = !n ? 'Ningún archivo elegido' : n === 1 ? str(input.files[0].name, 80) : `${n} archivos`;
+  ui.archivos = { ...ui.archivos, [input.id]: texto };
+  const el = $('#' + input.id + '-n'); if (el) el.textContent = texto;
+}
+function avisoDemo() {
+  if (!MODO_DEMO) return '';
+  return `<div class="demo-strip" role="note">${icon('eye', 16)}<span><b>Demostración</b><span class="demo-extra">${DEMO_SHOWCASE ? ' con progreso de ejemplo' : ''} · separada de tu perfil habitual</span></span><button type="button" class="btn ghost sm" data-act="demo-reset">Restablecer</button></div>`;
 }
 function vCompetencias() {
   const cs = A.competencias(D, P, hoy()); const rec = A.recomendar(D, P, hoy()); const ev = A.evolucion(P);

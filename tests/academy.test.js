@@ -68,3 +68,25 @@ test('recomendaciones explicadas priorizan pendientes y enlazan contenido existe
   assert.ok(B.maquinas.some((m)=>m.id===rec.maquina)); assert.ok(rec.motivo.length>20);
   assert.equal(A.competencias(B,{},'2026-10-28').reduce((n,c)=>n+c.total,0),190);
 });
+
+test('demostración para presentaciones: progreso coherente, actual y sin el caso de la charla', () => {
+  const hoy='2026-11-22'; const p=A.demoShowcase(B,E,hoy);
+  assert.equal(E.racha(p.dias,hoy),4,'racha de cuatro días con actividad hoy');
+  assert.equal(p.dias[hoy].xp,40);
+  // Los XP coinciden con lo que se habría ganado: preguntas acertadas, salas superadas, flags y simulacro.
+  const qs=B.rutas.flatMap(r=>r.salas.flatMap(s=>s.preguntas)); const q=id=>qs.find(x=>x.id===id);
+  let esperado=Object.entries(p.respuestas).filter(([,e])=>e.aciertos>0).reduce((n,[id])=>n+E.xpPregunta(q(id)),0);
+  esperado+=Object.values(p.salas).filter(s=>s.mejor>=.8).reduce((n,s)=>n+E.XP.sala+(s.mejor===1?E.XP.salaPerfecta:0),0);
+  for(const [id,m] of Object.entries(p.maquinas)){const mq=B.maquinas.find(x=>x.id===id);esperado+=m.flags.reduce((n,f)=>n+E.xpFlag(mq.flags.find(x=>x.id===f),mq.dificultad,false),0);}
+  esperado+=E.xpSimulacro(B.simulacros.find(s=>s.id==='sprint-ens'));
+  assert.equal(p.xp,esperado);
+  assert.deepEqual(Object.keys(p.logros).sort(),[...E.logrosCumplidos(p,B,hoy)].sort(),'sin logros pendientes de celebrar');
+  assert.equal(p.maquinas['m-ransom'],undefined,'«Noche de ransomware» se resuelve en directo');
+  assert.equal(p.laboratorio,undefined);
+  const cs=A.competencias(B,p,hoy);assert.ok(cs.filter(c=>c.estados.retenida>0).length>=2,'al menos dos competencias con retención');
+  assert.ok(E.pendientes(p.respuestas,hoy).length>0,'hay repasos pendientes que enseñar');
+  assert.equal(A.recomendar(B,p,hoy).tipo,'repaso');
+  // Es determinista y se desplaza con la fecha
+  assert.deepEqual(A.demoShowcase(B,E,hoy),p);
+  assert.equal(E.racha(A.demoShowcase(B,E,'2027-01-15').dias,'2027-01-15'),4);
+});

@@ -63,6 +63,8 @@ def main():
             J("window.__ARGOS__.ui.sesion = null; document.body.style.overflow = ''; window.__ARGOS__.go('maquina', 'm-ransom')")
             pg.click('#evt-0'); pg.screenshot(path=str(OUT / f"maquina-{scheme}.png"))
             J("window.__ARGOS__.go('logros')"); pg.screenshot(path=str(OUT / f"logros-{scheme}.png"))
+            J("window.__ARGOS__.go('laboratorio')"); pg.screenshot(path=str(OUT / f"laboratorio-{scheme}.png"))
+            J("window.__ARGOS__.go('competencias')"); pg.screenshot(path=str(OUT / f"competencias-{scheme}.png"))
             J("window.__ARGOS__.iniciarSimulacro('sim-grc')"); pg.wait_for_timeout(100)
             for _ in range(7):
                 pg.click(".opt >> nth=1"); pg.keyboard.press("ArrowRight")

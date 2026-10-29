@@ -1,8 +1,10 @@
 /* ---------- Estructura: barra superior, pestañas, navegación, avisos y diálogos ---------- */
 const SECCIONES = [
-  ['hoy', 'Hoy', 'home'], ['rutas', 'Rutas', 'route'], ['maquinas', 'Máquinas', 'terminal'], ['simulacros', 'Simulacros', 'timer'], ['logros', 'Logros', 'award']
+  ['hoy', 'Hoy', 'home'], ['rutas', 'Rutas', 'route'], ['maquinas', 'Máquinas', 'terminal'], ['simulacros', 'Simulacros', 'timer'], ['inicio', 'Aprender', 'graduation'], ['logros', 'Logros', 'award']
 ];
-const seccionDe = (v) => ({ ruta: 'rutas', maquina: 'maquinas' }[v] || v);
+/* «Aprender» agrupa el recorrido guiado, las competencias, el laboratorio, el taller y la creación de contenido */
+const APRENDER = [['inicio', 'Empieza aquí'], ['competencias', 'Competencias'], ['laboratorio', 'Laboratorio'], ['taller', 'Taller'], ['autores', 'Crear contenido']];
+const seccionDe = (v) => ({ ruta: 'rutas', maquina: 'maquinas', competencias: 'inicio', laboratorio: 'inicio', taller: 'inicio', autores: 'inicio' }[v] || v);
 
 function renderTop() {
   const r = E.rangoDe(P.xp); const racha = E.racha(P.dias, hoy()); const cur = seccionDe(ui.view);
@@ -22,8 +24,10 @@ function render() {
   aplicarTema();
   renderTop();
   const fn = VISTAS[ui.view] || vHoy;
-  $('#view').innerHTML = enlacesAcademia() + fn();
+  $('#view').innerHTML = avisoDemo() + enlacesAcademia() + fn();
   if (ui.view === 'perfil') dibujarTarjeta($('#share-canvas'));
+  const sub = $('.subnav'); const act = sub?.querySelector('[aria-current]');
+  if (sub && act) sub.scrollLeft = Math.max(0, act.offsetLeft - (sub.clientWidth - act.offsetWidth) / 2);
   renderPlayer();
   renderModal();
 }
