@@ -175,15 +175,17 @@ def showcase(page):
     assert page.locator('[data-act="lab-taller"]').count() == 0
     # Cada vista se puede abrir directamente desde un enlace (el primer pintado ocurre antes de evaluar
     # los módulos de Aprender: una constante de módulo usada al pintar dejaba la página en blanco)
+    # Una pestaña nueva por enlace: es lo que hace quien lo abre, y ninguna navegación interrumpe a otra.
     errores_directos = []
-    page.on('pageerror', lambda e: errores_directos.append(str(e)))
     for consulta in ['', '&demo', '&demo=showcase', '&taller=NICAHACK']:
         for vista in ['hoy', 'rutas', 'ruta/ens', 'maquinas', 'maquina/m-ransom', 'simulacros', 'logros', 'perfil', 'ayuda',
                       'inicio', 'competencias', 'laboratorio', 'taller', 'autores']:
-            page.goto('about:blank')
-            page.goto(URL + consulta + '#' + vista)
-            page.wait_for_selector('#view h1', timeout=5000)
-            assert page.locator('#view h1').inner_text().strip(), (consulta, vista)
+            p = page.context.new_page()
+            p.on('pageerror', lambda e, c=consulta, v=vista: errores_directos.append(f'{c}#{v}: {e}'))
+            p.goto(URL + consulta + '#' + vista)
+            p.wait_for_selector('#view h1', timeout=5000)
+            assert p.locator('#view h1').inner_text().strip(), (consulta, vista)
+            p.close()
     assert not errores_directos, errores_directos
     print('Demostración, navegación Aprender, selector de archivo y enlace del taller OK')
 
