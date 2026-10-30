@@ -120,7 +120,9 @@ Lo nuevo está en **Aprender**, una sección propia en la barra superior y en la
 
 Guías: [fases y compatibilidad](docs/FASES.md), [presentación](docs/GUIA_SHOWCASE.md), [laboratorio](docs/LABORATORIO.md), [talleres y autores](docs/TALLERES_Y_AUTORES.md), [revisión editorial](docs/EDITORIAL.md).
 
-Las pruebas con cinco usuarios y la revisión experta externa siguen pendientes. La 1.4.0 se presenta en NicaHackFest 2026 (22 de noviembre): [plan de la sesión](docs/ROADMAP_SHOWCASE.md).
+Las pruebas con cinco usuarios y la revisión experta externa siguen pendientes. Si has probado ARGOS en una charla o un taller, [cuéntanos cómo te fue](https://github.com/heindall92/argos-grc/issues/new?template=opinion.yml).
+
+La 1.4.0 se presenta el 22 de noviembre de 2026 en NicaBuilds, dentro de [NicaHackFest 2026](https://nicahackfest.com), organizado por NicaSecurity.
 
 **En línea:** [heindall92.github.io/argos-grc](https://heindall92.github.io/argos-grc/).
 
