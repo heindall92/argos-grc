@@ -1,5 +1,10 @@
 # Cambios
 
+## 1.4.1 · octubre de 2026
+
+- **Herramientas GRC del autor:** Acerca de pasa a nueve herramientas. Se suma **Atlas GRC**, que enseña la ISO/IEC 27001 desde cero con lecciones, prácticas, simulacros CertiProf y la ciudad de Albatrel que crece contigo. La frase de resumen empieza por «Atlas te enseña la norma». También aparece en la tabla del README.
+- **Pruebas.** La e2e de Acerca de comprueba las nueve tarjetas y los enlaces a la web y al código de Atlas.
+
 ## 1.4.0 · octubre de 2026
 
 Cierra la candidata 1.4.0-rc.1, integrada en `main` el 28 de octubre, con lo que hacía falta para presentarla en NicaHackFest 2026.

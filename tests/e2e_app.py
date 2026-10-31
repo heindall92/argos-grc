@@ -311,9 +311,9 @@ def main():
         legal = page.inner_text("#view")
         ok("sin relación con ISO, IEC, PECB, el CCN ni ninguna entidad de certificación" in legal and "no son una certificación" in legal, "Fuentes muestra el aviso legal completo")
         page.click('[data-act="help-tab"][data-tab="acerca"]')
-        ok(page.locator(".suite-card").count() == 8 and "ARGOS" in page.inner_text(".suite-card.here"), "Acerca de enlaza las 8 herramientas GRC y marca ARGOS")
+        ok(page.locator(".suite-card").count() == 9 and "ARGOS" in page.inner_text(".suite-card.here"), "Acerca de enlaza las 9 herramientas GRC y marca ARGOS")
         links = J("[...document.querySelectorAll('#view a[target=_blank]')].map(a => [a.href, a.rel])")
-        ok(all("noopener" in r for _, r in links) and any("kairos" in h for h, _ in links) and any("rosetta" in h for h, _ in links), "Los enlaces externos abren en pestaña nueva con noopener")
+        ok(all("noopener" in r for _, r in links) and any("kairos" in h for h, _ in links) and any("rosetta" in h for h, _ in links) and any("heindall92.github.io/atlas-grc" in h for h, _ in links) and any("github.com/heindall92/atlas-grc" in h for h, _ in links), "Los enlaces externos abren en pestaña nueva con noopener")
 
         print("Seguridad: CSP e inyección")
         ok(J("window.__csp.length") == 0, f"Sin infracciones de la CSP durante la sesión ({J('window.__csp')})")

@@ -183,6 +183,7 @@ Es un único HTML con **CSP por hashes** y sin peticiones de red (`default-src '
 
 | Herramienta | Para qué |
 |---|---|
+| [**Atlas GRC**](https://github.com/heindall92/atlas-grc) | Aprender la ISO/IEC 27001 desde cero: lecciones, prácticas, simulacros CertiProf y la ciudad de Albatrel que crece contigo. [Abrir la app](https://heindall92.github.io/atlas-grc/). |
 | **ARGOS** | Entrenar: rutas, casos prácticos y simulacros. |
 | [**Rosetta**](https://github.com/heindall92/rosetta_multinorma) | Traducir entre marcos: ENS, ISO/IEC 27001, NIS2 e ISO/IEC 42001 en 115 controles unificados, alineado con la CCN-STIC 825. |
 | [**ENS Compliance Studio**](https://github.com/heindall92/grc_ens_compliance_studio) | Preparar la conformidad con el ENS: categorización, MAGERIT, Declaración de Aplicabilidad y preauditoría. |
