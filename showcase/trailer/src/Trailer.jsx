@@ -1,6 +1,6 @@
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
-import { AbsoluteFill, Img, OffthreadVideo, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
+import { AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import datos from './datos.json';
 
 /* Paleta de ARGOS (app/src/styles.css, tema oscuro). Un solo acento; el iridiscente solo en el logo y la línea. */
@@ -108,6 +108,8 @@ function Cierre({ d }) {
 
 export const Trailer = () => (
   <AbsoluteFill style={{ background: C.bg }}>
+    {/* Banda sonora generada con musica.py a partir de estos mismos tiempos de escena */}
+    <Audio src={staticFile('musica.wav')} />
     <Sequence from={E.logo[0]} durationInFrames={E.logo[1]}><Logo d={E.logo[1]} /></Sequence>
     <Sequence from={E.problema[0]} durationInFrames={E.problema[1]}><Problema d={E.problema[1]} /></Sequence>
     <Sequence from={E.caso[0]} durationInFrames={E.caso[1]}><Fragmento d={E.caso[1]} desde={11} hasta={20} y0={70} antetitulo="Máquinas" rotulo="Casos de organizaciones ficticias, con evidencias como las reales." /></Sequence>

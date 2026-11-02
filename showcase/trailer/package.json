@@ -5,7 +5,7 @@
   "description": "Tráiler de ARGOS para NicaHackFest 2026 (Remotion). Los vídeos salen de tools/grabar-demo.py.",
   "license": "GPL-2.0-only",
   "scripts": {
-    "preparar": "node preparar.js",
+    "preparar": "node preparar.js && python3 musica.py public/musica.wav",
     "studio": "npm run preparar && remotion studio src/index.js",
     "horizontal": "npm run preparar && remotion render src/index.js Trailer out/argos-trailer-1920x1080.mp4",
     "vertical": "npm run preparar && remotion render src/index.js TrailerVertical out/argos-trailer-1080x1350.mp4",

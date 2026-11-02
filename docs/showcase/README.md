@@ -56,7 +56,8 @@ Con `--url https://heindall92.github.io/argos-grc/` graba la versión publicada.
 ## Tráiler
 
 - Proyecto de [Remotion](https://www.remotion.dev) en `showcase/trailer/`, con versiones fijadas.
-- Sin música ni voz: los rótulos van incrustados.
+- Sin voz: los rótulos van incrustados.
+- Con música generada por código (`musica.py`), sin derechos de terceros. Va a 120 BPM y lee los tiempos de escena de `src/Trailer.jsx`, así que cada cambio de bloque cae en un pulso con un golpe grave, y si cambia el montaje la música se adapta sola. Se normaliza a -14 LUFS con pico real de -1 dBTP, el nivel habitual de YouTube y LinkedIn. `npm run preparar` la genera en `public/musica.wav`. Necesita Python 3 con `numpy`, `scipy` y `soundfile`, además de `ffmpeg`.
 - Usa la grabación de la demo, el logo y las cifras del banco (`npm run preparar` los copia), con la paleta de ARGOS y animaciones de entrada sin rebote.
 - Composiciones:
   - `Trailer`, 1920×1080, para abrir la charla;
